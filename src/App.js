@@ -1,16 +1,20 @@
 import { useEffect } from "react";
 import Login from "./pages/Login";
-import { useStateProvider } from "./utils/StateProvider";
-import { reducerCases } from "./utils/Constants";
 import DashBoard from "./pages/Dashboard";
+import { selectToken } from "./utils/tokenSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { setToken } from "./utils/tokenSlice";
 
 export default function App() {
-  const [{ token }, dispatch] = useStateProvider();
+  const { token } = useSelector(selectToken);
+  const dispatch = useDispatch();
+
+
   useEffect(() => {
     const hash = window.location.hash;
     if (hash) {
       const token = hash.substring(1).split("&")[0].split('=')[1];
-      dispatch({ type: reducerCases.SET_TOKEN, token });
+      dispatch(setToken(token))
     }
   }, [token, dispatch]);
   return (

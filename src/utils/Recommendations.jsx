@@ -1,9 +1,11 @@
 import { useEffect } from "react";
-import { useStateProvider } from "./StateProvider";
 import axios from "axios";
+import { useSelector } from "react-redux";
+import { selectToken } from "./tokenSlice";
 
 export const Recommendations = () => {
-	const [{ token, dispatch }] = useStateProvider();
+	const { token } = useSelector(selectToken);
+
 	useEffect(() => {
 		const getRecommendationsData = async () => {
 			const response = await axios.get(
@@ -17,7 +19,7 @@ export const Recommendations = () => {
 			);
 		};
 		getRecommendationsData();
-	}, [token, dispatch]);
+	}, []);
 
 	return <div className=" bg-pink-800">Recommendations</div>;
 };

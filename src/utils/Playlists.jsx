@@ -1,9 +1,12 @@
 import { useEffect } from "react";
-import {useStateProvider} from "./StateProvider";
 import axios from "axios";
+import { useSelector } from "react-redux";
+import { selectToken } from "./tokenSlice";
 
 export const Playlists = () => {
-	const [{ token, dispatch }] = useStateProvider();
+	const { token } = useSelector(selectToken);
+
+	
 	useEffect(() => {
 		const getPlaylistData = async () => {
 			const response = await axios.get(
@@ -15,10 +18,10 @@ export const Playlists = () => {
 					}
 				}
 			);
-      const {items} = response.data;
+			const { items } = response.data;
 		};
 		getPlaylistData();
-	}, [token, dispatch]);
+	}, []);
 
-	return <div>Playlists</div>;
+	return <div></div>;
 };

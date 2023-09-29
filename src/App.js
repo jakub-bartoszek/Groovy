@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 import Login from "./pages/Login";
 import DashBoard from "./pages/Dashboard";
-import { selectToken } from "./utils/tokenSlice";
+import { selectToken } from "./utils/spotifyDataSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { setToken } from "./utils/tokenSlice";
+import { setToken } from "./utils/spotifyDataSlice";
 
 export default function App() {
   const { token } = useSelector(selectToken);

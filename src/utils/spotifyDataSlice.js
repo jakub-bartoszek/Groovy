@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const tokenSlice = createSlice({
-  name: "token",
+const spotifyDataSlice = createSlice({
+  name: "spotifyData",
   initialState: {
     token: null
   },
@@ -12,7 +12,7 @@ const tokenSlice = createSlice({
   },
 });
 
-export const { setToken } = tokenSlice.actions;
+export const { setToken } = spotifyDataSlice.actions;
 export const selectToken = (state) => state.token;
-export default tokenSlice.reducer;
+export default spotifyDataSlice.reducer;
 

@@ -1,8 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
-import tokenReducer from "./utils/tokenSlice";
+import spotifyDataReducer from "./utils/spotifyDataSlice";
 
 export default configureStore({
   reducer: {
-    token: tokenReducer,
+    token: spotifyDataReducer,
   },
 });

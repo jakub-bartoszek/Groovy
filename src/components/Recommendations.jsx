@@ -1,10 +1,10 @@
 import { useEffect } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
-import { selectToken } from "./spotifyDataSlice";
+import { selectToken } from "../utils/spotifyDataSlice";
 
 export const Recommendations = () => {
-	const { token } = useSelector(selectToken);
+	const token = useSelector(selectToken);
 
 	useEffect(() => {
 		const getRecommendationsData = async () => {

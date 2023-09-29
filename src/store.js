@@ -3,6 +3,6 @@ import spotifyDataReducer from "./utils/spotifyDataSlice";
 
 export default configureStore({
   reducer: {
-    token: spotifyDataReducer,
+    spotifyData: spotifyDataReducer,
   },
 });

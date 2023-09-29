@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setToken } from "./utils/spotifyDataSlice";
 
 export default function App() {
-  const { token } = useSelector(selectToken);
+  const token = useSelector(selectToken);
   const dispatch = useDispatch();
 
 

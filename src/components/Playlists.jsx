@@ -13,9 +13,9 @@ export const Playlists = () => {
 	const playlists = useSelector(selectPlaylists);
 
 	useEffect(() => {
-		const getPlaylistData = async () => {
+		const getPlaylistData = async (id) => {
 			const response = await axios.get(
-				"https://api.spotify.com/v1/me/playlists",
+				`https://api.spotify.com/v1/me/playlists/`,
 				{
 					headers: {
 						Authorization: "Bearer " + token,
@@ -24,8 +24,8 @@ export const Playlists = () => {
 				}
 			);
 			const { items } = response.data;
-			const playlists = items.map(({ name, id, images }) => {
-				return { name, id, images };
+			const playlists = items.map(({ name, id, images, owner }) => {
+				return { name, id, images, owner };
 			});
 
 			dispatch(setPlaylists(playlists));
@@ -40,7 +40,7 @@ export const Playlists = () => {
 					try {
 						return (
 							<li
-								className="flex flex items-center gap-3"
+								className="flex items-center gap-3"
 								key={playlist.id}
 							>
 								<img
@@ -48,7 +48,12 @@ export const Playlists = () => {
 									alt="Playlist cover"
 									src={Object.values(playlist.images[0])[1]}
 								></img>
-								{playlist.name}
+								<div>
+									<p className=" text-lg">{playlist.name}</p>
+									<p className=" text-gray-300 text-sm">
+										{Object.values(playlist.owner)[0]}
+									</p>
+								</div>
 							</li>
 						);
 					} catch (error) {
@@ -58,7 +63,12 @@ export const Playlists = () => {
 								key={playlist.id}
 							>
 								<div className="h-12 w-12 rounded-md bg-black"></div>
-								{playlist.name}
+								<div>
+									<p className=" text-lg">{playlist.name}</p>
+									<p className=" text-gray-300 text-sm">
+										{Object.values(playlist.owner)[0]}
+									</p>
+								</div>
 							</li>
 						);
 					}

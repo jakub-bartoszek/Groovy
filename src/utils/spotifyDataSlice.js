@@ -4,12 +4,13 @@ const spotifyDataSlice = createSlice({
   name: "spotifyData",
   initialState: {
     token: null,
-    playlists: []
+    playlists: [],
   },
   reducers: {
     setToken: (state, { payload }) => {
       state.token = payload;
     },
+
     setPlaylists: (state, { payload }) => {
       state.playlists = payload;
     }

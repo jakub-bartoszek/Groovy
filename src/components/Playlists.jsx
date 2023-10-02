@@ -30,7 +30,7 @@ export const Playlists = () => {
 
 			dispatch(setPlaylists(playlists));
 		};
-		
+
 		getPlaylistData();
 	}, [token, dispatch]);
 
@@ -60,7 +60,7 @@ export const Playlists = () => {
 					} catch (error) {
 						return (
 							<li
-								className="flex flex items-center gap-3"
+								className="flex items-center gap-3"
 								key={playlist.id}
 							>
 								<div className="h-12 w-12 rounded-md bg-black"></div>

@@ -1,7 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+body {
+  background-color: black;
+}
 /* Active Navigation Link */
 .active {
   @apply text-cyan-500;

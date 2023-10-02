@@ -1,40 +1,13 @@
-import SpotifyWebApi from "spotify-web-api-node";
+import { Link } from "react-router-dom";
 import { Playlists } from "./Playlists";
-import { useEffect, useRef, useState } from "react";
 
-const spotifyApi = new SpotifyWebApi({
-	clientId: "34b03478831b4560911d57f64b00b9ea"
-});
-
-export const Sidebar = ({ token }) => {
-	const [search, setSearch] = useState("");
-	const [searchResults, setSearchResults] = useState([]);
-	const searchRef = useRef(null);
-
-	useEffect(() => {
-		if (!token) return;
-		spotifyApi.setAccessToken(token);
-	}, [token]);
-
-	useEffect(() => {
-		if (!search) return;
-		setSearchResults([]);
-		if (!token) return;
-
-		spotifyApi.searchTracks(search).then((response) => {
-			console.log(response);
-		});
-	}, [search, token]);
-
+export const Sidebar = ({ token, children }) => {
 	return (
-		<div className="flex flex-col gap-2">
-			<div className="bg-red-900 rounded-xl px-6 py-4">
-				<ul>
-					<li>Home</li>
-					<li>Search</li>
-				</ul>
-			</div>
-
+		<div className="flex flex-col gap-2 float-left text-white h-[100vw]">
+			<nav className="bg-[#121212] text-white rounded-xl px-6 py-4 flex flex-col">
+				<Link to="/search">Search</Link>
+				<Link to="/">Home</Link>
+			</nav>
 			<Playlists />
 		</div>
 	);

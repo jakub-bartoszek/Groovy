@@ -4,7 +4,10 @@ import DashBoard from "./pages/Dashboard";
 import { selectToken } from "./utils/spotifyDataSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { setToken } from "./utils/spotifyDataSlice";
-import { HashRouter, Navigate, Route, Routes } from "react-router-dom";
+import { BrowserRouter, HashRouter, NavLink, Navigate, Route, Routes } from "react-router-dom";
+import { Sidebar } from "./components/Sidebar";
+import { Search } from "./components/Search";
+import { Playlists } from "./components/Playlists";
 
 export default function App() {
   const token = useSelector(selectToken);
@@ -22,19 +25,24 @@ export default function App() {
   }, [token, dispatch]);
 
   return (
-    <>
+    <div className="bg-black">
       {token
-        ? <HashRouter>
-          <Routes>
-            <Route
-              path={`/access_token=${token}&token_type=Bearer&expires_in=3600`}
-              element={<Navigate to="/" />}
-            />
-            <Route path="/" element={<DashBoard />} />
-          </Routes>
-        </HashRouter>
+        ? <div className="grid grid-cols-[420px_auto] gap-2 p-2">
+          <BrowserRouter>
+            <Sidebar/>
+            <Routes>
+              <Route path="/search" element={<Search />} />
+              <Route
+                path={`/access_token=${token}&token_type=Bearer&expires_in=3600`}
+                element={<Navigate to="/" />}
+              />
+              <Route path="/" element={<DashBoard />} />
+            </Routes>
+
+          </BrowserRouter>
+        </div>
         : <Login />}
-    </>
+    </div>
 
   );
 }

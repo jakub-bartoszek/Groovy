@@ -2,33 +2,41 @@ import { useEffect, useRef, useState } from "react";
 import SpotifyWebApi from "spotify-web-api-node";
 
 export const Search = ({ token }) => {
+	const [search, setSearch] = useState("");
+	const [searchResults, setSearchResults] = useState([]);
 	const spotifyApi = new SpotifyWebApi({
 		clientId: "34b03478831b4560911d57f64b00b9ea"
 	});
-	const [search, setSearch] = useState("");
-	const [searchResults, setSearchResults] = useState([]);
-	const searchRef = useRef(null);
 
 	useEffect(() => {
-		if (!token) return;
-		spotifyApi.setAccessToken(token);
-	}, [token]);
+		if (!token) {
+			return;
+		} else {
+			spotifyApi.setAccessToken(token);
+		}
+	}, [token, spotifyApi]);
 
 	useEffect(() => {
-		if (!search) return;
-		setSearchResults([]);
-		if (!token) return;
-
-		spotifyApi.searchTracks(search).then((response) => {
-			console.log(response);
-		});
+		if (!search) {
+			setSearchResults([]);
+		} else {
+			if (!token) {
+				return;
+			} else {
+				spotifyApi.searchTracks(search).then((response) => response.body.tracks.items);
+			}
+		}
 	}, [search, token]);
 
 	return (
 		<div className="bg-gradient-to-b from-gray-600 to-black h-[100vw] p-2">
 			<input
-				className="bg-[#242424] border-none border-gray-300 rounded-full py-2 px-8"
-				placeholder="What are you looking for?"
+				placeholder="szukaj"
+				value={search}
+				onChange={(event) => {
+					setSearch(event.target.value);
+					console.log(search);
+				}}
 			></input>
 		</div>
 	);

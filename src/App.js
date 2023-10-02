@@ -21,7 +21,6 @@ export default function App() {
       dispatch(setToken(token));
     }
     if (token) { localStorage.setItem("token", JSON.stringify(token)); }
-    console.log(`/access_token=${token}&token_type=Bearer&expires_in=3600`);
   }, [token, dispatch]);
 
   return (
@@ -31,7 +30,7 @@ export default function App() {
           <BrowserRouter>
             <Sidebar/>
             <Routes>
-              <Route path="/search" element={<Search />} />
+              <Route path="/search" element={<Search token={token} />} />
               <Route
                 path={`/access_token=${token}&token_type=Bearer&expires_in=3600`}
                 element={<Navigate to="/" />}

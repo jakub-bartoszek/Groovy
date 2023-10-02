@@ -13,7 +13,7 @@ export const Playlists = () => {
 	const playlists = useSelector(selectPlaylists);
 
 	useEffect(() => {
-		const getPlaylistData = async (id) => {
+		const getPlaylistData = async () => {
 			const response = await axios.get(
 				`https://api.spotify.com/v1/me/playlists/`,
 				{
@@ -30,6 +30,7 @@ export const Playlists = () => {
 
 			dispatch(setPlaylists(playlists));
 		};
+		
 		getPlaylistData();
 	}, [token, dispatch]);
 

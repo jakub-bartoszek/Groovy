@@ -4,20 +4,20 @@ import DashBoard from "./pages/Dashboard";
 import { selectToken } from "./utils/spotifyDataSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { setToken } from "./utils/spotifyDataSlice";
-import { BrowserRouter, HashRouter, NavLink, Navigate, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { Sidebar } from "./components/Sidebar";
 import { Search } from "./components/Search";
-import { Playlists } from "./components/Playlists";
 
-const code = new URLSearchParams(window.location.search).get("code");
-
+const code = new URLSearchParams(window.location.search).get('code');
 
 export default function App() {
-  return code ? <DashBoard code={code} /> : <Login />;
-}
+  return (
+    code ? <DashBoard code={code} /> : <Login />
+  );
+};
 
-/* OLD VERSION ONLY FRONTEND
-
+/* 
+export default function App() {
   const token = useSelector(selectToken);
   const dispatch = useDispatch();
 
@@ -28,14 +28,15 @@ export default function App() {
       dispatch(setToken(token));
     }
     if (token) { localStorage.setItem("token", JSON.stringify(token)); }
-  }, [token, dispatch]);
+  }, [token, dispatch])
+
 
   return (
     <div className="bg-black">
       {token
         ? <div className="grid grid-cols-[420px_auto] gap-2 p-2">
           <BrowserRouter>
-            <Sidebar/>
+            <Sidebar />
             <Routes>
               <Route path="/search" element={<Search token={token} />} />
               <Route
@@ -49,5 +50,7 @@ export default function App() {
         </div>
         : <Login />}
     </div>
+
   );
+}
 */

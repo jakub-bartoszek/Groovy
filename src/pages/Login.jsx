@@ -1,25 +1,27 @@
 import React from "react";
 
 export default function Login() {
-	const handleClick = () => {
-		const clientId = "34b03478831b4560911d57f64b00b9ea";
-		const redirectUri = "http://localhost:3000/";
-		const apiUrl = "https://accounts.spotify.com/authorize";
-		const scope = [
-			"user-read-email",
-			"user-read-private",
-			"user-modify-playback-state",
-			"user-read-playback-state",
-			"user-read-currently-playing",
-			"user-read-recently-played",
-			"user-read-playback-position",
-			"user-top-read",
-			"playlist-read-collaborative"
-		];
-		window.location.href = `${apiUrl}?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scope.join(
-			" "
-		)}&response_type=code&show_dialog=true`;
-	};
+	const clientId = "34b03478831b4560911d57f64b00b9ea";
+	const redirectUri = "http://localhost:3000";
+	const apiUrl = "https://accounts.spotify.com/authorize";
+	const scope = [
+		"user-read-email",
+		"user-read-private",
+		"user-modify-playback-state",
+		"user-read-playback-state",
+		"user-read-currently-playing",
+		"user-read-recently-played",
+		"user-read-playback-position",
+		"user-top-read",
+		"playlist-read-collaborative"
+	];
+	const AUTH_URL = `${apiUrl}?client_id=${clientId}&response_type=code&redirect_uri=${redirectUri}&scope=streaming%20user-read-email%20user-read-private%20user-library-read%20user-library-modify%20user-read-playback-state%20user-modify-playback-state`;
 
-	return <button className="text-white" onClick={handleClick}>Login</button>;
+	return (
+		<div className="flex justify-center h-[100vh] items-center">
+			<button className=" bg-green-600 text-white p-4 h-[max-content] font-bold text-3xl rounded-xl">
+				<a href={AUTH_URL}>Login with Spotify</a>
+			</button>
+		</div>
+	);
 }

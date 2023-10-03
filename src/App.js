@@ -9,10 +9,17 @@ import { Sidebar } from "./components/Sidebar";
 import { Search } from "./components/Search";
 import { Playlists } from "./components/Playlists";
 
+const code = new URLSearchParams(window.location.search).get("code");
+
+
 export default function App() {
+  return code ? <DashBoard code={code} /> : <Login />;
+}
+
+/* OLD VERSION ONLY FRONTEND
+
   const token = useSelector(selectToken);
   const dispatch = useDispatch();
-
 
   useEffect(() => {
     const hash = window.location.hash;
@@ -42,6 +49,5 @@ export default function App() {
         </div>
         : <Login />}
     </div>
-
   );
-}
+*/

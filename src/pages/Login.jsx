@@ -18,8 +18,8 @@ export default function Login() {
 		];
 		window.location.href = `${apiUrl}?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scope.join(
 			" "
-		)}&response_type=token&show_dialog=true`;
+		)}&response_type=code&show_dialog=true`;
 	};
 
-	return <button onClick={handleClick}>Login</button>;
+	return <button className="text-white" onClick={handleClick}>Login</button>;
 }

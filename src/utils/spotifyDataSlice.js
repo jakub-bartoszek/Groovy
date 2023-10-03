@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const spotifyDataSlice = createSlice({
   name: "spotifyData",
   initialState: {
-    token: JSON.parse(localStorage.getItem("token")),
+    token: "",
     playlists: [],
   },
   reducers: {

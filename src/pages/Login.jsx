@@ -1,6 +1,7 @@
 import React from "react";
+import useAuth from "../utils/useAuth";
 
-export default function Login() {
+export default function Login({ code }) {
 	const clientId = "34b03478831b4560911d57f64b00b9ea";
 	const redirectUri = "http://localhost:3000";
 	const apiUrl = "https://accounts.spotify.com/authorize";
@@ -15,8 +16,10 @@ export default function Login() {
 		"user-top-read",
 		"playlist-read-collaborative"
 	];
-	const AUTH_URL = `${apiUrl}?client_id=${clientId}&response_type=code&redirect_uri=${redirectUri}&scope=streaming%20user-read-email%20user-read-private%20user-library-read%20user-library-modify%20user-read-playback-state%20user-modify-playback-state`;
-
+	const AUTH_URL = `${apiUrl}?client_id=${clientId}&response_type=code&redirect_uri=${redirectUri}&scope=${scope.join("%20")}`;
+ 
+	useAuth(code)
+	
 	return (
 		<div className="flex justify-center h-[100vh] items-center">
 			<button className=" bg-green-600 text-white p-4 h-[max-content] font-bold text-3xl rounded-xl">

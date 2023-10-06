@@ -13,7 +13,7 @@ export const code = new URLSearchParams(window.location.search).get('code');
 
 export default function App() {
   const token = useSelector(selectToken);
-
+  useAuth(code)
   return (
     <div>
       {token

@@ -1,25 +1,19 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { code } from "../App";
 
 const spotifyDataSlice = createSlice({
   name: "spotifyData",
   initialState: {
-    token: JSON.parse(localStorage.getItem("token")),
-    playlists: [],
+    token: JSON.parse(sessionStorage.getItem("token")),
   },
   reducers: {
     setToken: (state, { payload }) => {
       state.token = payload;
     },
 
-    setPlaylists: (state, { payload }) => {
-      state.playlists = payload;
-    }
   },
 });
 
-export const { setToken, setPlaylists } = spotifyDataSlice.actions;
+export const { setToken } = spotifyDataSlice.actions;
 export const selectToken = (state) => state.spotifyData.token;
-export const selectPlaylists = (state) => state.spotifyData.playlists;
 export default spotifyDataSlice.reducer;
 

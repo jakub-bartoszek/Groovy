@@ -1,16 +1,14 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import {
 	selectPlaylists,
 	selectToken
 } from "../utils/spotifyDataSlice";
-import { setPlaylists } from "../utils/spotifyDataSlice";
 
 export const Playlists = () => {
 	const token = useSelector(selectToken);
-	const dispatch = useDispatch();
-	const playlists = useSelector(selectPlaylists);
+	const [playlists, setPlaylists] = useState([]);
 
 	useEffect(() => {
 		const getPlaylistData = async () => {
@@ -28,11 +26,11 @@ export const Playlists = () => {
 				return { name, id, images, owner };
 			});
 
-			dispatch(setPlaylists(playlists));
+			setPlaylists(playlists);
 		};
 
 		getPlaylistData();
-	}, [token, dispatch]);
+	}, [token]);
 
 	return (
 		<div className=" bg-[#121212] text-white rounded-xl px-6 py-4">

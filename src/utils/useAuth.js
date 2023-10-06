@@ -10,35 +10,37 @@ export default function useAuth(code) {
   const token = useSelector(selectToken);
 
   useEffect(() => {
-    if (code || token) {
+    if (code) {
       axios.post('http://localhost:3001/login', {
         code
       }).then(res => {
         setAccessToken(res.data.accessToken);
         setRefreshToken(res.data.refreshToken);
         setExpiresIn(res.data.expiresIn);
-        window.history.pushState({}, null, "/");
-        localStorage.setItem("token", JSON.stringify(res.data.accessToken));
+        window.history.pushState({}, null, "/home");
         window.location.reload();
+        sessionStorage.setItem("token", JSON.stringify(res.data.accessToken));
       }).catch(() => {
-        window.location = "/home";
+        window.location = "/";
+        sessionStorage.removeItem("token");
       });
     }
-  }, [code, token]);
-
+  }, [code]);
 
   useEffect(() => {
     if (refreshToken || expiresIn) {
       const interval = setInterval(() => {
+        console.log("refresh");
         axios.post('http://localhost:3001/refresh', {
           refreshToken,
         }).then(res => {
           setAccessToken(res.data.accessToken);
           setExpiresIn(res.data.expiresIn);
-          localStorage.setItem("token", JSON.stringify(res.data.accessToken));
+          sessionStorage.setItem("token", JSON.stringify(res.data.accessToken));
 
         }).catch(() => {
           window.location = "/";
+          sessionStorage.removeItem("token");
         });
       }, (expiresIn - 60) * 1000);
 

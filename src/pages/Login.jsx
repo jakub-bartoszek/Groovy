@@ -17,9 +17,7 @@ export default function Login({ code }) {
 		"playlist-read-collaborative"
 	];
 	const AUTH_URL = `${apiUrl}?client_id=${clientId}&response_type=code&redirect_uri=${redirectUri}&scope=${scope.join("%20")}`;
- 
-	useAuth(code)
-	
+ 	
 	return (
 		<div className="flex justify-center h-[100vh] items-center">
 			<button className=" bg-green-600 text-white p-4 h-[max-content] font-bold text-3xl rounded-xl">

@@ -11,7 +11,7 @@ export const Playlists = () => {
 	const [playlists, setPlaylists] = useState([]);
 
 	useEffect(() => {
-		const getPlaylistData = async () => {
+		const getPlaylist = async () => {
 			const response = await axios.get(
 				`https://api.spotify.com/v1/me/playlists/`,
 				{
@@ -22,6 +22,8 @@ export const Playlists = () => {
 				}
 			);
 			const { items } = response.data;
+			console.log(items);
+
 			const playlists = items.map(({ name, id, images, owner }) => {
 				return { name, id, images, owner };
 			});
@@ -29,12 +31,30 @@ export const Playlists = () => {
 			setPlaylists(playlists);
 		};
 
-		getPlaylistData();
+		getPlaylist();
+	}, [token]);
+
+	useEffect(() => {
+		const getTopItems = async () => {
+			const response = await axios.get(
+				`https://api.spotify.com/v1/me/top/tracks/`,
+				{
+					headers: {
+						Authorization: "Bearer " + token,
+						"Content-Type": "application/json"
+					}
+				}
+			);
+			const { items } = response.data;
+		
+		};
+
+		getTopItems();
 	}, [token]);
 
 	return (
-		<div className=" bg-[#121212] text-white rounded-xl px-6 py-4">
-			<ul className=" gap-2 flex flex-col">
+		
+			<ul className=" gap-2 flex flex-col mt-10">
 				{playlists.map((playlist) => {
 					try {
 						return (
@@ -73,6 +93,5 @@ export const Playlists = () => {
 					}
 				})}
 			</ul>
-		</div>
 	);
 };

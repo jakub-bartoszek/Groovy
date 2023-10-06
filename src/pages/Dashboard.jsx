@@ -9,7 +9,7 @@ import { useSelector } from "react-redux";
 const Dashboard = ({ token }) => {
 	return (
 		<BrowserRouter>
-			<div className="grid grid-cols-2 gap-2 bg-[#000000] h-[100vw] p-2 ">
+			<div className="grid grid-cols-[auto_2fr] gap-2 bg-[#000000] h-[100vw] p-2 ">
 				<Sidebar />
 				<div className="bg-gradient-to-b from-gray-600 to-black rounded-xl p-2">
 					<Routes>

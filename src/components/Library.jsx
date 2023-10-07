@@ -3,54 +3,48 @@ import { Playlists } from "./Playlists";
 import { LeftArrowIcon } from "../assets/left-arrow";
 import { RightArrowIcon } from "../assets/right-arrow";
 import { StyledButton } from "./StyledButton";
+import { TopItems } from "./TopItems";
 
 export const Library = () => {
 	const contentWrapper = useRef(null);
-	const [scrollLeft, setScrollLeft] = useState(0);
+	const [scrollPosition, setScrollPosition] = useState("left");
 
 	return (
 		<div className="bg-[#121212] text-white rounded-xl px-6 py-4">
 			<div className="font-bold px-2 mb-3">Library</div>
-			<div className="relative items-center">
+			<div className="relative flex items-center">
 				<div
-					className={`absolute left-0 bg-gradient-to-r from-[#121212] h-full w-28 opacity-${
-						scrollLeft === 0 ? "0" : "70"
+					className={`absolute left-0 flex bg-gradient-to-r from-[#121212] w-24 ${
+						scrollPosition === "left" ? "hidden" : ""
 					}`}
-				/>
-				<button
-					className={`${
-						scrollLeft === 0 ? "hidden" : " "
-					} absolute left-[0] bg-[#242424] rounded-full text-sm p-1 text-[#888888] hover:brightness-[1.4]`}
-					onClick={() => {
-						contentWrapper.current.scrollLeft = 0;
-						setScrollLeft(0);
-					}}
 				>
-					<LeftArrowIcon />
-				</button>
+					<button
+						className="bg-[#242424] rounded-full p-1"
+						onClick={() => {
+							setScrollPosition("left");
+							contentWrapper.current.scrollLeft -= 1000;
+						}}
+					>
+						<LeftArrowIcon />
+					</button>
+				</div>
 				<div
-					className={`absolute right-0 bg-gradient-to-l from-[#121212] h-full w-28 opacity-${
-						scrollLeft === contentWrapper.current.scrollWidth
-							? "0"
-							: "70"
+					className={`absolute right-0 flex bg-gradient-to-l from-[#121212] w-24 justify-end ${
+						scrollPosition === "right" ? "hidden" : ""
 					}`}
-				/>
-				<button
-					className={`${
-						scrollLeft === contentWrapper.current.scrollWidth
-							? "hidden"
-							: " "
-					} absolute right-[0] bg-[#242424] rounded-full text-sm p-1 text-[#888888] hover:brightness-[1.4]`}
-					onClick={() => {
-						contentWrapper.current.scrollLeft =
-							contentWrapper.current.scrollWidth;
-						setScrollLeft(contentWrapper.current.scrollWidth);
-					}}
 				>
-					<RightArrowIcon className="text-white" />
-				</button>
+					<button
+						className="bg-[#242424] rounded-full p-1"
+						onClick={() => {
+							setScrollPosition("right");
+							contentWrapper.current.scrollLeft += 1000;
+						}}
+					>
+						<RightArrowIcon />
+					</button>
+				</div>
 				<div
-					className="flex gap-2 overflow-x-hidden scroll-smooth"
+					className="flex gap-2 overflow-x-scroll hide-scrollbar scroll-smooth"
 					ref={contentWrapper}
 				>
 					<StyledButton>Playlists</StyledButton>
@@ -60,7 +54,10 @@ export const Library = () => {
 					<StyledButton>Podcasts</StyledButton>
 				</div>
 			</div>
-			<Playlists />
+			<ul className="gap-2 mt-10 flex flex-col">
+				<Playlists />
+				<TopItems />
+			</ul>
 		</div>
 	);
 };

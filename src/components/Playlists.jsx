@@ -21,77 +21,39 @@ export const Playlists = () => {
 					}
 				}
 			);
-			const { items } = response.data;
-			console.log(items);
-
-			const playlists = items.map(({ name, id, images, owner }) => {
-				return { name, id, images, owner };
-			});
-
-			setPlaylists(playlists);
+			const items = response.data.items;
+			setPlaylists(items);
 		};
 
 		getPlaylist();
 	}, [token]);
 
-	useEffect(() => {
-		const getTopItems = async () => {
-			const response = await axios.get(
-				`https://api.spotify.com/v1/me/top/tracks/`,
-				{
-					headers: {
-						Authorization: "Bearer " + token,
-						"Content-Type": "application/json"
-					}
-				}
-			);
-			const { items } = response.data;
-		
-		};
-
-		getTopItems();
-	}, [token]);
-
 	return (
-		
-			<ul className=" gap-2 flex flex-col mt-10">
-				{playlists.map((playlist) => {
-					try {
-						return (
-							<li
-								className="flex items-center gap-3"
-								key={playlist.id}
-							>
-								<img
-									className="h-12 w-12 rounded-md "
-									alt="Playlist cover"
-									src={Object.values(playlist.images[0])[1]}
-								></img>
-								<div>
-									<p className=" text-lg">{playlist.name}</p>
-									<p className=" text-gray-300 text-sm">
-										{Object.values(playlist.owner)[0]}
-									</p>
-								</div>
-							</li>
-						);
-					} catch (error) {
-						return (
-							<li
-								className="flex items-center gap-3"
-								key={playlist.id}
-							>
-								<div className="h-12 w-12 rounded-md bg-black"></div>
-								<div>
-									<p className=" text-lg">{playlist.name}</p>
-									<p className=" text-gray-300 text-sm">
-										{Object.values(playlist.owner)[0]}
-									</p>
-								</div>
-							</li>
-						);
-					}
-				})}
-			</ul>
+		<>
+			{playlists.map((playlist) => {
+
+				return (
+					<li
+						key={playlist.id}
+						className="flex items-center gap-3"
+					>
+						{playlist.images.length !== 0 ? (
+							<img
+								className="h-12 w-12 rounded-s"
+								alt="playlist cover"
+								src={playlist.images[0].url}
+							/>
+						) : (
+							<div className="bg-black h-12 w-12 rounded-s" />
+						)}
+
+						<div>
+							<p className=" font-bold">{playlist.name}</p>
+							<p className="text-sm text-[#a4a4a4]">Playlista • {playlist.owner.display_name}</p>
+						</div>
+					</li>
+				);
+			})}
+		</>
 	);
 };

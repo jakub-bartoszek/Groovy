@@ -34,7 +34,7 @@ export const Search = ({ token }) => {
 					hover:outline hover:outline-1 hover:outline-[#888888] hover:bg-[#2a2a2a]
 					focus:outline focus:outline-2 focus:outline-white"
 				>
-					<SearchIcon />
+					<SearchIcon height={20} width={20} />
 					<input
 						className="bg-transparent focus:outline-none pl-1 placeholder-[#888888]"
 						placeholder="What are you looking for?"

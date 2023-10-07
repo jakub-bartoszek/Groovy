@@ -1,5 +1,4 @@
-import { useEffect, useRef, useState } from "react";
-import { spotifyApi } from "../utils/spotifyApi";
+import { useEffect, useState } from "react";
 import { SearchIcon } from "../assets/search";
 import axios from "axios";
 

@@ -1,10 +1,7 @@
-import React from "react";
-import useAuth from "../utils/useAuth";
+
 import { Sidebar } from "../components/Sidebar";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { Search } from "../components/Search";
-import { selectToken } from "../utils/spotifyDataSlice";
-import { useSelector } from "react-redux";
 import { Player } from "../components/Player";
 
 const Dashboard = ({ token }) => {
@@ -28,7 +25,7 @@ const Dashboard = ({ token }) => {
 						/>
 					</Routes>
 				</div>
-				<Player />
+				<Player token={token} />
 			</div>
 		</BrowserRouter>
 	);

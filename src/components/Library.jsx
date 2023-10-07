@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { Playlists } from "./Playlists";
 import { LeftArrowIcon } from "../assets/left-arrow";
 import { RightArrowIcon } from "../assets/right-arrow";

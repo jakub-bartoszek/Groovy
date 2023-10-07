@@ -1,10 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
-import {
-	selectPlaylists,
-	selectToken
-} from "../utils/spotifyDataSlice";
+import { useSelector } from "react-redux";
+import { selectToken } from "../utils/spotifyDataSlice";
 
 export const TopItems = () => {
 	const token = useSelector(selectToken);
@@ -50,7 +47,6 @@ export const TopItems = () => {
 	return (
 		<>
 			{topArtists.map((artist) => {
-				console.log(artist)
 				return (
 					<li
 						key={artist.id}
@@ -63,9 +59,7 @@ export const TopItems = () => {
 						></img>
 						<div>
 							<p>{artist.name}</p>
-							<p className="text-sm text-[#a4a4a4]">
-								Artist
-							</p>
+							<p className="text-sm text-[#a4a4a4]">Artist</p>
 						</div>
 					</li>
 				);

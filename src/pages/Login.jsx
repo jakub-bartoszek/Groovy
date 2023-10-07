@@ -1,5 +1,4 @@
 import React from "react";
-import useAuth from "../utils/useAuth";
 
 export default function Login({ code }) {
 	const clientId = "34b03478831b4560911d57f64b00b9ea";
@@ -14,10 +13,15 @@ export default function Login({ code }) {
 		"user-read-recently-played",
 		"user-read-playback-position",
 		"user-top-read",
-		"playlist-read-collaborative"
+		"playlist-read-collaborative",
+		"streaming",
+		"user-library-read",
+		"user-library-modify"
 	];
-	const AUTH_URL = `${apiUrl}?client_id=${clientId}&response_type=code&redirect_uri=${redirectUri}&scope=${scope.join("%20")}`;
- 	
+	const AUTH_URL = `${apiUrl}?client_id=${clientId}&response_type=code&redirect_uri=${redirectUri}&scope=${scope.join(
+		"%20"
+	)}`;
+
 	return (
 		<div className="flex justify-center h-[100vh] items-center">
 			<button className=" bg-green-600 text-white p-4 h-[max-content] font-bold text-3xl rounded-xl">

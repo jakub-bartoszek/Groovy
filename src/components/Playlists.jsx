@@ -1,10 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
-import {
-	selectPlaylists,
-	selectToken
-} from "../utils/spotifyDataSlice";
+import { useSelector } from "react-redux";
+import { selectToken } from "../utils/spotifyDataSlice";
 
 export const Playlists = () => {
 	const token = useSelector(selectToken);

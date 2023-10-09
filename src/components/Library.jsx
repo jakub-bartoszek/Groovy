@@ -5,64 +5,92 @@ import { RightArrowIcon } from "../assets/right-arrow";
 import { StyledButton } from "./StyledButton";
 import { TopArtists, TopItems } from "./TopArtists";
 import { TopTracks } from "./TopTracks";
-import { selectLibraryCategory } from "../utils/spotifyDataSlice";
-import { useSelector } from "react-redux";
+import {
+	selectLibraryCategory,
+	setLibraryCategory
+} from "../utils/spotifyDataSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 export const Library = () => {
 	const contentWrapper = useRef(null);
 	const [scrollPosition, setScrollPosition] = useState("left");
 	const libraryCategory = useSelector(selectLibraryCategory);
+	const dispatch = useDispatch();
 
 	return (
 		<div className="bg-[#121212] text-white rounded-xl flex flex-col h-[100%]">
 			<div className="font-bold mb-3 p-4">Library</div>
 			<div className="relative flex items-center mx-4">
-				<div
-					className={`absolute left-0 flex bg-gradient-to-r from-[#121212] w-24 ${
+				<button
+					className={`bg-[#242424] rounded-full p-1 absolute left-0 shadow-left z-10 ${
 						scrollPosition === "left" ? "hidden" : ""
 					}`}
+					onClick={() => {
+						setScrollPosition("left");
+						contentWrapper.current.scrollLeft -= 1000;
+					}}
 				>
-					<button
-						className="bg-[#242424] rounded-full p-1"
-						onClick={() => {
-							setScrollPosition("left");
-							contentWrapper.current.scrollLeft -= 1000;
-						}}
-					>
-						<LeftArrowIcon />
-					</button>
-				</div>
-				<div
-					className={`absolute right-0 flex bg-gradient-to-l from-[#121212] w-24 justify-end ${
+					<LeftArrowIcon />
+				</button>
+				<button
+					className={`bg-[#242424] rounded-full p-1 absolute right-0 shadow-right z-10 ${
 						scrollPosition === "right" ? "hidden" : ""
 					}`}
+					onClick={() => {
+						setScrollPosition("right");
+						contentWrapper.current.scrollLeft += 1000;
+					}}
 				>
-					<button
-						className="bg-[#242424] rounded-full p-1"
-						onClick={() => {
-							setScrollPosition("right");
-							contentWrapper.current.scrollLeft += 1000;
-						}}
-					>
-						<RightArrowIcon />
-					</button>
-				</div>
+					<RightArrowIcon />
+				</button>
 				<div
-					className="flex gap-2 overflow-x-scroll hide-scrollbar scroll-smooth"
+					className="gap-2 overflow-x-scroll hide-scrollbar scroll-smooth grid grid-flow-col"
 					ref={contentWrapper}
 				>
-					<StyledButton name="Playlists" />
-					<StyledButton name="Artists" />
-					<StyledButton name="Albums" />
-					<StyledButton name="Tracks" />
-					<StyledButton name="Podcasts" />
+					{libraryCategory !== "All" ? (
+						<button
+							onClick={() => dispatch(setLibraryCategory("All"))}
+							className="bg-black h-8 w-8 flex items-center justify-center rounded-full"
+						>
+							a
+						</button>
+					) : null}
+					{libraryCategory === "Playlists" ||
+					libraryCategory === "All" ? (
+						<StyledButton name="Playlists" />
+					) : null}
+					{libraryCategory === "Artists" ||
+					libraryCategory === "All" ? (
+						<StyledButton name="Artists" />
+					) : null}
+					{libraryCategory === "Tracks" ||
+					libraryCategory === "All" ? (
+						<StyledButton name="Tracks" />
+					) : null}
+					{libraryCategory === "Albums" ||
+					libraryCategory === "All" ? (
+						<StyledButton name="Albums" />
+					) : null}
+					{libraryCategory === "Podcasts" ||
+					libraryCategory === "All" ? (
+						<StyledButton name="Podcasts" />
+					) : null}
 				</div>
 			</div>
-			<div className="h-[100%] overflow-x-scroll mt-2">
-				<ul className="flex flex-col h-[0] p-2">
-				{libraryCategory === "Playlists" || libraryCategory === "All" ? <Playlists /> : null}
-				{libraryCategory === "Artists" || libraryCategory === "All" ? <TopArtists /> : null}
-				{libraryCategory === "Tracks" || libraryCategory === "All" ? <TopTracks /> : null}
+			<div className="flex flex-col h-[100%] overflow-y-scroll p-2 rounded-xl">
+				<ul className="grid grid-flow-row p-2 h-0">
+					{libraryCategory === "Playlists" ||
+					libraryCategory === "All" ? (
+						<Playlists />
+					) : null}
+					{libraryCategory === "Artists" ||
+					libraryCategory === "All" ? (
+						<TopArtists />
+					) : null}
+					{libraryCategory === "Tracks" ||
+					libraryCategory === "All" ? (
+						<TopTracks />
+					) : null}
 				</ul>
 			</div>
 		</div>

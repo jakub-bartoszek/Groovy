@@ -10,7 +10,7 @@ export const Player = ({ token }) => {
 	const isPlaying = useSelector(selectIsPlaying);
 
 	return (
-		<div className="bg-red-500 col-span-2">
+		<div className="col-span-2">
 			<SpotifyPlayer
 				play={isPlaying}
 				uris={track}

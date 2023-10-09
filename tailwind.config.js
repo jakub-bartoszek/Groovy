@@ -3,6 +3,10 @@ module.exports = {
   content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
   theme: {
     extend: {
+      boxShadow: {
+        'left': '10px 0 20px 10px #121212, -10px 0 0 0 #121212',
+        'right': '-10px 0 20px 10px #121212, 10px 0 0 0 #121212',
+      },
       animation: {
         slideup: 'slideup 1s ease-in-out',
         slidedown: 'slidedown 1s ease-in-out',

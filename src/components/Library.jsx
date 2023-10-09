@@ -3,11 +3,15 @@ import { Playlists } from "./Playlists";
 import { LeftArrowIcon } from "../assets/left-arrow";
 import { RightArrowIcon } from "../assets/right-arrow";
 import { StyledButton } from "./StyledButton";
-import { TopItems } from "./TopItems";
+import { TopArtists, TopItems } from "./TopArtists";
+import { TopTracks } from "./TopTracks";
+import { selectLibraryCategory } from "../utils/spotifyDataSlice";
+import { useSelector } from "react-redux";
 
 export const Library = () => {
 	const contentWrapper = useRef(null);
 	const [scrollPosition, setScrollPosition] = useState("left");
+	const libraryCategory = useSelector(selectLibraryCategory);
 
 	return (
 		<div className="bg-[#121212] text-white rounded-xl flex flex-col h-[100%]">
@@ -47,17 +51,18 @@ export const Library = () => {
 					className="flex gap-2 overflow-x-scroll hide-scrollbar scroll-smooth"
 					ref={contentWrapper}
 				>
-					<StyledButton>Playlists</StyledButton>
-					<StyledButton>Artists</StyledButton>
-					<StyledButton>Albums</StyledButton>
-					<StyledButton>Tracks</StyledButton>
-					<StyledButton>Podcasts</StyledButton>
+					<StyledButton name="Playlists" />
+					<StyledButton name="Artists" />
+					<StyledButton name="Albums" />
+					<StyledButton name="Tracks" />
+					<StyledButton name="Podcasts" />
 				</div>
 			</div>
-			<div className="h-[100%] overflow-auto mt-2">
+			<div className="h-[100%] overflow-x-scroll mt-2">
 				<ul className="flex flex-col h-[0] p-2">
-					<Playlists />
-					<TopItems />
+				{libraryCategory === "Playlists" || libraryCategory === "All" ? <Playlists /> : null}
+				{libraryCategory === "Artists" || libraryCategory === "All" ? <TopArtists /> : null}
+				{libraryCategory === "Tracks" || libraryCategory === "All" ? <TopTracks /> : null}
 				</ul>
 			</div>
 		</div>

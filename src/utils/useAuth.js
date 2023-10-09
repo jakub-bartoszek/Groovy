@@ -17,12 +17,11 @@ export default function useAuth(code) {
         setAccessToken(res.data.accessToken);
         setRefreshToken(res.data.refreshToken);
         setExpiresIn(res.data.expiresIn);
-        window.history.pushState({}, null, "/home");
-        window.location.reload();
         sessionStorage.setItem("token", JSON.stringify(res.data.accessToken));
+        window.location.reload(); window.history.pushState({}, null, "/home");
+
       }).catch(() => {
         window.location = "/";
-        sessionStorage.removeItem("token");
       });
     }
   }, [code]);
@@ -36,7 +35,6 @@ export default function useAuth(code) {
           setAccessToken(res.data.accessToken);
           setExpiresIn(res.data.expiresIn);
           sessionStorage.setItem("token", JSON.stringify(res.data.accessToken));
-
         }).catch(() => {
           window.location = "/";
           sessionStorage.removeItem("token");

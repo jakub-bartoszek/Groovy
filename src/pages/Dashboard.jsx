@@ -15,7 +15,7 @@ const Dashboard = ({ token }) => {
 			<div className="grid grid-cols-[auto_2fr] grid-rows-[1fr_80px] gap-2 bg-black h-screen max-h-screen p-2">
 				<Sidebar />
 
-				<div className="flex flex-col h-[100%] overflow-y-scroll p-4 rounded-xl bg-gradient-to-b from-gray-600 ">
+				<div className="flex flex-col h-[100%] overflow-y-scroll pl-5 pr-2 rounded-xl bg-gradient-to-b from-gray-600 ">
 					<Routes>
 						<Route
 							path="/search"

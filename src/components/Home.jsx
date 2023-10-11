@@ -2,8 +2,11 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { nanoid } from "nanoid";
 import { HeartIcon } from "../assets/heart";
+import { useDispatch } from "react-redux";
+import { setCurrentTrack } from "../utils/spotifyDataSlice";
 
 export const Home = ({ token }) => {
+	const dispatch = useDispatch();
 	const [recentlyPlayedTracks, setRecentlyPlayedTracks] = useState(
 		[]
 	);
@@ -25,9 +28,9 @@ export const Home = ({ token }) => {
 		}
 	}, [token]);
 	return (
-		<>
-			<h1>Hello!</h1>
-			<div className="grid grid-cols-3 gap-4 text-white font-bold lg:grid-cols-2 md:grid-cols-1">
+		<div className=" text-white">
+			<h1 className=" text-3xl font-bold py-6">Hello!</h1>
+			<div className="grid grid-cols-3 gap-4 font-bold 2xl:grid-cols-2 lg:grid-cols-1">
 				<div
 					key={nanoid()}
 					className="flex bg-white bg-opacity-10 rounded-md items-center gap-4"
@@ -38,11 +41,11 @@ export const Home = ({ token }) => {
 					Polubione utwory
 				</div>
 				{recentlyPlayedTracks.map((track) => {
-					console.log(track.track.album.images[2].url);
 					return (
 						<div
+							onClick={() => dispatch(setCurrentTrack(track.track.uri))}
 							key={nanoid()}
-							className="flex bg-white bg-opacity-10 rounded-md items-center gap-4"
+							className="cursor-pointer flex bg-white bg-opacity-10 rounded-md items-center gap-4"
 						>
 							<img
 								className=" rounded-md h-[64px] shadow-xl"
@@ -54,6 +57,6 @@ export const Home = ({ token }) => {
 					);
 				})}
 			</div>
-		</>
+		</div>
 	);
 };

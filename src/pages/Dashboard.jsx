@@ -12,10 +12,10 @@ import { Home } from "../components/Home";
 const Dashboard = ({ token }) => {
 	return (
 		<BrowserRouter>
-			<div className="grid grid-cols-[auto_2fr] grid-rows-[1fr_80px] gap-2 bg-[#000000] h-screen max-h-screen p-2">
+			<div className="grid grid-cols-[auto_2fr] grid-rows-[1fr_80px] gap-2 bg-black h-screen max-h-screen p-2">
 				<Sidebar />
 
-				<div className="flex flex-col h-[100%] overflow-y-scroll p-2 rounded-xl">
+				<div className="flex flex-col h-[100%] overflow-y-scroll p-2 rounded-xl bg-gradient-to-b from-gray-600">
 					<Routes>
 						<Route
 							path="/search"

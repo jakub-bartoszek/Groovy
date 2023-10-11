@@ -37,7 +37,7 @@ export const Search = ({ token }) => {
 		<div>
 			<div className="flex items-center gap-3">
 				<NavLink to="/home">
-					<div className="bg-black rounded-full flex items-center justify-center p-1">
+					<div className="bg-black rounded-full flex items-center justify-center p-1 text-white">
 						<LeftArrowIcon />
 					</div>
 				</NavLink>

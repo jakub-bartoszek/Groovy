@@ -10,7 +10,7 @@ export const StyledButton = ({ name }) => {
 	return (
 		<button
 			onClick={() => dispatch(setLibraryCategory(name))}
-			className={`bg-[#242424] ${libraryCategory === name ? "bg-white" : ""} py-1 px-4 rounded-full cursor-pointer hover:brightness-125 transition-all`}
+			className={`bg-[#242424] ${libraryCategory === name ? "bg-white text-black" : ""} py-1 px-4 rounded-full cursor-pointer hover:brightness-125 transition-all focus:outline-none`}
 		>
 			{name}
 		</button>

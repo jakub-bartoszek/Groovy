@@ -1,9 +1,9 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { Playlists } from "./Playlists";
 import { LeftArrowIcon } from "../assets/left-arrow";
 import { RightArrowIcon } from "../assets/right-arrow";
 import { StyledButton } from "./StyledButton";
-import { TopArtists, TopItems } from "./TopArtists";
+import { TopArtists } from "./TopArtists";
 import { TopTracks } from "./TopTracks";
 import {
 	selectLibraryCategory,
@@ -93,10 +93,10 @@ export const Library = () => {
 				className="flex flex-col h-[100%] overflow-y-scroll p-2 rounded-xl"
 			>
 				<ul className="grid grid-flow-row p-2 h-0">
-					{libraryCategory === "Playlists" ||
+					{/* {libraryCategory === "Playlists" ||
 					libraryCategory === "All" ? (
 						<Playlists />
-					) : null}
+					) : null} */}
 					{libraryCategory === "Artists" ||
 					libraryCategory === "All" ? (
 						<TopArtists />

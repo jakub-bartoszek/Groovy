@@ -24,6 +24,9 @@ module.exports = {
         'right': '-10px 0 20px 10px #121212, 10px 0 0 0 #121212',
 
       },
+      colors: {
+        'muted': '#ffffffbb'
+      },
       animation: {
         slideup: 'slideup 1s ease-in-out',
         slidedown: 'slidedown 1s ease-in-out',

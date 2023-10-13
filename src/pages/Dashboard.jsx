@@ -8,6 +8,7 @@ import {
 import { Search } from "../components/Search";
 import { Player } from "../components/Player";
 import { Home } from "../components/Home";
+import { LikedSongs } from "../components/LikedSongs";
 
 const Dashboard = ({ token }) => {
 	return (
@@ -17,6 +18,10 @@ const Dashboard = ({ token }) => {
 
 				<div className="flex flex-col h-[100%] overflow-y-scroll pl-5 pr-2 rounded-xl bg-gradient-to-b from-gray-600 ">
 					<Routes>
+					<Route
+							path="/liked"
+							element={<LikedSongs token={token} />}
+						/>
 						<Route
 							path="/search"
 							element={<Search token={token} />}

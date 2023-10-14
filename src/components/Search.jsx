@@ -34,7 +34,7 @@ export const Search = ({ token }) => {
 	}, [search, token]);
 
 	return (
-		<div>
+		<div className="flex flex-col h-[100%] overflow-y-scroll rounded-xl bg-[#121212] p-4 bg-gradient-to-b from-slate-600">
 			<div className="flex items-center gap-3">
 				<NavLink to="/home">
 					<div className="bg-black rounded-full flex items-center justify-center p-1 text-white">
@@ -51,7 +51,7 @@ export const Search = ({ token }) => {
 					/>
 					<input
 						className="bg-transparent focus:outline-none pl-1 placeholder-[#888888] w-full"
-						placeholder="What are you looking for?  s  s  s s"
+						placeholder="What are you looking for?"
 						value={search}
 						onChange={(event) => {
 							setSearch(event.target.value);
@@ -59,7 +59,7 @@ export const Search = ({ token }) => {
 					/>
 				</label>
 			</div>
-			<ul>
+			<ul className="mt-10">
 				{searchResults.map((track) => {
 					return (
 						<li

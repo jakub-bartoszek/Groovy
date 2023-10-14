@@ -1,7 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { nanoid } from "nanoid";
-import { HeartIcon } from "../assets/heart";
 import { useDispatch } from "react-redux";
 import { setCurrentTrack } from "../utils/spotifyDataSlice";
 import { NavLink } from "react-router-dom";
@@ -29,7 +28,7 @@ export const Home = ({ token }) => {
 		}
 	}, [token]);
 	return (
-		<div className=" text-white">
+		<div className=" text-white bg-gradient-to-b from-slate-600 h-full p-4">
 			<h1 className=" text-3xl font-bold py-6">Hello!</h1>
 			<div className="grid grid-cols-3 gap-4 font-bold 2xl:grid-cols-2 lg:grid-cols-1">
 				<NavLink to="/liked">
@@ -37,10 +36,8 @@ export const Home = ({ token }) => {
 						key={nanoid()}
 						className="flex bg-white bg-opacity-10 rounded-md items-center gap-4"
 					>
-						<div className="shadow-xl rounded-md h-[64px] min-w-[64px] bg-gradient-to-tr from-purple-400 to-pink-400 text-white flex items-center justify-center">
-							<HeartIcon />
-						</div>
-						Polubione utwory
+						<img className="rounded-md" src="https://misc.scdn.co/liked-songs/liked-songs-64.png" alt="Liked songs"></img>
+						Liked songs
 					</div>
 				</NavLink>
 				{recentlyPlayedTracks.map((track) => {

@@ -11,6 +11,8 @@ import {
 } from "../utils/spotifyDataSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { CrossIcon } from "../assets/cross";
+import { nanoid } from "@reduxjs/toolkit";
+import { NavLink } from "react-router-dom";
 
 export const Library = () => {
 	const contentWrapper = useRef(null);
@@ -93,17 +95,17 @@ export const Library = () => {
 				className="flex flex-col h-[100%] overflow-y-scroll p-2 rounded-xl"
 			>
 				<ul className="grid grid-flow-row p-2 h-0">
-					{/* {libraryCategory === "Playlists" ||
+					{libraryCategory === "Playlists" ||
 					libraryCategory === "All" ? (
 						<Playlists />
-					) : null} */}
-					{libraryCategory === "Artists" ||
-					libraryCategory === "All" ? (
-						<TopArtists />
 					) : null}
 					{libraryCategory === "Tracks" ||
 					libraryCategory === "All" ? (
 						<TopTracks />
+					) : null}
+					{libraryCategory === "Artists" ||
+					libraryCategory === "All" ? (
+						<TopArtists />
 					) : null}
 				</ul>
 			</div>

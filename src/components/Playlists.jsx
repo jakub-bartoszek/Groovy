@@ -43,7 +43,7 @@ export const Playlists = () => {
 			</li>
 			{playlists.map((playlist) => (
 				<li key={playlist.id}>
-					<NavLink to={`/playlist/${playlist.id}`}>
+					<NavLink to={`/playlists/${playlist.id}`}>
 						<div className="flex items-center gap-3 hover:bg-[#1a1a1a] rounded-md p-2 playlist">
 							{playlist.images.length !== 0 ? (
 								<img

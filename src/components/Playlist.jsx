@@ -4,10 +4,11 @@ import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { setCurrentTrack } from "../utils/spotifyDataSlice";
+import { TrackList } from "./TableWithTracks";
 
 export const Playlist = ({ token }) => {
 	const { id } = useParams();
-	const [songs, setSongs] = useState([]);
+	const [tracks, setTracks] = useState([]);
 	const [playlist, setPlaylist] = useState({});
 	const dispatch = useDispatch();
 	useEffect(() => {
@@ -33,18 +34,18 @@ export const Playlist = ({ token }) => {
 				tracksCount: response.data.tracks.total
 			});
 
-			setSongs(
-				response.data.tracks.items.map((song, index) => {
+			setTracks(
+				response.data.tracks.items.map((track, index) => {
 					return {
 						index: index + 1,
-						trackName: song.track.name,
-						albumName: song.track.album.name,
-						artists: song.track.artists.map((artist) => artist.name),
+						trackName: track.track.name,
+						albumName: track.track.album.name,
+						artists: track.track.artists.map((artist) => artist.name),
 						image:
-							song.track.album.images.length === 0
+							track.track.album.images.length === 0
 								? null
-								: song.track.album.images[0].url,
-						uri: song.track.uri
+								: track.track.album.images[0].url,
+						uri: track.track.uri
 					};
 				})
 			);
@@ -82,41 +83,7 @@ export const Playlist = ({ token }) => {
 						<div>Title</div>
 						<div>Album</div>
 					</div>
-					{songs.map((song) => {
-						return (
-							<div
-								onClick={() => dispatch(setCurrentTrack(song.uri))}
-								key={nanoid()}
-								className="grid grid-cols-[5%_60%_35%] cursor-pointer hover:bg-[#ffffff10] py-2 rounded-md"
-							>
-								<div className="flex items-center justify-center">
-									{song.index}
-								</div>
-								<div className="flex gap-4 items-center">
-									{song.image ? (
-										<img
-											className="h-[50px]"
-											alt="Song cover"
-											src={song.image}
-										/>
-									) : (
-										<div className="h-[50px] w-[50px] bg-black"></div>
-									)}
-									<div className="overflow-hidden">
-										<p className="font-bold text-ellipsis whitespace-nowrap overflow-hidden">
-											{song.trackName}
-										</p>
-										<p className="text-muted text-ellipsis whitespace-nowrap overflow-hidden">
-											{song.artists.join(", ")}
-										</p>
-									</div>
-								</div>
-								<div className="text-ellipsis whitespace-nowrap overflow-hidden flex items-center">
-									{song.albumName}
-								</div>
-							</div>
-						);
-					})}
+					<TrackList tracks={tracks} />
 				</div>
 			</div>
 		</div>

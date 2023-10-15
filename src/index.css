@@ -20,6 +20,10 @@ body {
   @apply bg-[#222222]
 }
 
+.active .artist {
+  @apply bg-[#222222]
+}
+
 .bar:nth-child(2) {
   animation-delay: 0.2s;
 }

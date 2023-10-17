@@ -17,9 +17,10 @@ export const Recommendations = () => {
 					}
 				}
 			);
+			console.log(response.data);
 		};
 		getRecommendationsData();
-	}, []);
+	}, [token]);
 
 	return <div className=" bg-pink-800">Recommendations</div>;
 };

@@ -11,8 +11,6 @@ import {
 } from "../utils/spotifyDataSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { CrossIcon } from "../assets/cross";
-import { nanoid } from "@reduxjs/toolkit";
-import { NavLink } from "react-router-dom";
 
 export const Library = () => {
 	const contentWrapper = useRef(null);
@@ -83,10 +81,6 @@ export const Library = () => {
 					{libraryCategory === "Albums" ||
 					libraryCategory === "All" ? (
 						<StyledButton name="Albums" />
-					) : null}
-					{libraryCategory === "Podcasts" ||
-					libraryCategory === "All" ? (
-						<StyledButton name="Podcasts" />
 					) : null}
 				</div>
 			</div>

@@ -1,22 +1,68 @@
 {
   "name": "server",
-  "version": "1.0.0",
-  "description": "",
-  "main": "server.js",
-  "scripts": {
-    "devStart": "nodemon server.js",
-    "tart": "node server.js"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "version": "0.1.0",
+  "private": true,
   "dependencies": {
-    "body-parser": "^1.20.2",
+    "@metamodules/postgres": "^1.2.1",
     "cors": "^2.8.5",
+    "deploy-node-app": "^1.4.3",
+    "dotenv": "^8.0.0",
     "express": "^4.18.2",
+    "netlify-lambda": "^2.0.16",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-scripts": "3.0.1",
+    "serverless-http": "^3.2.0",
     "spotify-web-api-node": "^5.0.2"
   },
   "devDependencies": {
-    "nodemon": "^3.0.1"
-  }
+    "babel-eslint": "10.0.1",
+    "concurrently": "^4.1.0",
+    "cross-spawn": "^6.0.5",
+    "eslint": "^5.16.0",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-flowtype": "2.50.1",
+    "eslint-plugin-import": "2.16.0",
+    "eslint-plugin-node": "^9.1.0",
+    "eslint-plugin-prettier": "^3.1.0",
+    "eslint-plugin-promise": "^4.1.1",
+    "eslint-plugin-standard": "^4.0.0",
+    "nodemon": "^1.19.4",
+    "prettier": "^1.17.1"
+  },
+  "scripts": {
+    "devStart": "nodemon index.js",
+    "start": "node index.js",
+    "build": "react-scripts build",
+    "deploy": "deploy-node-app",
+    "test": "react-scripts test",
+    "eject-www": "react-scripts eject",
+    "psql": "export $(cat .env | xargs) && PGPASSWORD=${POSTGRES_PASSWORD} psql -h ${POSTGRES_SERVICE_HOST} -p ${POSTGRES_SERVICE_PORT} -U ${POSTGRES_USER} ${POSTGRES_DB}"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ],
+  "deploy-node-app": {
+    "prod": {
+      "port": 4000,
+      "protocol": "http",
+      "entrypoint": "src/api/index.js",
+      "type": "spa"
+    },
+    "dev": {
+      "port": 4000,
+      "protocol": "http",
+      "entrypoint": "src/api/index.js",
+      "registry": "",
+      "type": "spa",
+      "isPublic": false
+    }
+  },
+  "proxy": "http://localhost:4000"
 }

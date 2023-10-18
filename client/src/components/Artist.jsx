@@ -86,7 +86,7 @@ export const Artist = ({ token }) => {
 					boxShadow: `0 0 400px 80px ${bgColor}`
 				}}
 			>
-				<div className="flex self-end gap-4 w-full p-4 bg-gradient-to-t from-[#00000070] h-full">
+				<div className="flex self-end gap-4 w-full p-4 bg-gradient-to-t from-[#00000070]">
 					{artist.image ? (
 						<div className="w-[232px] h-[232px] 2xl:w-[190px] 2xl:h-[190px] self-end">
 							<img
@@ -96,7 +96,7 @@ export const Artist = ({ token }) => {
 									const R = colorThief.getColor(img)[0];
 									const G = colorThief.getColor(img)[1];
 									const B = colorThief.getColor(img)[2];
-									setBgColor(`rgba(${R} ,${G}, ${B}, 0.5)`);
+									setBgColor(`rgb(${R} ,${G}, ${B})`);
 								}}
 								className="h-full w-full shadow-2xl object-cover rounded-full image"
 								src={artist.image}

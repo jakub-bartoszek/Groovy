@@ -154,7 +154,7 @@ export const Artist = ({ token }) => {
 							setShowMore((showMore) => !showMore);
 						}}
 					>
-						Show {showMore ? "more" : "less"}
+						Show {showMore ? "less" : "more"}
 					</button>
 				</div>
 			</div>

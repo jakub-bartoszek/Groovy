@@ -11,7 +11,7 @@ export default function useAuth(code) {
 
   useEffect(() => {
     if (code) {
-      axios.post('http://localhost:3000/login', {
+      axios.post('http://localhost:3001/login', {
         code
       }).then(res => {
         setAccessToken(res.data.accessToken);
@@ -29,7 +29,7 @@ export default function useAuth(code) {
   useEffect(() => {
     if (refreshToken || expiresIn) {
       const interval = setInterval(() => {
-        axios.post('http://localhost:3000/refresh', {
+        axios.post('http://localhost:3001/refresh', {
           refreshToken,
         }).then(res => {
           setAccessToken(res.data.accessToken);

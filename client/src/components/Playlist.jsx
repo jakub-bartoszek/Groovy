@@ -4,13 +4,13 @@ import { useParams } from "react-router-dom";
 import { TrackList } from "./TrackList";
 import ColorThief from "colorthief/dist/color-thief.mjs";
 
+
 export const Playlist = ({ token }) => {
 	const { id } = useParams();
 	const [tracks, setTracks] = useState([]);
 	const [playlist, setPlaylist] = useState({});
 	const imageRef = useRef();
 	const [bgColor, setBgColor] = useState("#121212");
-
 	const colorThief = new ColorThief();
 
 	useEffect(() => {
@@ -99,9 +99,18 @@ export const Playlist = ({ token }) => {
 							</div>
 						</div>
 					</div>
-					<div className="flex flex-col p-4 mt-12 ">
-						<TrackList tracks={tracks} />
-					</div>
+					{tracks.length !== 0 ? (
+						<div className="flex flex-col p-4 mt-12 ">
+							<TrackList
+								token={token}
+								tracks={tracks}
+							/>
+						</div>
+					) : (
+						<div className="flex h-64 items-center justify-center">
+							<p className="font-bold text-xl">No tracks yet...</p>
+						</div>
+					)}
 				</>
 			) : (
 				<></>

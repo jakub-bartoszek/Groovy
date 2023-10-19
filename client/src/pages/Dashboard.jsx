@@ -13,6 +13,7 @@ import { Playlist } from "../components/Playlist";
 import { Artist } from "../components/Artist";
 
 const Dashboard = ({ token }) => {
+
 	return (
 		<BrowserRouter>
 			<div className="grid grid-cols-[auto_2fr] grid-rows-[1fr_80px] gap-2 bg-black h-screen max-h-screen p-2">

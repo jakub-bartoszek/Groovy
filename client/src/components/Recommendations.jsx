@@ -17,7 +17,6 @@ export const Recommendations = () => {
 					}
 				}
 			);
-			console.log(response.data);
 		};
 		getRecommendationsData();
 	}, [token]);

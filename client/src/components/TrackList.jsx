@@ -1,25 +1,31 @@
 import { useDispatch, useSelector } from "react-redux";
 import {
+	addToQueue,
 	selectCurrentTrack,
 	setCurrentTrack
 } from "../utils/spotifyDataSlice";
 import { nanoid } from "@reduxjs/toolkit";
 
-export const TrackList = ({ tracks }) => {
+export const TrackList = ({ tracks, token }) => {
 	const dispatch = useDispatch();
 	const currentTrack = useSelector(selectCurrentTrack);
-
+	const queue = tracks.map(track => track.uri)
 	return (
 		<div className="w-full">
 			<div className="flex border-b border-[#ffffff33] mb-2 gap-2 text-muted">
-				<div className="flex items-center justify-center w-[5%]">#</div>
+				<div className="flex items-center justify-center w-[5%]">
+					#
+				</div>
 				<div className="w-[50%]">Title</div>
 				<div className="w-[45%]">Album</div>
 			</div>
 			{tracks.map((track) => {
 				return (
 					<div
-						onClick={() => dispatch(setCurrentTrack(track.uri))}
+						onClick={() => {
+							dispatch(setCurrentTrack(track.uri));
+							dispatch(addToQueue(tracks.map(track => track.uri).slice(1)))
+						}}
 						key={nanoid()}
 						className="cursor-pointer flex py-2 gap-x-2 rounded-md
 						hover:bg-[#ffffff10]"

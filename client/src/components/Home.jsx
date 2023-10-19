@@ -1,12 +1,22 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { nanoid } from "nanoid";
-import { useDispatch } from "react-redux";
-import { setCurrentTrack } from "../utils/spotifyDataSlice";
+import { useDispatch, useSelector } from "react-redux";
+import {
+	addToQueue,
+	play,
+	selectCurrentTrack,
+	selectIsPlaying,
+	selectQueue,
+	setCurrentTrack
+} from "../utils/spotifyDataSlice";
 import { NavLink } from "react-router-dom";
 
 export const Home = ({ token }) => {
 	const dispatch = useDispatch();
+	const track = useSelector(selectCurrentTrack);
+	const queue = useSelector(selectQueue);
+	const isPlaying = useSelector(selectIsPlaying);
 	const [recentlyPlayedTracks, setRecentlyPlayedTracks] = useState(
 		[]
 	);
@@ -27,6 +37,28 @@ export const Home = ({ token }) => {
 			getRecentlyPlayedTracks();
 		}
 	}, [token]);
+
+	useEffect(() => {
+		const getQueue = async () => {
+			const response = await axios.get(
+				`https://api.spotify.com/v1/me/player/queue`,
+				{
+					headers: {
+						Authorization: "Bearer " + token
+					}
+				}
+			);
+			dispatch(
+				addToQueue(response.data.queue.map((track) => track.uri))
+			);
+		};
+
+		if (track.length !== 0) {
+			getQueue();
+		}
+	}, [token, dispatch, track]);
+
+
 	return (
 		<div className=" text-white bg-gradient-to-b from-slate-600 h-full p-4">
 			<h1 className=" text-3xl font-bold py-6">Hello!</h1>
@@ -36,7 +68,11 @@ export const Home = ({ token }) => {
 						key={nanoid()}
 						className="flex bg-white bg-opacity-10 rounded-md items-center gap-4"
 					>
-						<img className="rounded-md" src="https://misc.scdn.co/liked-songs/liked-songs-64.png" alt="Liked songs"></img>
+						<img
+							className="rounded-md"
+							src="https://misc.scdn.co/liked-songs/liked-songs-64.png"
+							alt="Liked songs"
+						></img>
 						Liked songs
 					</div>
 				</NavLink>

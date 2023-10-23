@@ -1,61 +1,122 @@
-import React, { useEffect, useState } from "react";
-import useSpotify from "../hooks/useSpotify";
-import { useSession } from "next-auth/react";
-import { LibraryIcon, MusicNoteIcon } from "@heroicons/react/outline";
+import React, { useRef, useState } from "react";
+import { LibraryIcon } from "../assets/icons/library";
+import { LeftArrowIcon } from "../assets/icons/left-arrow";
+import { RightArrowIcon } from "../assets/icons/right-arrow";
+import { CrossIcon } from "../assets/icons/cross";
+import { CategoryButton } from "./CategoryButton";
+import { Playlists } from "./Playlists";
 
 export const Library = ({ width }) => {
-	const spotifyApi = useSpotify();
-	const [playlists, setPlaylists] = useState([]);
-	const { data: session, status } = useSession();
-	useEffect(() => {
-		if (spotifyApi.getAccessToken()) {
-			spotifyApi.getUserPlaylists().then((data) => {
-				setPlaylists(data.body.items);
-			});
-		}
-	}, [session, spotifyApi]);
+	const contentWrapper = useRef(null);
+	const [libraryScrollPosition, setLibraryScrollPosition] =
+		useState(0);
+	const [scrollPosition, setScrollPosition] = useState("left");
+
+	const [libraryCategory, setLibraryCategory] = useState("All");
+	const handleScroll = (event) => {
+		setLibraryScrollPosition(event.currentTarget.scrollTop);
+	};
 
 	return (
-		<div className="rounded-md gap-4 text-[#b3b3b3] bg-[#121212] h-full overflow-hidden">
-			<h2 className="flex items-center gap-6 font-extrabold p-5">
-				<LibraryIcon className="w-6" />
+		<div className="rounded-md text-[#b3b3b3] bg-[#121212] h-full overflow-hidden flex flex-col">
+			<h2
+				className={`flex items-center gap-6 p-5 pl-6 font-bold ${
+					(width <= 70) & (libraryScrollPosition !== 0) &&
+					"shadow-bottom"
+				}`}
+			>
+				<LibraryIcon size={22} />
 				{width > 70 && <p>Library</p>}
 			</h2>
-			<ul
-				className={`p-1 h-full overflow-y-scroll scrollbar-none pb-16 ${
-					width > 70 && "hover:scrollbar"
-				} scrollbar-w-3 scrollbar-track-transparent scrollbar-thumb-[#5a5a5a] hover:scrollbar-thumb-[#898989]`}
-			>
-				{playlists.map((playlist) => (
-					<li
-						key={playlist.id}
-						className={`flex items-center gap-3 ${
-							width <= 70 && "justify-center"
-						} p-2 rounded-md hover:bg-[#1a1a1a] cursor-pointer`}
+			{width > 70 && (
+				<div
+					className={`relative flex items-center px-4 h-14 py-2 ${
+						libraryScrollPosition !== 0 && "shadow-bottom"
+					}`}
+				>
+					<button
+						className={`bg-[#242424] rounded-full p-1 absolute left-4 shadow-left ${
+							scrollPosition === "left" ? "hidden" : ""
+						} ${libraryCategory !== "All" ? "hidden" : ""}`}
+						onClick={() => {
+							setScrollPosition("left");
+							contentWrapper.current.scrollLeft -= 1000;
+						}}
 					>
-						{playlist.images[0] ? (
-							<img
-								className="h-11 w-11 rounded-[4px]"
-								src={playlist.images[playlist.images.length - 1]?.url}
+						<LeftArrowIcon />
+					</button>
+					<button
+						className={`bg-[#242424] rounded-full p-1 absolute right-4 shadow-right ${
+							scrollPosition === "right" ? "hidden" : ""
+						} ${libraryCategory !== "All" ? "hidden" : ""}`}
+						onClick={() => {
+							setScrollPosition("right");
+							contentWrapper.current.scrollLeft += 1000;
+						}}
+					>
+						<RightArrowIcon />
+					</button>
+					<div
+						className="gap-2 overflow-x-scroll scrollbar-none scroll-smooth grid grid-flow-col"
+						ref={contentWrapper}
+					>
+						{libraryCategory !== "All" ? (
+							<button
+								onClick={() => setLibraryCategory("All")}
+								className="bg-black h-8 w-8 flex items-center justify-center rounded-full"
+							>
+								<CrossIcon />
+							</button>
+						) : null}
+						{libraryCategory === "Playlists" ||
+						libraryCategory === "All" ? (
+							<CategoryButton
+								libraryCategory={libraryCategory}
+								setLibraryCategory={setLibraryCategory}
+								name="Playlists"
 							/>
-						) : (
-							<div className="h-11 w-11 rounded-[4px] bg-[#282828] flex items-center justify-center">
-								<MusicNoteIcon className="w-6" />
-							</div>
-						)}
-
-						{width > 70 && (
-							<div>
-								<p className="font-extrabold text-white">
-									{playlist.name}
-								</p>
-								<p className=" text-sm">
-									Playlist • {playlist.owner.display_name}
-								</p>
-							</div>
-						)}
-					</li>
-				))}
+						) : null}
+						{libraryCategory === "Artists" ||
+						libraryCategory === "All" ? (
+							<CategoryButton
+								libraryCategory={libraryCategory}
+								setLibraryCategory={setLibraryCategory}
+								name="Artists"
+							/>
+						) : null}
+						{libraryCategory === "Tracks" ||
+						libraryCategory === "All" ? (
+							<CategoryButton
+								libraryCategory={libraryCategory}
+								setLibraryCategory={setLibraryCategory}
+								name="Tracks"
+							/>
+						) : null}
+						{libraryCategory === "Albums" ||
+						libraryCategory === "All" ? (
+							<CategoryButton
+								libraryCategory={libraryCategory}
+								setLibraryCategory={setLibraryCategory}
+								name="Albums"
+							/>
+						) : null}
+						{libraryCategory === "Podcasts" ||
+						libraryCategory === "All" ? (
+							<CategoryButton
+								libraryCategory={libraryCategory}
+								setLibraryCategory={setLibraryCategory}
+								name="Podcasts"
+							/>
+						) : null}
+					</div>
+				</div>
+			)}
+			<ul
+				onScroll={handleScroll}
+				className={`p-1 h-full overflow-y-scroll scrollbar-none scrollbar-w-3 scrollbar-track-transparent scrollbar-thumb-[#5a5a5a] hover:scrollbar-thumb-[#898989]
+				 ${width > 70 && "hover:scrollbar p-2"}`}
+			>
+				<Playlists width={width} />
 			</ul>
 		</div>
 	);

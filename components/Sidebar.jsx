@@ -1,6 +1,7 @@
 import { Resizable } from "re-resizable";
 import { useEffect, useRef, useState } from "react";
-import { HomeIcon, SearchIcon } from "@heroicons/react/outline";
+import { HomeIcon } from "../assets/icons/home";
+import { SearchIcon } from "../assets/icons/search";
 import { Library } from "./Library";
 
 export const Sidebar = () => {
@@ -47,12 +48,20 @@ export const Sidebar = () => {
 				ref={sidebarRef}
 			>
 				<nav className="flex flex-col rounded-md p-5 gap-6 font-bold bg-[#121212] text-[#b3b3b3]">
-					<button className="flex items-center gap-6 hover:text-white">
-						<HomeIcon className="w-6" />
+					<button
+						className={`flex items-center gap-6 hover:text-white${
+							width <= 70 && "justify-center"
+						}`}
+					>
+						<HomeIcon size={28} />
 						{width > 70 && <p>Home</p>}
 					</button>
-					<button className="flex items-center gap-6 hover:text-white">
-						<SearchIcon className="w-6" />
+					<button
+						className={`flex items-center gap-6 hover:text-white${
+							width <= 70 && "justify-center"
+						}`}
+					>
+						<SearchIcon size={28} />
 						{width > 70 && <p>Search</p>}
 					</button>
 				</nav>

@@ -56,7 +56,7 @@ export default NextAuth({
 
       //want to comeback and previous token is still valid
       if (Date.now() < token.accessTokenExpires) {
-        console.log("Your token is still valid: " + token.accessToken);
+        console.log("Your token is still valid");
         return token;
       }
 

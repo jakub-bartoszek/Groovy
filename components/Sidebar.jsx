@@ -2,8 +2,6 @@ import { Resizable } from "re-resizable";
 import { useEffect, useRef, useState } from "react";
 import { HomeIcon, SearchIcon } from "@heroicons/react/outline";
 import { Library } from "./Library";
-import { useSession } from "next-auth/react";
-import useSpotify from "../hooks/useSpotify";
 
 export const Sidebar = () => {
 	const [width, setWidth] = useState();
@@ -33,7 +31,7 @@ export const Sidebar = () => {
 
 	return (
 		<Resizable
-			className="h-full overflow-hidden pr-2"
+			className="h-full overflow-hidden"
 			snapGap={150}
 			minWidth="70px"
 			snap={{
@@ -45,7 +43,7 @@ export const Sidebar = () => {
 			}}
 		>
 			<div
-				className="h-full grid grid-flow-row grid-rows-[auto_1fr] gap-2"
+				className="h-full grid grid-flow-row grid-rows-[auto_1fr] gap-2 overflow-hidden"
 				ref={sidebarRef}
 			>
 				<nav className="flex flex-col rounded-md p-5 gap-6 font-bold bg-[#121212] text-[#b3b3b3]">
@@ -58,7 +56,7 @@ export const Sidebar = () => {
 						{width > 70 && <p>Search</p>}
 					</button>
 				</nav>
-				<Library />
+				<Library width={width} />
 			</div>
 		</Resizable>
 	);

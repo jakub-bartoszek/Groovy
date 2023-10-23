@@ -4,16 +4,60 @@ module.exports = {
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
- 
+
     // Or if using `src` directory:
     "./src/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      boxShadow: {
+        'left': '10px 0 20px 10px #121212, -10px 0 0 5px #121212',
+        'right': '-10px 0 20px 10px #121212, 10px 0 0 5px #121212',
+        'bottom': '0 10px 10px #00000050'
+      },
+      colors: {
+        'muted': '#ffffffbb'
+      },
+      animation: {
+        slideup: 'slideup 1s ease-in-out',
+        slidedown: 'slidedown 1s ease-in-out',
+        slideleft: 'slideleft 1s ease-in-out',
+        slideright: 'slideright 1s ease-in-out',
+        wave: 'wave 1.2s linear infinite',
+        slowfade: 'slowfade 2.2s ease-in-out',
+      },
+      keyframes: {
+        slowfade: {
+          from: { opacity: 0 },
+          to: { opacity: 1 },
+        },
+        slideup: {
+          from: { opacity: 0, transform: 'translateY(25%)' },
+          to: { opacity: 1, transform: 'none' },
+        },
+        slidedown: {
+          from: { opacity: 0, transform: 'translateY(-25%)' },
+          to: { opacity: 1, transform: 'none' },
+        },
+        slideleft: {
+          from: { opacity: 0, transform: 'translateX(-20px)' },
+          to: { opacity: 1, transform: 'translateX(0)' },
+        },
+        slideright: {
+          from: { opacity: 0, transform: 'translateX(20px)' },
+          to: { opacity: 1, transform: 'translateX(0)' },
+        },
+        wave: {
+          '0%': { transform: 'scale(0)' },
+          '50%': { transform: 'scale(1)' },
+          '100%': { transform: 'scale(0)' },
+        },
+      },
+    },
   },
   plugins: [
     // ...
     require('tailwind-scrollbar')({ nocompatible: true }),
-],
+  ],
 }
 

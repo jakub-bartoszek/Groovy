@@ -8,7 +8,10 @@ function Login({ providers }) {
 					className="flex flex-col gap-12 items-center"
 					key={provider.name}
 				>
-					<img className="w-24 h-24" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Spotify_logo_without_text.svg/240px-Spotify_logo_without_text.svg.png" />
+					<img
+						className="w-24 h-24"
+						src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Spotify_logo_without_text.svg/240px-Spotify_logo_without_text.svg.png"
+					/>
 					<button
 						className="bg-[#18d860] hover:bg-white p-4 rounded-full font-bold"
 						onClick={() => signIn(provider.id, { callbackUrl: "/" })}
@@ -32,3 +35,7 @@ export async function getServerSideProps() {
 		}
 	};
 }
+
+Login.getLayout = function PageLayout(page) {
+	return <>{page}</>;
+};

@@ -1,17 +1,28 @@
 import { signOut, useSession } from "next-auth/react";
+import { LeftArrowIcon } from "../assets/icons/left-arrow";
+import BellIcon from "@heroicons/react/outline/BellIcon";
 
 export const AccountBar = () => {
 	const { data: session } = useSession();
 	return (
-			<div className="grid grid-cols-[1fr_auto] bg-transparent absolute top-0 w-full">
-				<div></div>
+		<div className="flex justify-between gap-3 items-center w-full absolute p-5 top-0">
+			<div className="h-8 w-8 bg-[#000000aa] rounded-full flex items-center justify-center">
+				<LeftArrowIcon size={18} />
+			</div>
+			<div className="flex gap-3">
+				<div className="h-8 bg-[#000000aa] rounded-full flex items-center px-4 hover:scale-105 text-sm">
+					Zainstaluj aplikację
+				</div>
+				<div className="h-8 w-8 bg-[#000000aa] text-muted rounded-full flex items-center justify-center hover:scale-105 hover:text-white ">
+					<BellIcon className="h-6" />
+				</div>
 				<div
-					tabIndex="1"
-					className="relative group"
+					tabIndex={1}
+					className="h-8 w-8 bg-[#000000aa] rounded-full flex items-center justify-center self-end group relative hover:scale-105"
 				>
 					<img
 						src={session?.user.image}
-						className="h-6 rounded-full outline outline-4 outline-[#000000aa] hover:scale-105"
+						className="h-6 rounded-full"
 					/>
 					<ul className="absolute right-0 top-10 w-56 bg-[#282828] text-sm p-1 rounded-md hidden group-focus-within:block">
 						<li>
@@ -50,5 +61,6 @@ export const AccountBar = () => {
 					</ul>
 				</div>
 			</div>
+		</div>
 	);
 };

@@ -35,7 +35,7 @@ export const Library = ({ width }) => {
 					}`}
 				>
 					<button
-						className={`bg-[#242424] rounded-full p-1 absolute left-4 shadow-left ${
+						className={`bg-[#242424] flex items-center justify-center h-8 w-8 rounded-full absolute left-4 shadow-left ${
 							scrollPosition === "left" ? "hidden" : ""
 						} ${libraryCategory !== "All" ? "hidden" : ""}`}
 						onClick={() => {
@@ -43,10 +43,10 @@ export const Library = ({ width }) => {
 							contentWrapper.current.scrollLeft -= 1000;
 						}}
 					>
-						<LeftArrowIcon />
+						<LeftArrowIcon size={18} />
 					</button>
 					<button
-						className={`bg-[#242424] rounded-full p-1 absolute right-4 shadow-right ${
+						className={`bg-[#242424] flex items-center justify-center h-8 w-8 rounded-full absolute right-4 shadow-right ${
 							scrollPosition === "right" ? "hidden" : ""
 						} ${libraryCategory !== "All" ? "hidden" : ""}`}
 						onClick={() => {
@@ -54,10 +54,10 @@ export const Library = ({ width }) => {
 							contentWrapper.current.scrollLeft += 1000;
 						}}
 					>
-						<RightArrowIcon />
+						<RightArrowIcon size={18} />
 					</button>
 					<div
-						className="gap-2 overflow-x-scroll scrollbar-none scroll-smooth grid grid-flow-col"
+						className="gap-2 h-8 overflow-x-scroll scrollbar-none scroll-smooth grid grid-flow-col"
 						ref={contentWrapper}
 					>
 						{libraryCategory !== "All" ? (

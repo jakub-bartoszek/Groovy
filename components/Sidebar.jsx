@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { HomeIcon } from "../assets/icons/home";
 import { SearchIcon } from "../assets/icons/search";
 import { Library } from "./Library";
+import Link from "next/link";
 
 export const Sidebar = () => {
 	const [width, setWidth] = useState();
@@ -40,7 +41,8 @@ export const Sidebar = () => {
 			}}
 			maxWidth="420px"
 			defaultSize={{
-				width: "300px"
+				width: "300px",
+				height: "100%"
 			}}
 		>
 			<div
@@ -54,7 +56,7 @@ export const Sidebar = () => {
 						}`}
 					>
 						<HomeIcon size={28} />
-						{width > 70 && <p>Home</p>}
+						{width > 70 && <Link href="/">Home</Link>}
 					</button>
 					<button
 						className={`flex items-center gap-6 hover:text-white${

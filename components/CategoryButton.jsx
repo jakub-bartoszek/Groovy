@@ -5,7 +5,7 @@ export const CategoryButton = ({
 }) => (
 	<button
 		onClick={() => setLibraryCategory(name)}
-		className={`text-sm py-1.5 px-3 rounded-full ${
+		className={`text-sm px-3 rounded-full ${
 			libraryCategory === name
 				? "bg-white text-black"
 				: "bg-[#232323] text-white"

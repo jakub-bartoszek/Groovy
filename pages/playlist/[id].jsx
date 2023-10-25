@@ -1,5 +1,10 @@
 import { useRouter } from "next/router";
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, {
+	useCallback,
+	useEffect,
+	useRef,
+	useState
+} from "react";
 import useSpotify from "../../hooks/useSpotify";
 import { useSession } from "next-auth/react";
 import ColorThief from "colorthief/dist/color-thief.mjs";
@@ -25,11 +30,18 @@ export default function Playlist() {
 	const scrollRef = useRef();
 	const [opacity, setOpacity] = useState(0);
 
-	const _ = require('lodash');
+	const _ = require("lodash");
 
-	const throttledScroll = useCallback(_.throttle(() => {
-    setOpacity(scrollRef.current.scrollTop/300);
-  }, 100, { leading: false }), [setOpacity]);
+	const throttledScroll = useCallback(
+		_.throttle(
+			() => {
+				setOpacity(scrollRef.current.scrollTop / 300);
+			},
+			100,
+			{ leading: false }
+		),
+		[setOpacity]
+	);
 
 	useEffect(() => {
 		if (spotifyApi.getAccessToken() && router.query.id) {
@@ -59,7 +71,8 @@ export default function Playlist() {
 							duration: (track.track.duration_ms / 60000)
 								.toFixed(2)
 								.toString(),
-							dateAdded: track.added_at
+							dateAdded: track.added_at,
+							uri: track.track.uri
 						};
 					})
 				);
@@ -73,7 +86,10 @@ export default function Playlist() {
 	}, [session, spotifyApi, router.query.id]);
 	return (
 		<div className="h-full overflow-hidden relative rounded-md">
-			<AccountBar bgColor={bgColor} opacity={opacity} />
+			<AccountBar
+				bgColor={bgColor}
+				opacity={opacity}
+			/>
 			{playlist && (
 				<div
 					ref={scrollRef}
@@ -88,7 +104,7 @@ export default function Playlist() {
 						}}
 					>
 						<div className="flex self-end gap-4 w-full p-5 bg-gradient-to-t from-[#00000070]">
-							<div className=" bg-black w-[190px] h-[190px] lg:h-[232px] lg:w-[232px]">
+							<div className=" bg-black min-w-[190px] h-[190px] lg:h-[232px] lg:min-w-[232px]">
 								{playlist.image && (
 									<img
 										className="h-full w-full shadow-2xl object-cover image"
@@ -128,7 +144,10 @@ export default function Playlist() {
 							</div>
 						</div>
 					</div>
-					<TrackList opacity={opacity} tracks={tracks} />
+					<TrackList
+						opacity={opacity}
+						tracks={tracks}
+					/>
 				</div>
 			)}
 		</div>

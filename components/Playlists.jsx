@@ -16,7 +16,9 @@ export const Playlists = ({ width }) => {
 		}
 	}, [session, spotifyApi]);
 
+
 	return (
+		
 		<>
 			{playlists.map((playlist) => (
 				<li key={playlist.id}>

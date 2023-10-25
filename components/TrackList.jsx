@@ -1,18 +1,29 @@
 import ClockIcon from "@heroicons/react/outline/ClockIcon";
 import CalendarIcon from "@heroicons/react/outline/CalendarIcon";
+import useSpotify from "../hooks/useSpotify";
 
 export const TrackList = ({ tracks, opacity }) => {
+	const spotifyApi = useSpotify();
+
 	const dateFormat = {
 		year: "numeric",
 		month: "short",
 		day: "numeric"
 	};
 
+	const playSong = () => {
+	};
+
 	return (
 		<div className="w-full text-sm">
-			<div style={{
-				backgroundColor: `rgba(18, 18, 18, ${opacity >= 1 ? "1" : "0"})`
-			}} className="px-5 mt-5 sticky top-[72px]">
+			<div
+				style={{
+					backgroundColor: `rgba(18, 18, 18, ${
+						opacity >= 1 ? "1" : "0"
+					})`
+				}}
+				className="px-5 mt-5 sticky top-[72px]"
+			>
 				<div className="grid grid-cols-[5%_35%_30%_20%_10%] border-b-2 border-[#ffffff11] mb-5">
 					<p className="flex p-2 justify-center">#</p>
 					<p className="flex p-2">Title</p>
@@ -30,8 +41,9 @@ export const TrackList = ({ tracks, opacity }) => {
 					const date = new Date(track.dateAdded);
 					return (
 						<div
+							onClick={() => playSong(track.uri)}
 							key={track.id}
-							className=" grid grid-cols-[5%_35%_30%_20%_10%]"
+							className=" grid grid-cols-[5%_35%_30%_20%_10%] cursor-pointer"
 						>
 							<div className="flex p-2 items-center justify-center">
 								{track.index}

@@ -2,29 +2,39 @@ import { signOut, useSession } from "next-auth/react";
 import { LeftArrowIcon } from "../assets/icons/left-arrow";
 import BellIcon from "@heroicons/react/outline/BellIcon";
 
-export const AccountBar = () => {
+export const AccountBar = ({ bgColor, opacity }) => {
 	const { data: session } = useSession();
+
+
 	return (
-		<div className="flex justify-between gap-3 items-center w-full absolute p-5 top-0">
-			<div className="h-8 w-8 bg-[#000000aa] rounded-full flex items-center justify-center">
+		<div
+			style={{
+				backgroundColor: `rgba(${bgColor?.R}, ${bgColor?.G}, ${bgColor?.B}, ${opacity})`,
+				transition: "background-color 0.1s linear"
+			}}
+			className={`flex justify-between gap-3 items-center w-full absolute p-5 top-0`}
+		>
+			<button className="h-8 w-8 bg-[#000000aa] rounded-full flex items-center justify-center">
 				<LeftArrowIcon size={18} />
-			</div>
+			</button>
 			<div className="flex gap-3">
-				<div className="h-8 bg-[#000000aa] rounded-full flex items-center px-4 hover:scale-105 text-sm">
+				<button className="h-8 bg-[#000000aa] rounded-full flex items-center px-4 hover:scale-105 text-sm">
 					Zainstaluj aplikację
-				</div>
-				<div className="h-8 w-8 bg-[#000000aa] text-muted rounded-full flex items-center justify-center hover:scale-105 hover:text-white ">
+				</button>
+				<button className="h-8 w-8 bg-[#000000aa] text-muted rounded-full flex items-center justify-center hover:scale-105 hover:text-white ">
 					<BellIcon className="h-6" />
-				</div>
+				</button>
 				<div
 					tabIndex={1}
-					className="h-8 w-8 bg-[#000000aa] rounded-full flex items-center justify-center self-end group relative hover:scale-105"
+					className="self-end group relative cursor-pointer"
 				>
-					<img
-						src={session?.user.image}
-						className="h-6 rounded-full"
-					/>
-					<ul className="absolute right-0 top-10 w-56 bg-[#282828] text-sm p-1 rounded-md hidden group-focus-within:block">
+					<div className="h-8 w-8 bg-[#000000aa] rounded-full flex items-center justify-center  hover:scale-105">
+						<img
+							src={session?.user.image}
+							className="h-6 rounded-full"
+						/>
+					</div>
+					<ul className="absolute right-0 top-10 w-56 bg-[#282828] text-sm p-1 rounded-md hidden group-focus-within:block scale-100">
 						<li>
 							<button className="hover:bg-[#3e3e3e] p-3 w-full text-left">
 								Konto

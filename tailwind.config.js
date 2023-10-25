@@ -32,7 +32,7 @@ module.exports = {
         'bottom': '0 10px 10px #00000050'
       },
       colors: {
-        'muted': '#ffffffbb'
+        'muted': '#b3b3b3'
       },
       animation: {
         slideup: 'slideup 1s ease-in-out',

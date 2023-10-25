@@ -1,5 +1,6 @@
 import { Fragment } from "react";
 import { Sidebar } from "../components/Sidebar";
+import { Player } from "../components/Player";
 
 function Layout(props) {
   return (
@@ -9,7 +10,7 @@ function Layout(props) {
           <Sidebar />
           <main className="h-full w-full bg-[#121212] rounded-md overflow-hidden">{props.children}</main>
         </div>
-        <div className='bg-slate-600'>Player</div>
+        <Player/>
       </div>
     </Fragment>
   );

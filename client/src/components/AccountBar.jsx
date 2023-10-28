@@ -1,8 +1,33 @@
-
+import { useEffect, useState } from "react";
 import { LeftArrowIcon } from "../assets/icons/left-arrow";
 import BellIcon from "@heroicons/react/outline/BellIcon";
+import axios from "axios";
+import { selectToken } from "../utils/spotifyDataSlice";
+import { useSelector } from "react-redux";
 
 export const AccountBar = ({ bgColor, opacity }) => {
+	const token = useSelector(selectToken);
+	const [user, setUser] = useState({});
+
+	useEffect(() => {
+		const getCurrentUser = async () => {
+			const response = await axios.get(
+				`https://api.spotify.com/v1/me`,
+				{
+					headers: {
+						Authorization: "Bearer " + token,
+						"Content-Type": "application/json"
+					}
+				}
+			);
+			setUser({
+				image:
+					response.data.images[response.data.images.length - 1].url,
+				name: response.data.display_name
+			});
+		};
+		getCurrentUser();
+	});
 
 	return (
 		<div
@@ -27,7 +52,11 @@ export const AccountBar = ({ bgColor, opacity }) => {
 					className="self-end group relative cursor-pointer"
 				>
 					<div className="h-8 w-8 bg-[#000000aa] rounded-full flex items-center justify-center  hover:scale-105">
-
+						<img
+						className="w-6 rounded-full"
+							src={user.image}
+							alt={user.name}
+						/>
 					</div>
 					<ul className="absolute right-0 top-10 w-56 bg-[#282828] text-sm p-1 rounded-md hidden group-focus-within:block scale-100 z-20">
 						<li>
@@ -56,9 +85,7 @@ export const AccountBar = ({ bgColor, opacity }) => {
 							</button>
 						</li>
 						<li>
-							<button
-								className="hover:bg-[#3e3e3e] p-3 w-full text-left border-t-[1px] border-t-[#ffffff50]"
-							>
+							<button className="hover:bg-[#3e3e3e] p-3 w-full text-left border-t-[1px] border-t-[#ffffff50]">
 								Wyloguj
 							</button>
 						</li>

@@ -1,13 +1,32 @@
-export const SearchIcon = ({size}) => (
+export const SearchIcon = ({ size }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
 		width={size}
 		height={size}
-		viewBox="0 0 50 50"
+		viewBox="0 0 283.46 283.46"
 	>
-		<path
+		<circle
+			fill="transparent"
+			stroke="currentColor"
+			strokeWidth="27px"
+			className="st0"
+			cx="124.19"
+			cy="123.87"
+			r="109.96"
+		/>
+		<rect
 			fill="currentColor"
-			d="M 21 3 C 11.601563 3 4 10.601563 4 20 C 4 29.398438 11.601563 37 21 37 C 24.355469 37 27.460938 36.015625 30.09375 34.34375 L 42.375 46.625 L 46.625 42.375 L 34.5 30.28125 C 36.679688 27.421875 38 23.878906 38 20 C 38 10.601563 30.398438 3 21 3 Z M 21 7 C 28.199219 7 34 12.800781 34 20 C 34 27.199219 28.199219 33 21 33 C 13.800781 33 8 27.199219 8 20 C 8 12.800781 13.800781 7 21 7 Z"
-		></path>
+			x="223.91"
+			y="190.51"
+			transform="matrix(0.7071 -0.7071 0.7071 0.7071 -98.245 237.1844)"
+			width="26.55"
+			height="93.36"
+		/>
+		<circle
+			fill="currentColor"
+			cx="270.19"
+			cy="270.19"
+			r="13.27"
+		/>
 	</svg>
 );

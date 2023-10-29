@@ -58,7 +58,7 @@ export const TrackList = ({ tracks, token, opacity }) => {
 								<PlayIcon size={14}/>
 							</div>
 							<div className="flex items-center gap-4 p-2 pl-0">
-								<div className="h-[40px] w-[40px] min-h-[40px] min-w-[40px] bg-black objec">
+								<div className="h-[40px] w-[40px] min-h-[40px] min-w-[40px] bg-black object-cover">
 									{track.image && (
 										<img
 											className=""

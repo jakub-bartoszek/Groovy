@@ -5,6 +5,8 @@ import { RightArrowIcon } from "../assets/icons/right-arrow";
 import { CrossIcon } from "../assets/icons/cross";
 import { CategoryButton } from "./CategoryButton";
 import { Playlists } from "./Playlists";
+import { TopTracks } from "./TopTracks";
+import { TopArtists } from "./TopArtists";
 
 export const Library = ({ width }) => {
 	const contentWrapper = useRef(null);
@@ -12,7 +14,7 @@ export const Library = ({ width }) => {
 		useState(0);
 	const [scrollPosition, setScrollPosition] = useState("left");
 
-	const [libraryCategory, setLibraryCategory] = useState("All");
+	const [category, setCategory] = useState("All");
 
 	const handleScroll = (event) => {
 		setLibraryScrollPosition(event.currentTarget.scrollTop);
@@ -21,12 +23,14 @@ export const Library = ({ width }) => {
 	return (
 		<div className="rounded-md text-[#b3b3b3] bg-[#121212] h-full overflow-hidden flex flex-col">
 			<h2
-				className={`flex items-center gap-6 p-5 pl-6 font-bold ${
+				className={`flex items-center gap-4 py-4 px-[19px] font-bold ${
 					(width <= 70) & (libraryScrollPosition !== 0) &&
 					"shadow-bottom"
 				}`}
 			>
-				<LibraryIcon size={22} />
+				<div className="w-8 h-8 flex items-center justify-center">
+					<LibraryIcon size={22} />
+				</div>
 				{width > 70 && <p>Library</p>}
 			</h2>
 			{width > 70 && (
@@ -38,7 +42,7 @@ export const Library = ({ width }) => {
 					<button
 						className={`bg-[#242424] flex items-center justify-center h-8 w-8 rounded-full absolute left-4 shadow-left ${
 							scrollPosition === "left" ? "hidden" : ""
-						} ${libraryCategory !== "All" ? "hidden" : ""}`}
+						} ${category !== "All" ? "hidden" : ""}`}
 						onClick={() => {
 							setScrollPosition("left");
 							contentWrapper.current.scrollLeft -= 1000;
@@ -49,7 +53,7 @@ export const Library = ({ width }) => {
 					<button
 						className={`bg-[#242424] flex items-center justify-center h-8 w-8 rounded-full absolute right-4 shadow-right ${
 							scrollPosition === "right" ? "hidden" : ""
-						} ${libraryCategory !== "All" ? "hidden" : ""}`}
+						} ${category !== "All" ? "hidden" : ""}`}
 						onClick={() => {
 							setScrollPosition("right");
 							contentWrapper.current.scrollLeft += 1000;
@@ -61,51 +65,51 @@ export const Library = ({ width }) => {
 						className="gap-2 h-8 overflow-x-scroll hide-scrollbar scroll-smooth grid grid-flow-col"
 						ref={contentWrapper}
 					>
-						{libraryCategory !== "All" ? (
+						{category !== "All" ? (
 							<button
-								onClick={() => setLibraryCategory("All")}
-								className="bg-black h-8 w-8 flex items-center justify-center rounded-full"
+								onClick={() => setCategory("All")}
+								className="bg-[#242424] h-8 w-8 flex items-center justify-center rounded-full"
 							>
-								<CrossIcon />
+								<CrossIcon size={18} />
 							</button>
 						) : null}
-						{libraryCategory === "Playlists" ||
-						libraryCategory === "All" ? (
+						{category === "Playlists" ||
+						category === "All" ? (
 							<CategoryButton
-								libraryCategory={libraryCategory}
-								setLibraryCategory={setLibraryCategory}
+								category={category}
+								setCategory={setCategory}
 								name="Playlists"
 							/>
 						) : null}
-						{libraryCategory === "Artists" ||
-						libraryCategory === "All" ? (
+						{category === "Artists" ||
+						category === "All" ? (
 							<CategoryButton
-								libraryCategory={libraryCategory}
-								setLibraryCategory={setLibraryCategory}
+								category={category}
+								setCategory={setCategory}
 								name="Artists"
 							/>
 						) : null}
-						{libraryCategory === "Tracks" ||
-						libraryCategory === "All" ? (
+						{category === "Tracks" ||
+						category === "All" ? (
 							<CategoryButton
-								libraryCategory={libraryCategory}
-								setLibraryCategory={setLibraryCategory}
+								category={category}
+								setCategory={setCategory}
 								name="Tracks"
 							/>
 						) : null}
-						{libraryCategory === "Albums" ||
-						libraryCategory === "All" ? (
+						{category === "Albums" ||
+						category === "All" ? (
 							<CategoryButton
-								libraryCategory={libraryCategory}
-								setLibraryCategory={setLibraryCategory}
+								category={category}
+								setCategory={setCategory}
 								name="Albums"
 							/>
 						) : null}
-						{libraryCategory === "Podcasts" ||
-						libraryCategory === "All" ? (
+						{category === "Podcasts" ||
+						category === "All" ? (
 							<CategoryButton
-								libraryCategory={libraryCategory}
-								setLibraryCategory={setLibraryCategory}
+								category={category}
+								setCategory={setCategory}
 								name="Podcasts"
 							/>
 						) : null}
@@ -114,25 +118,22 @@ export const Library = ({ width }) => {
 			)}
 			<ul
 				onScroll={handleScroll}
-				className={`p-1 h-full overflow-y-scroll ${width <= 70 && "hide-scrollbar"}`}
+				className={`p-1 h-full overflow-y-scroll ${
+					width <= 70 && "hide-scrollbar"
+				}`}
 			>
-				<Playlists width={width} />
+				{category === "Playlists" ||
+				category === "All" ? (
+					<Playlists width={width} />
+				) : null}
+				{category === "Tracks" || category === "All" ? (
+					<TopTracks />
+				) : null}
+				{category === "Artists" ||
+				category === "All" ? (
+					<TopArtists />
+				) : null}
 			</ul>
 		</div>
 	);
 };
-
-{/* <ul className="grid grid-flow-row p-2 h-0">
-{libraryCategory === "Playlists" ||
-libraryCategory === "All" ? (
-	<Playlists />
-) : null}
-{libraryCategory === "Tracks" ||
-libraryCategory === "All" ? (
-	<TopTracks />
-) : null}
-{libraryCategory === "Artists" ||
-libraryCategory === "All" ? (
-	<TopArtists />
-) : null}
-</ul> */}

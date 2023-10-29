@@ -49,24 +49,24 @@ export const Sidebar = () => {
 				className="h-full grid grid-flow-row grid-rows-[auto_1fr] gap-2 overflow-hidden"
 				ref={sidebarRef}
 			>
-				<nav className="flex flex-col rounded-md p-5 gap-6 font-bold bg-[#121212] text-[#b3b3b3]">
+				<nav
+					className={`py-4 px-[19px] flex flex-col rounded-md gap-4 font-bold bg-[#121212] text-[#b3b3b3] ${
+						width <= 70 && "items-center"
+					}`}
+				>
 					<NavLink to="/home">
-						<button
-							className={`flex items-center gap-6 hover:text-white${
-								width <= 70 && "justify-center"
-							}`}
-						>
-							<HomeIcon size={28} />
+						<button className="flex gap-4 items-center">
+							<div className="h-8 w-8 flex items-center justify-center">
+								<HomeIcon size={22} />
+							</div>
 							{width > 70 && <p>Home</p>}
 						</button>
 					</NavLink>
 					<NavLink to="/search">
-						<button
-							className={`flex items-center gap-6 hover:text-white${
-								width <= 70 && "justify-center"
-							}`}
-						>
-							<SearchIcon size={28} />
+						<button className="flex gap-4 items-center">
+							<div className="h-8 w-8 flex items-center justify-center">
+								<SearchIcon size={22} />
+							</div>
 							{width > 70 && <p>Search</p>}
 						</button>
 					</NavLink>

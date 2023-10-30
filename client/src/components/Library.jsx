@@ -14,7 +14,7 @@ export const Library = ({ width }) => {
 		useState(0);
 	const [scrollPosition, setScrollPosition] = useState("left");
 
-	const [category, setCategory] = useState("All");
+	const [category, setCategory] = useState("all");
 
 	const handleScroll = (event) => {
 		setLibraryScrollPosition(event.currentTarget.scrollTop);
@@ -42,7 +42,7 @@ export const Library = ({ width }) => {
 					<button
 						className={`bg-[#242424] flex items-center justify-center h-8 w-8 rounded-full absolute left-4 shadow-left ${
 							scrollPosition === "left" ? "hidden" : ""
-						} ${category !== "All" ? "hidden" : ""}`}
+						} ${category !== "all" ? "hidden" : ""}`}
 						onClick={() => {
 							setScrollPosition("left");
 							contentWrapper.current.scrollLeft -= 1000;
@@ -53,7 +53,7 @@ export const Library = ({ width }) => {
 					<button
 						className={`bg-[#242424] flex items-center justify-center h-8 w-8 rounded-full absolute right-4 shadow-right ${
 							scrollPosition === "right" ? "hidden" : ""
-						} ${category !== "All" ? "hidden" : ""}`}
+						} ${category !== "all" ? "hidden" : ""}`}
 						onClick={() => {
 							setScrollPosition("right");
 							contentWrapper.current.scrollLeft += 1000;
@@ -65,48 +65,48 @@ export const Library = ({ width }) => {
 						className="gap-2 h-8 overflow-x-scroll hide-scrollbar scroll-smooth grid grid-flow-col"
 						ref={contentWrapper}
 					>
-						{category !== "All" ? (
+						{category !== "all" ? (
 							<button
-								onClick={() => setCategory("All")}
+								onClick={() => setCategory("all")}
 								className="bg-[#242424] h-8 w-8 flex items-center justify-center rounded-full"
 							>
 								<CrossIcon size={18} />
 							</button>
 						) : null}
-						{category === "Playlists" ||
-						category === "All" ? (
+						{category === "playlists" ||
+						category === "all" ? (
 							<CategoryButton
 								category={category}
 								setCategory={setCategory}
 								name="Playlists"
 							/>
 						) : null}
-						{category === "Artists" ||
-						category === "All" ? (
+						{category === "artists" ||
+						category === "all" ? (
 							<CategoryButton
 								category={category}
 								setCategory={setCategory}
 								name="Artists"
 							/>
 						) : null}
-						{category === "Tracks" ||
-						category === "All" ? (
+						{category === "tracks" ||
+						category === "all" ? (
 							<CategoryButton
 								category={category}
 								setCategory={setCategory}
 								name="Tracks"
 							/>
 						) : null}
-						{category === "Albums" ||
-						category === "All" ? (
+						{category === "albums" ||
+						category === "all" ? (
 							<CategoryButton
 								category={category}
 								setCategory={setCategory}
 								name="Albums"
 							/>
 						) : null}
-						{category === "Podcasts" ||
-						category === "All" ? (
+						{category === "podcasts" ||
+						category === "all" ? (
 							<CategoryButton
 								category={category}
 								setCategory={setCategory}
@@ -122,16 +122,16 @@ export const Library = ({ width }) => {
 					width <= 70 && "hide-scrollbar"
 				}`}
 			>
-				{category === "Playlists" ||
-				category === "All" ? (
+				{category === "playlists" ||
+				category === "all" ? (
 					<Playlists width={width} />
 				) : null}
-				{category === "Tracks" || category === "All" ? (
-					<TopTracks />
+				{category === "tracks" || category === "all" ? (
+					<TopTracks width={width}/>
 				) : null}
-				{category === "Artists" ||
-				category === "All" ? (
-					<TopArtists />
+				{category === "artists" ||
+				category === "all" ? (
+					<TopArtists width={width}/>
 				) : null}
 			</ul>
 		</div>

@@ -64,7 +64,7 @@ export const TrackList = ({ tracks, token, opacity }) => {
 								</div>
 								<div className="overflow-hidden flex flex-col justify-center">
 									<p
-										className={`font-bold text-ellipsis whitespace-nowrap overflow-hidden`}
+										className={`font-semibold text-ellipsis whitespace-nowrap overflow-hidden`}
 									>
 										{track.name}
 									</p>

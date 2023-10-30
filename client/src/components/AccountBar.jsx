@@ -1,33 +1,13 @@
-import { useEffect, useState } from "react";
 import { LeftArrowIcon } from "../assets/icons/left-arrow";
 import BellIcon from "@heroicons/react/outline/BellIcon";
-import axios from "axios";
-import { selectToken } from "../utils/spotifyDataSlice";
+import { selectBgColor, selectOpacity } from "../utils/spotifyDataSlice";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
-export const AccountBar = ({ bgColor, opacity }) => {
-	const token = useSelector(selectToken);
-	const [user, setUser] = useState({});
-
-	useEffect(() => {
-		const getCurrentUser = async () => {
-			const response = await axios.get(
-				`https://api.spotify.com/v1/me`,
-				{
-					headers: {
-						Authorization: "Bearer " + token,
-						"Content-Type": "application/json"
-					}
-				}
-			);
-			setUser({
-				image:
-					response.data.images[response.data.images.length - 1].url,
-				name: response.data.display_name
-			});
-		};
-		getCurrentUser();
-	});
+export const AccountBar = ({searchInput}) => {
+	const bgColor = useSelector(selectBgColor)
+	const opacity = useSelector(selectOpacity)
+	const navigate = useNavigate();
 
 	return (
 		<div
@@ -35,11 +15,12 @@ export const AccountBar = ({ bgColor, opacity }) => {
 				backgroundColor: `rgba(${bgColor?.R}, ${bgColor?.G}, ${bgColor?.B}, ${opacity})`,
 				transition: "background-color 0.1s linear"
 			}}
-			className={`flex justify-between gap-3 items-center w-full absolute p-5 top-0`}
+			className={`flex justify-between gap-3 items-center p-5 w-full absolute top-0 h-[72px] z-10 text-white`}
 		>
-			<button className="h-8 w-8 bg-[#000000aa] rounded-full flex items-center justify-center">
+			<button onClick={() => navigate(-1)} className="h-8 w-8 bg-[#000000aa] rounded-full flex items-center justify-center">
 				<LeftArrowIcon size={18} />
 			</button>
+			{searchInput}
 			<div className="flex gap-3">
 				<button className="h-8 bg-[#000000aa] rounded-full flex items-center px-4 hover:scale-105 text-sm">
 					Zainstaluj aplikację
@@ -52,11 +33,7 @@ export const AccountBar = ({ bgColor, opacity }) => {
 					className="self-end group relative cursor-pointer"
 				>
 					<div className="h-8 w-8 bg-[#000000aa] rounded-full flex items-center justify-center  hover:scale-105">
-						<img
-						className="w-6 rounded-full"
-							src={user.image}
-							alt={user.name}
-						/>
+
 					</div>
 					<ul className="absolute right-0 top-10 w-56 bg-[#282828] text-sm p-1 rounded-md hidden group-focus-within:block scale-100 z-20">
 						<li>

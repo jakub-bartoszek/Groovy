@@ -1,40 +1,39 @@
-import axios from "axios";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { TrackList } from "./TrackList";
+import { useDispatch, useSelector } from "react-redux";
+import {
+	selectBgColor,
+	selectOpacity,
+	setBgColor,
+	setOpacity
+} from "../utils/spotifyDataSlice";
+import axios from "axios";
 import ColorThief from "colorthief/dist/color-thief.mjs";
-import {AccountBar} from "./AccountBar";
 
 export const Playlist = ({ token }) => {
+	const dispatch = useDispatch();
+	const opacity = useSelector(selectOpacity);
 	const { id } = useParams();
 	const [playlist, setPlaylist] = useState();
 	const [tracks, setTracks] = useState();
-	const [ownerImage, setOwnerImage] = useState("");
-	const [bgColor, setBgColor] = useState({
-		R: 18,
-		G: 18,
-		B: 18,
-		A: 0
-	});
-	const [playlistColor, setPlaylistColor] = useState("#121212");
 	const imageRef = useRef();
-
+	const bgColor = useSelector(selectBgColor);
 	const colorThief = new ColorThief();
 	const scrollRef = useRef();
-	const [opacity, setOpacity] = useState(0);
-
 	const _ = require("lodash");
 
 	const throttledScroll = useCallback(
 		_.throttle(
 			() => {
-				setOpacity(scrollRef.current.scrollTop / 300);
+				dispatch(setOpacity(scrollRef.current.scrollTop / 300));
 			},
 			100,
 			{ leading: false }
 		),
 		[setOpacity]
 	);
+
 	useEffect(() => {
 		const getPlaylistItems = async () => {
 			const response = await axios.get(
@@ -85,91 +84,65 @@ export const Playlist = ({ token }) => {
 		getPlaylistItems();
 	}, [token, id]);
 
-	useEffect(() => {
-		const getOwner = async () => {
-			const response = await axios.get(
-				`https://api.spotify.com/v1/users/${playlist.ownerId}`,
-				{
-					headers: {
-						Authorization: "Bearer " + token,
-						"Content-Type": "application/json"
-					}
-				}
-			);
-			setOwnerImage(response.data.images[0].url)
-		};
-		if (playlist) {
-			getOwner();
-		}
-	}, [playlist, token])
-
 	return (
 		<div className="h-full overflow-hidden relative rounded-md text-white">
-		<AccountBar
-			bgColor={bgColor}
-			opacity={opacity}
-		/>
-		{playlist && (
-			<div
-				ref={scrollRef}
-				onScroll={throttledScroll}
-				className="h-full overflow-y-scroll bg-[#121212]"
-			>
+			{playlist && (
 				<div
-					className="w-full h-[350px] flex"
-					style={{
-						backgroundColor: playlistColor,
-						boxShadow: `0 0 200px 80px #000000aa, 0 0 200px 80px ${playlistColor}`
-					}}
+					ref={scrollRef}
+					onScroll={throttledScroll}
+					className="h-full overflow-y-scroll bg-[#121212]"
 				>
-					<div className="flex self-end gap-4 w-full p-5 bg-gradient-to-t from-[#00000070]">
-						<div className=" bg-black min-w-[190px] h-[190px] lg:h-[232px] lg:min-w-[232px]">
-							{playlist.image && (
-								<img
-									className="h-full w-full shadow-2xl object-cover image"
-									ref={imageRef}
-									onLoad={() => {
-										const img = imageRef.current;
-										const R = colorThief.getColor(img)[0];
-										const G = colorThief.getColor(img)[1];
-										const B = colorThief.getColor(img)[2];
-
-										setBgColor({ R: R, G: G, B: B, A: 0 });
-										setPlaylistColor(`rgb(${R}, ${G}, ${B})`);
-									}}
-									src={playlist.image}
-									alt="Liked songs"
-									crossOrigin="Anonymous"
-								/>
-							)}
-						</div>
-						<div className="flex flex-col justify-between">
-							<div>Playlist</div>
-							<div className="flex flex-col gap-4">
-								<p className="text-7xl font-bold">
-									{playlist.name}
-								</p>
-								<div className="flex items-center gap-2">
+					<div
+						className="w-full h-[350px] flex"
+						style={{
+							backgroundColor: `rgb(${bgColor.R}, ${bgColor.G}, ${bgColor.B})`,
+							boxShadow: `0 0 200px 80px #000000aa, 0 0 200px 80px rgb(${bgColor.R}, ${bgColor.G}, ${bgColor.B})`
+						}}
+					>
+						<div className="flex self-end gap-4 w-full p-5 bg-gradient-to-t from-[#00000070]">
+							<div className="bg-black min-w-[190px] w-[190px] h-[190px] lg:h-[232px] lg:min-w-[232px]">
+								{playlist.image && (
 									<img
-									alt={playlist.owner}
-										className="rounded-full h-6"
-										src={ownerImage}
+										className="h-full shadow-2xl image object-cover"
+										ref={imageRef}
+										onLoad={() => {
+											const img = imageRef.current;
+											const R = colorThief.getColor(img)[0];
+											const G = colorThief.getColor(img)[1];
+											const B = colorThief.getColor(img)[2];
+
+											dispatch(
+												setBgColor({ R: R, G: G, B: B, A: 0 })
+											);
+										}}
+										src={playlist.image}
+										alt="Liked songs"
+										crossOrigin="Anonymous"
 									/>
-									<p className="text-sm">
-										<b>{playlist.owner}</b>
-										{` • ${playlist.tracksCount} tracks`}
+								)}
+							</div>
+							<div className="flex flex-col justify-between">
+								<div>Playlist</div>
+								<div className="flex flex-col gap-4">
+									<p className="text-7xl font-bold">
+										{playlist.name}
 									</p>
+									<div className="flex items-center gap-2">
+										<p className="text-sm">
+											<b>{playlist.owner}</b>
+											{` • ${playlist.tracksCount} tracks`}
+										</p>
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
+					<TrackList
+						opacity={opacity}
+						tracks={tracks}
+					/>
 				</div>
-				<TrackList
-					opacity={opacity}
-					tracks={tracks}
-				/>
-			</div>
-		)}
-	</div>
-);
-}
+			)}
+		</div>
+	);
+};

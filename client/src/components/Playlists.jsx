@@ -65,7 +65,7 @@ export const Playlists = ({ width }) => {
 							)}
 							{width > 70 && (
 								<div>
-									<p className="font-bold text-white">
+									<p className="font-semibold text-white">
 										{playlist.name}
 									</p>
 									<p className=" text-sm">

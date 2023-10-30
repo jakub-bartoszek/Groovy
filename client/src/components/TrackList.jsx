@@ -1,12 +1,8 @@
-import { useDispatch, useSelector } from "react-redux";
-import {
-	addToQueue,
-	selectCurrentTrack,
-	setCurrentTrack
-} from "../utils/spotifyDataSlice";
+import { useDispatch } from "react-redux";
+import { setCurrentTrack } from "../utils/spotifyDataSlice";
 import ClockIcon from "@heroicons/react/outline/ClockIcon";
 import CalendarIcon from "@heroicons/react/outline/CalendarIcon";
-import {PlayIcon} from "../assets/icons/play"
+import { PlayIcon } from "../assets/icons/play";
 
 export const TrackList = ({ tracks, token, opacity }) => {
 	const dateFormat = {
@@ -16,7 +12,6 @@ export const TrackList = ({ tracks, token, opacity }) => {
 	};
 
 	const dispatch = useDispatch();
-	const currentTrack = useSelector(selectCurrentTrack);
 
 	return (
 		<div className="w-full text-sm">
@@ -55,13 +50,13 @@ export const TrackList = ({ tracks, token, opacity }) => {
 								{track.index}
 							</div>
 							<div className="hidden p-2 items-center justify-center group-hover:flex">
-								<PlayIcon size={14}/>
+								<PlayIcon size={14} />
 							</div>
 							<div className="flex items-center gap-4 p-2 pl-0">
-								<div className="h-[40px] w-[40px] min-h-[40px] min-w-[40px] bg-black object-cover">
+								<div className="h-[40px] w-[40px] min-h-[40px] min-w-[40px] bg-black">
 									{track.image && (
 										<img
-											className=""
+											className="object-cover"
 											alt="Song cover"
 											src={track.image}
 										/>

@@ -11,13 +11,15 @@ import { Home } from "../components/Home";
 import { LikedTracks } from "../components/LikedTracks";
 import { Playlist } from "../components/Playlist";
 import { Artist } from "../components/Artist";
+import { AccountBar } from "../components/AccountBar";
 
 const Dashboard = ({ token }) => {
 	return (
 		<BrowserRouter>
 			<div className="grid grid-cols-[auto_2fr] grid-rows-[1fr_80px] gap-2 bg-black h-screen max-h-screen p-2">
 				<Sidebar />
-				<div className="flex flex-col h-[100%] overflow-hidden rounded-xl">
+				<div className="flex flex-col h-[100%] overflow-hidden rounded-xl relative">
+					<AccountBar />
 					<Routes>
 						<Route
 							path="/artists/:id"
@@ -45,7 +47,7 @@ const Dashboard = ({ token }) => {
 						/>
 					</Routes>
 				</div>
-				<Player token={token}/>
+				<Player token={token} />
 			</div>
 		</BrowserRouter>
 	);

@@ -1,23 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import { SearchIcon } from "../assets/icons/search";
+import { CategoryButton } from "../components/CategoryButton";
 import axios from "axios";
-import { useDispatch } from "react-redux";
-import { setCurrentTrack } from "../utils/spotifyDataSlice";
-import { LeftArrowIcon } from "../assets/icons/left-arrow";
-import { NavLink } from "react-router-dom";
-import { AccountBar } from "./AccountBar";
-import { CategoryButton } from "./CategoryButton";
-import { CrossIcon } from "../assets/icons/cross";
-import { RightArrowIcon } from "../assets/icons/right-arrow";
 
 export const Search = ({ token }) => {
 	const [search, setSearch] = useState("");
 	const [searchResults, setSearchResults] = useState();
 	const [category, setCategory] = useState("track");
-
-	const dispatch = useDispatch();
 	const contentWrapper = useRef(null);
-	const [scrollPosition, setScrollPosition] = useState("left");
 
 	useEffect(() => {
 		if (token) {
@@ -42,29 +32,21 @@ export const Search = ({ token }) => {
 
 	return (
 		<div className="h-full overflow-hidden relative rounded-md text-white flex flex-col bg-[#121212]">
-			<AccountBar
-				bgColor={{
-					R: 18,
-					G: 18,
-					B: 18,
-					A: 1
-				}}
-				opacity={1}
-				searchInput={
-					<label className="pl-2 pr-4 h-12 flex items-center bg-[#242424] text-white rounded-full sticky top-0 hover:bg-[#2a2a2a] focus-within:outline focus-within:outline-2">
-						<SearchIcon size={20} />
-						<input
-							className="pl-2 h-8 bg-transparent focus:outline-none placeholder-[#888888] w-full"
-							placeholder="What are you looking for?"
-							value={search}
-							onChange={(event) => {
-								setSearch(event.target.value);
-							}}
-						/>
-					</label>
-				}
-			/>
-
+			<div
+				className={`flex justify-between gap-3 items-center p-5 ml-12 w-full absolute top-0 h-[72px] z-10 text-white`}
+			>
+				<label className="pl-2 pr-4 h-12 flex items-center bg-[#242424] text-white rounded-full hover:bg-[#2a2a2a] focus-within:outline focus-within:outline-2">
+					<SearchIcon size={20} />
+					<input
+						className="pl-2 h-8 bg-transparent focus:outline-none placeholder-[#888888] w-full"
+						placeholder="What are you looking for?"
+						value={search}
+						onChange={(event) => {
+							setSearch(event.target.value);
+						}}
+					/>
+				</label>
+			</div>
 			<div
 				className="gap-2 py-2 px-4 flex overflow-x-scroll items-center hide-scrollbar scroll-smooth sticky top-[72px]"
 				ref={contentWrapper}

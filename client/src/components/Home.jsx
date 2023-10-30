@@ -29,7 +29,7 @@ export const Home = ({ token }) => {
 	}, [token]);
 
 	return (
-		<div className=" text-white bg-gradient-to-b from-slate-600 h-full p-4">
+		<div className=" text-white bg-gradient-to-b from-slate-600 h-full p-4 pt-[72px]">
 			<h1 className=" text-3xl font-bold py-6">Hello!</h1>
 			<div className="grid grid-cols-3 gap-4 font-bold 2xl:grid-cols-2 lg:grid-cols-1">
 				<NavLink to="/liked">

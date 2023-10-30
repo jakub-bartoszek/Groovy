@@ -46,7 +46,7 @@ export const Playlists = ({ width }) => {
 				<li key={playlist.id}>
 					<NavLink to={`/playlists/${playlist.id}`}>
 						<div
-							className={`flex items-center gap-3 p-2 rounded-md hover:bg-[#1a1a1a] cursor-pointer ${
+							className={`flex items-center gap-3 p-2 rounded-md hover:bg-[#1a1a1a] cursor-pointer playlist ${
 								width <= 70 && "justify-center"
 							}`}
 						>

@@ -38,7 +38,7 @@ export const Playlists = ({ width }) => {
 							alt="Liked songs"
 							className="h-12 w-12 rounded-md"
 						></img>
-						<p>Liked songs</p>
+						<p className="text-white font-semibold">Liked songs</p>
 					</div>
 				</NavLink>
 			</li>

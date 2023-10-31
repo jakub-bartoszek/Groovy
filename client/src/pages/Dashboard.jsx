@@ -12,13 +12,30 @@ import { LikedTracks } from "../components/LikedTracks";
 import { Playlist } from "../components/Playlist";
 import { Artist } from "../components/Artist";
 import { AccountBar } from "../components/AccountBar";
+import { useEffect, useRef, useState } from "react";
 
 const Dashboard = ({ token }) => {
+	const [width, setWidth] = useState();
+	const contentWrapperRef = useRef()
+
+	useEffect(() => {
+		const element = contentWrapperRef.current;
+		if (element) {
+			const observer = new ResizeObserver(() => {
+				setWidth(element.offsetWidth);
+			});
+			observer.observe(element);
+			return () => {
+				observer.disconnect();
+			};
+		}
+	}, [width]);
+
 	return (
 		<BrowserRouter>
 			<div className="grid grid-cols-[auto_2fr] grid-rows-[1fr_80px] gap-2 bg-black h-screen max-h-screen p-2">
 				<Sidebar />
-				<div className="flex flex-col h-[100%] overflow-hidden rounded-xl relative">
+				<div ref={contentWrapperRef} className="flex flex-col h-[100%] overflow-hidden rounded-xl relative">
 					<AccountBar />
 					<Routes>
 						<Route
@@ -39,7 +56,7 @@ const Dashboard = ({ token }) => {
 						/>
 						<Route
 							path="/home"
-							element={<Home token={token} />}
+							element={<Home width={width} token={token} />}
 						/>
 						<Route
 							path="/"

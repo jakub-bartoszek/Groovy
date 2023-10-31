@@ -2,19 +2,22 @@ import { useEffect, useRef, useState } from "react";
 import { SearchIcon } from "../assets/icons/search";
 import { CategoryButton } from "../components/CategoryButton";
 import axios from "axios";
+import { SearchBar } from "./SearchBar";
+import { useSelector } from "react-redux";
+import { selectSearchQuery } from "../utils/searchSlice";
 
 export const Search = ({ token }) => {
-	const [search, setSearch] = useState("");
+	const searchQuery = useSelector(selectSearchQuery);
 	const [searchResults, setSearchResults] = useState();
 	const [category, setCategory] = useState("track");
 	const contentWrapper = useRef(null);
 
 	useEffect(() => {
 		if (token) {
-			if (search) {
+			if (searchQuery) {
 				const getSearchResults = async () => {
 					const response = await axios.get(
-						`https://api.spotify.com/v1/search?q=${search}&type=${category}`,
+						`https://api.spotify.com/v1/search?q=${searchQuery}&type=${category}`,
 						{
 							headers: {
 								Authorization: "Bearer " + token
@@ -28,25 +31,10 @@ export const Search = ({ token }) => {
 				setSearchResults([]);
 			}
 		}
-	}, [search, token, category]);
+	}, [searchQuery, token, category]);
 
 	return (
 		<div className="h-full overflow-hidden relative rounded-md text-white flex flex-col bg-[#121212]">
-			<div
-				className={`flex justify-between gap-3 items-center p-5 ml-12 w-full absolute top-0 h-[72px] z-10 text-white`}
-			>
-				<label className="pl-2 pr-4 h-12 flex items-center bg-[#242424] text-white rounded-full hover:bg-[#2a2a2a] focus-within:outline focus-within:outline-2">
-					<SearchIcon size={20} />
-					<input
-						className="pl-2 h-8 bg-transparent focus:outline-none placeholder-[#888888] w-full"
-						placeholder="What are you looking for?"
-						value={search}
-						onChange={(event) => {
-							setSearch(event.target.value);
-						}}
-					/>
-				</label>
-			</div>
 			<div
 				className="gap-2 py-2 px-4 flex overflow-x-scroll items-center hide-scrollbar scroll-smooth sticky top-[72px]"
 				ref={contentWrapper}

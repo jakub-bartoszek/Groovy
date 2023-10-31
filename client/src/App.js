@@ -4,7 +4,6 @@ import { selectToken } from "./utils/spotifyDataSlice";
 import { useSelector } from "react-redux";
 import useAuth from "./utils/useAuth";
 
-
 export const code = new URLSearchParams(window.location.search).get('code');
 
 export default function App() {

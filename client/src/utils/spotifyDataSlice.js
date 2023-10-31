@@ -25,6 +25,7 @@ const spotifyDataSlice = createSlice({
     },
     addToQueue: (state, { payload }) => {
       state.queue = (payload);
+      state.isPlaying = true;
     },
     setLibraryCategory: (state, { payload }) => {
       state.libraryCategory = payload;

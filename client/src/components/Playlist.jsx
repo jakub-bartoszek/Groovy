@@ -1,17 +1,20 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
-import { TrackList } from "./TrackList";
+import { PlaylistTracks } from "./PlaylistTracks";
 import { useDispatch, useSelector } from "react-redux";
 import {
+	addToQueue,
 	selectBgColor,
 	selectOpacity,
 	setBgColor,
+	setCurrentTrack,
 	setOpacity
 } from "../utils/spotifyDataSlice";
 import axios from "axios";
 import ColorThief from "colorthief/dist/color-thief.mjs";
+import { PlayIcon } from "../assets/icons/play";
 
-export const Playlist = ({ token }) => {
+export const Playlist = ({ token, width }) => {
 	const dispatch = useDispatch();
 	const opacity = useSelector(selectOpacity);
 	const { id } = useParams();
@@ -45,7 +48,6 @@ export const Playlist = ({ token }) => {
 					}
 				}
 			);
-
 			setPlaylist({
 				id: response.data.id,
 				name: response.data.name,
@@ -56,7 +58,10 @@ export const Playlist = ({ token }) => {
 						? null
 						: response.data.images[0].url,
 				followersCount: response.data.followers.total,
-				tracksCount: response.data.tracks.total
+				tracksCount: response.data.tracks.total,
+				queue: response.data.tracks.items.map(
+					(track) => track.track.uri
+				)
 			});
 
 			setTracks(
@@ -137,7 +142,15 @@ export const Playlist = ({ token }) => {
 							</div>
 						</div>
 					</div>
-					<TrackList
+					<div onClick={() => {
+						dispatch(setCurrentTrack(playlist.queue[0]))
+						dispatch(addToQueue(playlist.queue.slice(1)))
+
+					}} className="w-14 h-14 flex items-center justify-center cursor-pointer m-5 bg-green-500 rounded-full text-black p-2">
+						<PlayIcon size={20} />
+					</div>
+					<PlaylistTracks
+					width={width}
 						opacity={opacity}
 						tracks={tracks}
 					/>

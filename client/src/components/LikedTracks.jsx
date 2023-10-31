@@ -1,16 +1,22 @@
 import axios from "axios";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { TrackList } from "./TrackList";
 import { useDispatch, useSelector } from "react-redux";
-import { selectBgColor, selectOpacity, setBgColor, setOpacity } from "../utils/spotifyDataSlice";
+import {
+	selectBgColor,
+	selectOpacity,
+	setBgColor,
+	setOpacity
+} from "../utils/spotifyDataSlice";
+import { PlaylistTracks } from "./PlaylistTracks";
+import { PlayButton } from "./PlayButton";
 
-export const LikedTracks = ({ token }) => {
-	const dispatch = useDispatch()
-	const opacity = useSelector(selectOpacity)
-	const bgColor = useSelector(selectBgColor)
+export const LikedTracks = ({ token, width }) => {
+	const dispatch = useDispatch();
+	const [playlist, setPlaylist] = useState();
+	const opacity = useSelector(selectOpacity);
+	const bgColor = useSelector(selectBgColor);
 	const [tracks, setTracks] = useState();
 	const scrollRef = useRef();
-
 
 	const _ = require("lodash");
 
@@ -36,6 +42,11 @@ export const LikedTracks = ({ token }) => {
 					}
 				}
 			);
+
+			setPlaylist({
+				queue: response.data.items.map((track) => track.track.uri)
+			});
+
 			setTracks(
 				response.data.items.map((track, index) => {
 					return {
@@ -99,7 +110,9 @@ export const LikedTracks = ({ token }) => {
 						</div>
 					</div>
 				</div>
-				<TrackList
+				<PlayButton playlist={playlist} />
+				<PlaylistTracks
+					width={width}
 					opacity={opacity}
 					tracks={tracks}
 				/>
@@ -107,6 +120,3 @@ export const LikedTracks = ({ token }) => {
 		</div>
 	);
 };
-
-// #533ca0
-// https://misc.scdn.co/liked-songs/liked-songs-300.png

@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { useSelector } from "react-redux";
-import { selectToken } from "../utils/spotifyDataSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { selectToken, setCurrentTrack } from "../utils/spotifyDataSlice";
 
 export const TopTracks = ({ width }) => {
 	const token = useSelector(selectToken);
 	const [topTracks, setTopTracks] = useState([]);
+	const dispatch = useDispatch()
 
 	useEffect(() => {
 		const getTopTracks = async () => {
@@ -28,7 +29,8 @@ export const TopTracks = ({ width }) => {
 	return topTracks.map((track) => (
 		<li key={track.id}>
 			<div
-				className={`flex items-center gap-3 p-2 hover:bg-[#1a1a1a] rounded-md artist ${
+			onClick={() => dispatch(setCurrentTrack(track.uri))}
+				className={`flex items-center gap-3 p-2 hover:bg-[#1a1a1a] cursor-pointer rounded-md artist ${
 					width <= 70 && "justify-center"
 				}`}
 			>
@@ -41,7 +43,7 @@ export const TopTracks = ({ width }) => {
 					<div>
 						<p className="text-white font-semibold text-ellipsis whitespace-nowrap overflow-hidden">{track.name}</p>
 						<p className="text-sm text-[#a4a4a4]">
-							Album • {track.artists[0].name}
+							Track • {track.artists[0].name}
 						</p>
 					</div>
 				)}

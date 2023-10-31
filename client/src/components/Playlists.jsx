@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { selectToken } from "../utils/spotifyDataSlice";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { nanoid } from "@reduxjs/toolkit";
 import MusicNoteIcon from "@heroicons/react/outline/MusicNoteIcon";
 

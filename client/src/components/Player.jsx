@@ -23,13 +23,16 @@ export const Player = ({ token }) => {
 				uris={track.concat(queue)}
 				token={token}
 				styles={{
-					activeColor: "#fff",
+					activeColor: "#1cb954",
 					bgColor: "#000000",
 					color: "#fff",
 					loaderColor: "#fff",
 					sliderColor: "#1cb954",
+					sliderHandleColor: "#fff",
+					sliderTrackColor: "#666",
 					trackArtistColor: "#ccc",
-					trackNameColor: "#fff"
+					trackNameColor: "#fff",
+
 				}}
 			/>
 		</div>

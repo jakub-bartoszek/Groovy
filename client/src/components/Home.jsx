@@ -1,14 +1,27 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
-import { nanoid } from "nanoid";
-import { useDispatch } from "react-redux";
-import { setCurrentTrack } from "../utils/spotifyDataSlice";
-import { NavLink } from "react-router-dom";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { selectBgColor, setOpacity } from "../utils/spotifyDataSlice";
+import { Tile } from "./Tile";
 
-export const Home = ({ token }) => {
+export const Home = ({ token, width }) => {
 	const dispatch = useDispatch();
 	const [recentlyPlayedTracks, setRecentlyPlayedTracks] = useState(
 		[]
+	);
+	const bgColor = useSelector(selectBgColor);
+	const scrollRef = useRef();
+	const _ = require("lodash");
+
+	const throttledScroll = useCallback(
+		_.throttle(
+			() => {
+				dispatch(setOpacity(scrollRef.current.scrollTop / 300));
+			},
+			100,
+			{ leading: false }
+		),
+		[setOpacity]
 	);
 
 	useEffect(() => {
@@ -29,40 +42,40 @@ export const Home = ({ token }) => {
 	}, [token]);
 
 	return (
-		<div className=" text-white bg-gradient-to-b from-slate-600 h-full p-4 pt-[72px]">
-			<h1 className=" text-3xl font-bold py-6">Hello!</h1>
-			<div className="grid grid-cols-3 gap-4 font-bold 2xl:grid-cols-2 lg:grid-cols-1">
-				<NavLink to="/liked">
+		<div className="h-full overflow-hidden relative rounded-md text-white">
+			<div
+				ref={scrollRef}
+				onScroll={throttledScroll}
+				className="text-white h-full overflow-y-scroll"
+			>
+				<div
+					style={{
+						backgroundImage: `linear-gradient(rgba(18, 18, 18, 0.7), #121212)`,
+						backgroundColor: `rgba(${bgColor?.R}, ${bgColor?.G}, ${bgColor?.B}, 1)`,
+						transition: "0.3s linear"
+					}}
+					className="pt-[72px] p-4 bg-red-500"
+				>
+					<h1 className=" text-3xl font-bold py-6">Hello! {width}</h1>
 					<div
-						key={nanoid()}
-						className="flex bg-white bg-opacity-10 rounded-md items-center gap-4"
+						className={`grid grid-cols-3 gap-4 font-semibold ${
+							width < 700 && "grid-cols-2"
+						} ${width < 500 && "grid-cols-1"}`}
 					>
-						<img
-							className="rounded-md"
-							src="https://misc.scdn.co/liked-songs/liked-songs-64.png"
-							alt="Liked songs"
-						></img>
-						Liked songs
+						<Tile
+							width={width}
+							name="Liked songs"
+							imgSrc="https://misc.scdn.co/liked-songs/liked-songs-64.png"
+						/>
+						{recentlyPlayedTracks.map((track) => (
+							<Tile
+								width={width}
+								track={track}
+							/>
+						))}
 					</div>
-				</NavLink>
-				{recentlyPlayedTracks.map((track) => {
-					return (
-						<div
-							onClick={() =>
-								dispatch(setCurrentTrack(track.track.uri))
-							}
-							key={nanoid()}
-							className="cursor-pointer flex bg-white bg-opacity-10 rounded-md items-center gap-4"
-						>
-							<img
-								className=" rounded-md h-[64px] shadow-xl"
-								src={track.track.album.images[2].url}
-								alt="Track cover"
-							></img>
-							{track.track.name}
-						</div>
-					);
-				})}
+				</div>
+				<div className="bg-[#121212] h-full w-full"></div>
 			</div>
 		</div>
 	);

@@ -37,7 +37,9 @@ export const Tile = ({ track, name, imgSrc, width }) => {
 					alt="Track cover"
 					crossOrigin="Anonymous"
 				/>
-				<p className={`px-4 ${width < 800 && "text-sm"}`}>{track ? track.track.name : name}</p>
+				<p className={`px-4 ${width < 800 && "text-sm"}`}>
+					{track ? track.track.name : name}
+				</p>
 			</div>
 		</div>
 	);

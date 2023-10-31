@@ -1,8 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import { SearchIcon } from "../assets/icons/search";
 import { CategoryButton } from "../components/CategoryButton";
 import axios from "axios";
-import { SearchBar } from "./SearchBar";
 import { useSelector } from "react-redux";
 import { selectSearchQuery } from "../utils/searchSlice";
 

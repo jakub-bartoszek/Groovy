@@ -44,11 +44,11 @@ const Dashboard = ({ token }) => {
 						/>
 						<Route
 							path="/playlists/:id"
-							element={<Playlist token={token} />}
+							element={<Playlist width={width} token={token} />}
 						/>
 						<Route
 							path="/liked"
-							element={<LikedTracks token={token} />}
+							element={<LikedTracks width={width} token={token} />}
 						/>
 						<Route
 							path="/search"

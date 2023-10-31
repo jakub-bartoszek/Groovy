@@ -44,7 +44,7 @@ export const TrackList = ({ tracks, token, opacity }) => {
 								dispatch(setCurrentTrack(track.uri));
 							}}
 							key={track.id}
-							className="grid grid-cols-[7%_34%_29%_19%_10%] cursor-pointer rounded-md hover:bg-[#ffffff22] group"
+							className="grid grid-cols-[5%_35%_30%_20%_10%] cursor-pointer rounded-md hover:bg-[#ffffff22] group"
 						>
 							<div className="flex p-2 items-center justify-center group-hover:hidden">
 								{track.index}

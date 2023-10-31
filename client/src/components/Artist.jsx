@@ -1,28 +1,41 @@
 import axios from "axios";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import {
-	selectCurrentTrack,
-	setCurrentTrack
+	selectBgColor,
+	setBgColor,
+	setOpacity
 } from "../utils/spotifyDataSlice";
 import ColorThief from "colorthief/dist/color-thief.mjs";
+import { ArtistTopTracks } from "./ArtistTopTracks";
 
 export const Artist = ({ token }) => {
 	const { id } = useParams();
 	const [artist, setArtist] = useState({});
 	const [topTracks, setTopTracks] = useState([]);
-	const [bgColor, setBgColor] = useState("");
-	const [showMore, setShowMore] = useState(false);
 
+const bgColor = useSelector(selectBgColor)	
+	const scrollRef = useRef();
 	const dispatch = useDispatch();
-	const currentTrack = useSelector(selectCurrentTrack);
+
 	const colorThief = new ColorThief();
 	const imageRef = useRef();
 
-	useEffect(() => {
-		setShowMore(false);
-	}, [id]);
+	const _ = require("lodash");
+
+	const throttledScroll = useCallback(
+		_.throttle(
+			() => {
+				dispatch(setOpacity(scrollRef.current.scrollTop / 300));
+			},
+			100,
+			{ leading: false }
+		),
+		[setOpacity]
+	);
+
+
 
 	useEffect(() => {
 		const getArtist = async () => {
@@ -61,14 +74,17 @@ export const Artist = ({ token }) => {
 					response.data.tracks.map((track, index) => {
 						return {
 							index: index + 1,
-							trackName: track.name,
-							albumName: track.album.name,
+							name: track.name,
+							album: track.album.name,
 							artists: track.artists.map((artist) => artist.name),
 							image:
 								track.album.images.length === 0
 									? null
 									: track.album.images[0].url,
-							uri: track.uri
+							uri: track.uri,
+							duration: (track.duration_ms / 60000)
+							.toFixed(2)
+							.toString(),
 						};
 					})
 				);
@@ -78,86 +94,52 @@ export const Artist = ({ token }) => {
 	}, [token, id, artist]);
 
 	return (
-		<div className="h-full w-full overflow-y-scroll text-white bg-[#121212]">
-			<div
-				className="w-full h-[350px] flex"
-				style={{
-					backgroundColor: bgColor,
-					boxShadow: `0 0 400px 80px ${bgColor}`
-				}}
-			>
-				<div className="flex self-end gap-4 w-full p-4 bg-gradient-to-t from-[#00000070]">
-					{artist.image ? (
-						<div className="w-[232px] h-[232px] 2xl:w-[190px] 2xl:h-[190px] self-end">
-							<img
-								ref={imageRef}
-								onLoad={() => {
-									const img = imageRef.current;
-									const R = colorThief.getColor(img)[0];
-									const G = colorThief.getColor(img)[1];
-									const B = colorThief.getColor(img)[2];
-									setBgColor(`rgb(${R} ,${G}, ${B})`);
-								}}
-								className="h-full w-full shadow-2xl object-cover rounded-full image"
-								src={artist.image}
-								alt="Liked songs"
-								crossOrigin="Anonymous"
-							/>
-						</div>
-					) : (
-						<div className="w-64 h-64 shadow-2xl bg-black" />
-					)}
-					<div className="self-end flex flex-col gap-4">
-						<p>Artist</p>
-						<p className=" text-5xl font-bold">{artist.name}</p>
-						<p>{`${artist.followersCount} followers`}</p>
-					</div>
-				</div>
-			</div>
-			<div className="flex flex-col p-4">
-				<p className="font-bold text-2xl py-6">Top tracks</p>
-				<div className="flex flex-col">
-					{topTracks.slice(0, showMore ? 10 : 5).map((track) => (
-						<div
-							key={track.index}
-							className="flex items-center gap-4 cursor-pointer hover:bg-[#ffffff10] py-2 px-4 rounded-md"
-							onClick={() => {
-								dispatch(setCurrentTrack(track.uri));
-							}}
-						>
-							<div>{track.index}</div>
-
-							<img
-								alt={track.name}
-								src={track.image}
-								className="w-12"
-							></img>
-							<div>
-								<p
-									className={`${
-										track.uri === currentTrack[0]
-											? "text-green-500"
-											: "text-white"
-									} font-bold`}
-								>
-									{track.trackName}
-								</p>
-								<p className="text-muted">
-									{track.artists.join(", ")}
-								</p>
-							</div>
-						</div>
-					))}
-					<button
-						className="w-fit font-bold"
-						onClick={() => {
-							setShowMore((showMore) => !showMore);
+		<div className="h-full overflow-hidden relative rounded-md text-white">
+			{artist && (
+				<div
+					ref={scrollRef}
+					onScroll={throttledScroll}
+					className="h-full overflow-y-scroll bg-[#121212]"
+				>
+					<div
+						className="w-full h-[350px] flex"
+						style={{
+							backgroundColor: `rgb(${bgColor.R}, ${bgColor.G}, ${bgColor.B})`,
+							boxShadow: `0 0 200px 80px #000000aa, 0 0 200px 80px rgb(${bgColor.R}, ${bgColor.G}, ${bgColor.B})`
 						}}
 					>
-						Show {showMore ? "less" : "more"}
-					</button>
+						<div className="flex self-end gap-4 w-full p-5 bg-gradient-to-t from-[#00000070]">
+							<div className="min-w-[190px] w-[190px] h-[190px] lg:h-[232px] lg:min-w-[232px] rounded-full">
+							{artist.image && (
+									<img
+										className="h-full w-full shadow-2xl image object-cover rounded-full"
+										ref={imageRef}
+										onLoad={() => {
+											const img = imageRef.current;
+											const R = colorThief.getColor(img)[0];
+											const G = colorThief.getColor(img)[1];
+											const B = colorThief.getColor(img)[2];
+
+											dispatch(
+												setBgColor({ R: R, G: G, B: B, A: 0 })
+											);
+										}}
+										src={artist.image}
+										alt={artist.name}
+										crossOrigin="Anonymous"
+									/>
+								)}
+							</div>
+							<div className="flex flex-col justify-between drop-shadow-md">
+							<p>Artist</p>
+							<p className="text-7xl font-bold ">{artist.name}</p>
+							<p>{artist.followersCount} followers</p>
+							</div>
+						</div>
+					</div>
+					<ArtistTopTracks token={token} tracks={topTracks}/>
 				</div>
-			</div>
+			)}
 		</div>
 	);
 };

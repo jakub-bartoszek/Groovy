@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
-import { setCurrentTrack } from "../utils/spotifyDataSlice";
-import { PlayIcon } from "../assets/icons/play";
+import { setCurrentTrack } from "../../utils/spotifyDataSlice";
+import { PlayIcon } from "../../assets/icons/play";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
@@ -24,7 +24,7 @@ export const ArtistTopTracks = ({ tracks }) => {
 							dispatch(setCurrentTrack(track.uri));
 						}}
 						key={track.id}
-						className="grid grid-cols-[5%_50%_35%_10%] cursor-pointer rounded-md hover:bg-[#ffffff22] group"
+						className="grid grid-cols-[5%_50%_35%_10%] cursor-pointer rounded-[10px] hover:bg-[#ffffff22] group"
 					>
 						<div className="flex p-2 items-center justify-center group-hover:hidden">
 							{track.index}

@@ -1,10 +1,10 @@
 import { useDispatch } from "react-redux";
-import { setCurrentTrack } from "../utils/spotifyDataSlice";
+import { setCurrentTrack } from "../../utils/spotifyDataSlice";
 import ClockIcon from "@heroicons/react/outline/ClockIcon";
 import CalendarIcon from "@heroicons/react/outline/CalendarIcon";
-import { PlayIcon } from "../assets/icons/play";
+import { PlayIcon } from "../../assets/icons/play";
 
-export const PlaylistTracks = ({ tracks, token, opacity, width }) => {
+export const PlaylistTracks = ({ tracks, opacity, width }) => {
 	const dateFormat = {
 		year: "numeric",
 		month: "short",
@@ -25,7 +25,7 @@ export const PlaylistTracks = ({ tracks, token, opacity, width }) => {
 			>
 				<div
 					className={`grid grid-cols-[5%_35%_30%_20%_10%] border-b-2 border-[#ffffff11] mb-5 ${
-						width <= 600 && "grid-cols-[5%_40%_40%_15%]"
+						width <= 600 && "grid-cols-[5%_45%_35%_15%]"
 					}`}
 				>
 					<p className="flex p-2 justify-center">#</p>
@@ -50,8 +50,8 @@ export const PlaylistTracks = ({ tracks, token, opacity, width }) => {
 								dispatch(setCurrentTrack(track.uri));
 							}}
 							key={track.id}
-							className={`grid grid-cols-[5%_35%_30%_20%_10%] cursor-pointer rounded-md hover:bg-[#ffffff22] group ${
-								width <= 600 && "grid-cols-[5%_40%_40%_15%]"
+							className={`grid grid-cols-[5%_35%_30%_20%_10%] cursor-pointer rounded-[10px] hover:bg-[#ffffff22] group ${
+								width <= 600 && "grid-cols-[5%_45%_35%_15%]"
 							}`}
 						>
 							<div className="flex p-2 items-center justify-center group-hover:hidden">

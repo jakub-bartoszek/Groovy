@@ -1,22 +1,26 @@
-import { Sidebar } from "../components/Sidebar";
+import { Sidebar } from "../components/Sidebar/Sidebar";
 import {
 	BrowserRouter,
 	Navigate,
 	Route,
 	Routes
 } from "react-router-dom";
-import { Search } from "../components/Search";
+import { Search } from "../components/Search/Search";
 import { Player } from "../components/Player";
-import { Home } from "../components/Home";
+import { Home } from "../components/Home/Home";
 import { LikedTracks } from "../components/LikedTracks";
-import { Playlist } from "../components/Playlist";
-import { Artist } from "../components/Artist";
-import { AccountBar } from "../components/AccountBar";
+import { Playlist } from "../components/Playlist/Playlist";
+import { Artist } from "../components/Artist/Artist";
+import { AccountBar } from "../components/AccountBar/AccountBar";
 import { useEffect, useRef, useState } from "react";
+import useAuth from "../utils/useAuth";
 
-const Dashboard = ({ token }) => {
+
+const Dashboard = ({ code }) => {
 	const [width, setWidth] = useState();
 	const contentWrapperRef = useRef()
+	const accessToken = useAuth(code);
+
 
 	useEffect(() => {
 		const element = contentWrapperRef.current;
@@ -33,30 +37,30 @@ const Dashboard = ({ token }) => {
 
 	return (
 		<BrowserRouter>
-			<div className="grid grid-cols-[auto_2fr] grid-rows-[1fr_80px] gap-2 bg-black h-screen max-h-screen p-2">
-				<Sidebar />
+			<div className="grid grid-cols-[auto_2fr]  grid-rows-[1fr_80px] gap-2 bg-[black] h-screen max-h-screen p-2">
+				<Sidebar accessToken={accessToken} />
 				<div ref={contentWrapperRef} className="flex flex-col h-[100%] overflow-hidden rounded-xl relative">
-					<AccountBar />
+					<AccountBar accessToken={accessToken} />
 					<Routes>
 						<Route
 							path="/artists/:id"
-							element={<Artist token={token} />}
+							element={<Artist accessToken={accessToken} />}
 						/>
 						<Route
 							path="/playlists/:id"
-							element={<Playlist width={width} token={token} />}
+							element={<Playlist width={width} accessToken={accessToken} />}
 						/>
 						<Route
 							path="/liked"
-							element={<LikedTracks width={width} token={token} />}
+							element={<LikedTracks width={width} accessToken={accessToken} />}
 						/>
 						<Route
 							path="/search"
-							element={<Search token={token} />}
+							element={<Search width={width} accessToken={accessToken} />}
 						/>
 						<Route
 							path="/home"
-							element={<Home width={width} token={token} />}
+							element={<Home width={width} accessToken={accessToken} />}
 						/>
 						<Route
 							path="/"
@@ -64,7 +68,7 @@ const Dashboard = ({ token }) => {
 						/>
 					</Routes>
 				</div>
-				<Player token={token} />
+				<Player accessToken={accessToken} />
 			</div>
 		</BrowserRouter>
 	);

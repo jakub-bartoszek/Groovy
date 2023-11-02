@@ -1,14 +1,14 @@
 import React, { useRef, useState } from "react";
-import { LibraryIcon } from "../assets/icons/library";
-import { LeftArrowIcon } from "../assets/icons/left-arrow";
-import { RightArrowIcon } from "../assets/icons/right-arrow";
-import { CrossIcon } from "../assets/icons/cross";
-import { CategoryButton } from "./CategoryButton";
-import { Playlists } from "./Playlists";
-import { TopTracks } from "./TopTracks";
-import { TopArtists } from "./TopArtists";
+import { LibraryIcon } from "../../../assets/icons/library";
+import { LeftArrowIcon } from "../../../assets/icons/left-arrow";
+import { RightArrowIcon } from "../../../assets/icons/right-arrow";
+import { CrossIcon } from "../../../assets/icons/cross";
+import { CategoryButton } from "../../common/CategoryButton";
+import { Playlists } from "./Playlists/Playlists";
+import { TopTracks } from "./TopTracks/TopTracks";
+import { TopArtists } from "./TopArtists/TopArtists";
 
-export const Library = ({ width }) => {
+export const Library = ({ width, accessToken }) => {
 	const contentWrapper = useRef(null);
 	const [libraryScrollPosition, setLibraryScrollPosition] =
 		useState(0);
@@ -21,7 +21,7 @@ export const Library = ({ width }) => {
 	};
 
 	return (
-		<div className="rounded-md text-[#b3b3b3] bg-[#121212] h-full overflow-hidden flex flex-col">
+		<div className="rounded-[10px] text-[#b3b3b3] bg-[#121212] h-full overflow-hidden flex flex-col">
 			<h2
 				className={`flex items-center gap-4 py-4 px-[19px] font-bold ${
 					(width <= 70) & (libraryScrollPosition !== 0) &&
@@ -124,14 +124,14 @@ export const Library = ({ width }) => {
 			>
 				{category === "playlists" ||
 				category === "all" ? (
-					<Playlists width={width} />
+					<Playlists width={width} accessToken={accessToken} />
 				) : null}
 				{category === "tracks" || category === "all" ? (
-					<TopTracks width={width}/>
+					<TopTracks width={width} accessToken={accessToken}/>
 				) : null}
 				{category === "artists" ||
 				category === "all" ? (
-					<TopArtists width={width}/>
+					<TopArtists width={width} accessToken={accessToken}/>
 				) : null}
 			</ul>
 		</div>

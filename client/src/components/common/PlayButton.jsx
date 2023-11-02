@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
-import { addToQueue, setCurrentTrack } from "../utils/spotifyDataSlice";
-import { PlayIcon } from "../assets/icons/play";
+import { addToQueue, setCurrentTrack } from "../../utils/spotifyDataSlice";
+import { PlayIcon } from "../../assets/icons/play";
 
 export const PlayButton = ({playlist}) => {
 const dispatch = useDispatch()

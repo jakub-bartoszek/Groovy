@@ -1,11 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
-import { SearchIcon } from "../assets/icons/search";
+import { SearchIcon } from "../../assets/icons/search";
 import {
 	selectSearchQuery,
 	setSearchQuery
-} from "../utils/searchSlice";
+} from "../../utils/searchSlice";
 
-export const SearchBar = () => {
+export const SearchBar = ({accessToken}) => {
 	const dispatch = useDispatch();
 	const searchQuery = useSelector(selectSearchQuery);
 

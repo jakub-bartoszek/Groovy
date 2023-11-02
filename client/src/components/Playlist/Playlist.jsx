@@ -9,12 +9,12 @@ import {
 	setBgColor,
 	setCurrentTrack,
 	setOpacity
-} from "../utils/spotifyDataSlice";
+} from "../../utils/spotifyDataSlice";
 import axios from "axios";
 import ColorThief from "colorthief/dist/color-thief.mjs";
-import { PlayIcon } from "../assets/icons/play";
+import { PlayIcon } from "../../assets/icons/play";
 
-export const Playlist = ({ token, width }) => {
+export const Playlist = ({ accessToken, width }) => {
 	const dispatch = useDispatch();
 	const opacity = useSelector(selectOpacity);
 	const { id } = useParams();
@@ -29,7 +29,7 @@ export const Playlist = ({ token, width }) => {
 	const throttledScroll = useCallback(
 		_.throttle(
 			() => {
-				dispatch(setOpacity(scrollRef.current.scrollTop / 300));
+				dispatch(setOpacity(scrollRef.current.scrollTop / 400));
 			},
 			100,
 			{ leading: false }
@@ -43,7 +43,7 @@ export const Playlist = ({ token, width }) => {
 				`https://api.spotify.com/v1/playlists/${id}?limit=50`,
 				{
 					headers: {
-						Authorization: "Bearer " + token,
+						Authorization: "Bearer " + accessToken,
 						"Content-Type": "application/json"
 					}
 				}
@@ -87,10 +87,10 @@ export const Playlist = ({ token, width }) => {
 		};
 
 		getPlaylistItems();
-	}, [token, id]);
+	}, [accessToken, id]);
 
 	return (
-		<div className="h-full overflow-hidden relative rounded-md text-white">
+		<div className="h-full overflow-hidden relative rounded-[10px] text-white">
 			{playlist && (
 				<div
 					ref={scrollRef}
@@ -105,10 +105,10 @@ export const Playlist = ({ token, width }) => {
 						}}
 					>
 						<div className="flex self-end gap-4 w-full p-5 bg-gradient-to-t from-[#00000070]">
-							<div className="bg-black min-w-[190px] w-[190px] h-[190px] lg:h-[232px] lg:min-w-[232px]">
+							<div className="bg-black min-w-[190px] h-[190px] lg:h-[232px] lg:min-w-[232px]">
 								{playlist.image && (
 									<img
-										className="h-full shadow-2xl image object-cover"
+										className="h-full w-full shadow-2xl object-cover image"
 										ref={imageRef}
 										onLoad={() => {
 											const img = imageRef.current;
@@ -126,10 +126,10 @@ export const Playlist = ({ token, width }) => {
 									/>
 								)}
 							</div>
-							<div className="flex flex-col justify-between">
+							<div className="flex flex-col justify-between overflow-hidden">
 								<div>Playlist</div>
-								<div className="flex flex-col gap-4">
-									<p className="text-7xl font-bold">
+								<div className="flex flex-col gap-4 overflow-hidden">
+									<p className="text-5xl lg:text-7xl font-bold text-ellipsis whitespace-nowrap overflow-hidden">
 										{playlist.name}
 									</p>
 									<div className="flex items-center gap-2">
@@ -142,15 +142,17 @@ export const Playlist = ({ token, width }) => {
 							</div>
 						</div>
 					</div>
-					<div onClick={() => {
-						dispatch(setCurrentTrack(playlist.queue[0]))
-						dispatch(addToQueue(playlist.queue.slice(1)))
-
-					}} className="w-14 h-14 flex items-center justify-center cursor-pointer m-5 bg-green-500 rounded-full text-black p-2">
+					<div
+						onClick={() => {
+							dispatch(setCurrentTrack(playlist.queue[0]));
+							dispatch(addToQueue(playlist.queue.slice(1)));
+						}}
+						className="w-14 h-14 flex items-center justify-center cursor-pointer m-5 bg-green-500 rounded-full text-black p-2"
+					>
 						<PlayIcon size={20} />
 					</div>
 					<PlaylistTracks
-					width={width}
+						width={width}
 						opacity={opacity}
 						tracks={tracks}
 					/>

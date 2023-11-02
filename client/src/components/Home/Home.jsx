@@ -1,10 +1,13 @@
 import axios from "axios";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { selectBgColor, setOpacity } from "../utils/spotifyDataSlice";
+import {
+	selectBgColor,
+	setOpacity
+} from "../../utils/spotifyDataSlice";
 import { Tile } from "./Tile";
 
-export const Home = ({ token, width }) => {
+export const Home = ({ accessToken, width }) => {
 	const dispatch = useDispatch();
 	const [recentlyPlayedTracks, setRecentlyPlayedTracks] = useState(
 		[]
@@ -25,13 +28,13 @@ export const Home = ({ token, width }) => {
 	);
 
 	useEffect(() => {
-		if (token) {
+		if (accessToken) {
 			const getRecentlyPlayedTracks = async () => {
 				const response = await axios.get(
 					`https://api.spotify.com/v1/me/player/recently-played?limit=5`,
 					{
 						headers: {
-							Authorization: "Bearer " + token
+							Authorization: "Bearer " + accessToken
 						}
 					}
 				);
@@ -39,10 +42,10 @@ export const Home = ({ token, width }) => {
 			};
 			getRecentlyPlayedTracks();
 		}
-	}, [token]);
+	}, [accessToken]);
 
 	return (
-		<div className="h-full overflow-hidden relative rounded-md text-white">
+		<div className="h-full overflow-hidden relative bg-[#121212] rounded-[10px] text-white">
 			<div
 				ref={scrollRef}
 				onScroll={throttledScroll}
@@ -56,16 +59,17 @@ export const Home = ({ token, width }) => {
 					}}
 					className="pt-[72px] p-4 bg-red-500"
 				>
-					<h1 className=" text-3xl font-bold py-6">Hello! {width}</h1>
-					<div
-						className={`grid grid-cols-3 gap-4 font-semibold ${
-							width < 700 && "grid-cols-2"
-						} ${width < 500 && "grid-cols-1"}`}
+					<h1 className=" text-3xl font-bold py-6">Hello!{window.innerWidth}</h1>
+					<ul
+						className={`grid gap-4 font-semibold
+						${width > 900 && "grid-cols-3"}
+						${(width > 550 && width < 900) && "grid-cols-2"}
+						${width < 550 && "grid-cols-1"}`}
 					>
 						<Tile
 							width={width}
 							name="Liked songs"
-							imgSrc="https://misc.scdn.co/liked-songs/liked-songs-64.png"
+							imgSrc="https://misc.scdn.co/liked-songs/liked-songs-300.png"
 						/>
 						{recentlyPlayedTracks.map((track) => (
 							<Tile
@@ -73,7 +77,7 @@ export const Home = ({ token, width }) => {
 								track={track}
 							/>
 						))}
-					</div>
+					</ul>
 				</div>
 				<div className="bg-[#121212] h-full w-full"></div>
 			</div>

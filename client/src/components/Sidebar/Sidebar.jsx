@@ -1,11 +1,11 @@
 import { Resizable } from "re-resizable";
 import { useEffect, useRef, useState } from "react";
-import { HomeIcon } from "../assets/icons/home";
-import { SearchIcon } from "../assets/icons/search";
-import { Library } from "./Library";
+import { HomeIcon } from "../../assets/icons/home";
+import { SearchIcon } from "../../assets/icons/search";
+import { Library } from "./Library/Library";
 import { NavLink } from "react-router-dom";
 
-export const Sidebar = () => {
+export const Sidebar = ({ accessToken }) => {
 	const [width, setWidth] = useState();
 	const sidebarRef = useRef();
 	let snap = [];
@@ -39,7 +39,11 @@ export const Sidebar = () => {
 			snap={{
 				x: [70].concat(snap)
 			}}
-			maxWidth="420px"
+			maxWidth={
+				(window.innerWidth > 900 && "420px") ||
+				(window.innerWidth < 900 && window.innerWidth > 700 && "300px") ||
+				(window.innerWidth < 700 && "70px")
+			}
 			defaultSize={{
 				width: "300px",
 				height: "100%"
@@ -50,7 +54,7 @@ export const Sidebar = () => {
 				ref={sidebarRef}
 			>
 				<nav
-					className={`py-4 px-[19px] flex flex-col rounded-md gap-4 font-bold bg-[#121212] text-[#b3b3b3] ${
+					className={`py-4 px-[19px] flex flex-col rounded-[10px] gap-4 font-bold bg-[#121212] text-[#b3b3b3] ${
 						width <= 70 && "items-center"
 					}`}
 				>
@@ -71,7 +75,10 @@ export const Sidebar = () => {
 						</button>
 					</NavLink>
 				</nav>
-				<Library width={width} />
+				<Library
+					accessToken={accessToken}
+					width={width}
+				/>
 			</div>
 		</Resizable>
 	);

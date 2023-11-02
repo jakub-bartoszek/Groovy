@@ -6,11 +6,11 @@ import {
 	selectBgColor,
 	setBgColor,
 	setOpacity
-} from "../utils/spotifyDataSlice";
+} from "../../utils/spotifyDataSlice";
 import ColorThief from "colorthief/dist/color-thief.mjs";
 import { ArtistTopTracks } from "./ArtistTopTracks";
 
-export const Artist = ({ token }) => {
+export const Artist = ({ accessToken }) => {
 	const { id } = useParams();
 	const [artist, setArtist] = useState({});
 	const [topTracks, setTopTracks] = useState([]);
@@ -43,7 +43,7 @@ const bgColor = useSelector(selectBgColor)
 				`https://api.spotify.com/v1/artists/${id}`,
 				{
 					headers: {
-						Authorization: "Bearer " + token,
+						Authorization: "Bearer " + accessToken,
 						"Content-Type": "application/json"
 					}
 				}
@@ -56,7 +56,7 @@ const bgColor = useSelector(selectBgColor)
 			});
 		};
 		getArtist();
-	}, [token, id]);
+	}, [accessToken, id]);
 
 	useEffect(() => {
 		const getArtistTracks = async () => {
@@ -65,7 +65,7 @@ const bgColor = useSelector(selectBgColor)
 					`https://api.spotify.com/v1/artists/${id}/top-tracks?market=PL`,
 					{
 						headers: {
-							Authorization: "Bearer " + token,
+							Authorization: "Bearer " + accessToken,
 							"Content-Type": "application/json"
 						}
 					}
@@ -91,10 +91,10 @@ const bgColor = useSelector(selectBgColor)
 			}
 		};
 		getArtistTracks();
-	}, [token, id, artist]);
+	}, [accessToken, id, artist]);
 
 	return (
-		<div className="h-full overflow-hidden relative rounded-md text-white">
+		<div className="h-full overflow-hidden relative rounded-[10px] text-white">
 			{artist && (
 				<div
 					ref={scrollRef}
@@ -137,7 +137,7 @@ const bgColor = useSelector(selectBgColor)
 							</div>
 						</div>
 					</div>
-					<ArtistTopTracks token={token} tracks={topTracks}/>
+					<ArtistTopTracks accessToken={accessToken} tracks={topTracks}/>
 				</div>
 			)}
 		</div>

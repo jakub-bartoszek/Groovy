@@ -1,14 +1,14 @@
-import { LeftArrowIcon } from "../assets/icons/left-arrow";
+import { LeftArrowIcon } from "../../assets/icons/left-arrow";
 import BellIcon from "@heroicons/react/outline/BellIcon";
 import {
 	selectBgColor,
 	selectOpacity
-} from "../utils/spotifyDataSlice";
+} from "../../utils/spotifyDataSlice";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { SearchBar } from "./SearchBar";
 
-export const AccountBar = () => {
+export const AccountBar = ({accessToken}) => {
 	const bgColor = useSelector(selectBgColor);
 	const opacity = useSelector(selectOpacity);
 	const navigate = useNavigate();
@@ -28,7 +28,7 @@ export const AccountBar = () => {
 				<LeftArrowIcon size={18} />
 			</button>
 			<div>
-				{window.location.href.includes("search") && <SearchBar />}
+				{window.location.href.includes("search") && <SearchBar accessToken={accessToken} />}
 			</div>
 			<button className="h-8 bg-[#000000aa] rounded-full flex items-center px-4 hover:scale-105 text-sm">
 				Zainstaluj aplikację
@@ -41,7 +41,7 @@ export const AccountBar = () => {
 				className="group relative cursor-pointer"
 			>
 				<div className="h-8 w-8 bg-[#000000aa] rounded-full flex items-center justify-center  hover:scale-105"></div>
-				<ul className="absolute right-0 top-10 w-56 bg-[#282828] text-sm p-1 rounded-md hidden group-focus-within:block scale-100 z-20">
+				<ul className="absolute right-0 top-10 w-56 bg-[#282828] text-sm p-1 rounded-[10px] hidden group-focus-within:block scale-100 z-20">
 					<li>
 						<button className="hover:bg-[#3e3e3e] p-3 w-full text-left">
 							Konto

@@ -7,7 +7,7 @@ import {
 	selectQueue
 } from "../utils/spotifyDataSlice";
 
-export const Player = ({ token }) => {
+export const Player = ({ accessToken }) => {
 	const track = useSelector(selectCurrentTrack);
 	const queue = useSelector(selectQueue);
 	const isPlaying = useSelector(selectIsPlaying);
@@ -21,7 +21,7 @@ export const Player = ({ token }) => {
 				showSaveIcon={true}
 				play={isPlaying}
 				uris={track.concat(queue)}
-				token={token}
+				token={accessToken}
 				styles={{
 					activeColor: "#1cb954",
 					bgColor: "#000000",

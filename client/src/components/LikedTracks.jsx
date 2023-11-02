@@ -7,10 +7,10 @@ import {
 	setBgColor,
 	setOpacity
 } from "../utils/spotifyDataSlice";
-import { PlaylistTracks } from "./PlaylistTracks";
-import { PlayButton } from "./PlayButton";
+import { PlaylistTracks } from "./Playlist/PlaylistTracks";
+import { PlayButton } from "./common/PlayButton";
 
-export const LikedTracks = ({ token, width }) => {
+export const LikedTracks = ({ accessToken, width }) => {
 	const dispatch = useDispatch();
 	const [playlist, setPlaylist] = useState();
 	const opacity = useSelector(selectOpacity);
@@ -23,7 +23,7 @@ export const LikedTracks = ({ token, width }) => {
 	const throttledScroll = useCallback(
 		_.throttle(
 			() => {
-				dispatch(setOpacity(scrollRef.current.scrollTop / 300));
+				dispatch(setOpacity(scrollRef.current.scrollTop / 400));
 			},
 			100,
 			{ leading: false }
@@ -37,7 +37,7 @@ export const LikedTracks = ({ token, width }) => {
 				`https://api.spotify.com/v1/me/tracks`,
 				{
 					headers: {
-						Authorization: "Bearer " + token,
+						Authorization: "Bearer " + accessToken,
 						"Content-Type": "application/json"
 					}
 				}
@@ -70,10 +70,10 @@ export const LikedTracks = ({ token, width }) => {
 		};
 
 		getLikedTracks();
-	}, [token]);
+	}, [accessToken]);
 
 	return (
-		<div className="h-full overflow-hidden relative rounded-md text-white">
+		<div className="h-full overflow-hidden relative rounded-[10px] text-white">
 			<div
 				ref={scrollRef}
 				onScroll={throttledScroll}
@@ -87,7 +87,7 @@ export const LikedTracks = ({ token, width }) => {
 					}}
 				>
 					<div className="flex self-end gap-4 w-full p-5 bg-gradient-to-t from-[#00000070]">
-						<div className=" bg-black min-w-[190px] h-[190px] lg:h-[232px] lg:min-w-[232px]">
+						<div className="bg-black min-w-[190px] h-[190px] lg:h-[232px] lg:min-w-[232px]">
 							<img
 								className="h-full w-full shadow-2xl object-cover image"
 								onLoad={() => {
@@ -105,7 +105,7 @@ export const LikedTracks = ({ token, width }) => {
 						<div className="flex flex-col justify-between">
 							<div>Playlist</div>
 							<div className="flex flex-col gap-4">
-								<p className="text-7xl font-bold">Liked songs</p>
+								<p className="text-5xl lg:text-7xl font-bold">Liked songs</p>
 							</div>
 						</div>
 					</div>

@@ -13,14 +13,12 @@ import { Artist } from "../components/Artist/Artist";
 import { AccountBar } from "../components/AccountBar/AccountBar";
 import { useEffect, useRef, useState } from "react";
 import useAuth from "../utils/useAuth";
-import { LikedSongs } from "../components/LikedSongs";
-
+import { LikedSongs } from "../components/Playlist/LikedSongs";
 
 const Dashboard = ({ code }) => {
 	const [width, setWidth] = useState();
-	const contentWrapperRef = useRef()
+	const contentWrapperRef = useRef();
 	const accessToken = useAuth(code);
-
 
 	useEffect(() => {
 		const element = contentWrapperRef.current;
@@ -36,41 +34,80 @@ const Dashboard = ({ code }) => {
 	}, [width]);
 
 	return (
-		<BrowserRouter>
-			<div className="grid grid-cols-[auto_2fr]  grid-rows-[1fr_80px] gap-2 bg-[black] h-screen max-h-screen p-2">
-				<Sidebar accessToken={accessToken} />
-				<div ref={contentWrapperRef} className="flex flex-col h-[100%] overflow-hidden rounded-xl relative">
-					<AccountBar width={width} accessToken={accessToken} />
-					<Routes>
-						<Route
-							path="/artists/:id"
-							element={<Artist width={width} accessToken={accessToken} />}
+		<div className="overflow-hidden w-screen max-w-screen h-screen max-h-screen">
+			<BrowserRouter>
+				<div
+					className={`grid grid-cols-[auto_2fr] h-full w-full ${
+						window.innerWidth > 767
+							? "grid-rows-[1fr_80px]"
+							: "grid-rows-[1fr_150px]"
+					} gap-2 bg-[black] p-2`}
+				>
+					<Sidebar accessToken={accessToken} />
+					<div
+						ref={contentWrapperRef}
+						className="flex flex-col h-[100%] overflow-hidden rounded-xl relative"
+					>
+						<AccountBar
+							width={width}
+							accessToken={accessToken}
 						/>
-						<Route
-							path="/playlists/:id"
-							element={<Playlist width={width} accessToken={accessToken} />}
-						/>
-						<Route
-							path="/liked"
-							element={<LikedSongs width={width} accessToken={accessToken} />}
-						/>
-						<Route
-							path="/search"
-							element={<Search width={width} accessToken={accessToken} />}
-						/>
-						<Route
-							path="/home"
-							element={<Home width={width} accessToken={accessToken} />}
-						/>
-						<Route
-							path="/"
-							element={<Navigate to="/home" />}
-						/>
-					</Routes>
+						<Routes>
+							<Route
+								path="/artists/:id"
+								element={
+									<Artist
+										width={width}
+										accessToken={accessToken}
+									/>
+								}
+							/>
+							<Route
+								path="/playlists/:id"
+								element={
+									<Playlist
+										width={width}
+										accessToken={accessToken}
+									/>
+								}
+							/>
+							<Route
+								path="/liked"
+								element={
+									<LikedSongs
+										width={width}
+										accessToken={accessToken}
+									/>
+								}
+							/>
+							<Route
+								path="/search"
+								element={
+									<Search
+										width={width}
+										accessToken={accessToken}
+									/>
+								}
+							/>
+							<Route
+								path="/home"
+								element={
+									<Home
+										width={width}
+										accessToken={accessToken}
+									/>
+								}
+							/>
+							<Route
+								path="/"
+								element={<Navigate to="/home" />}
+							/>
+						</Routes>
+					</div>
+					<Player accessToken={accessToken} />
 				</div>
-				<Player accessToken={accessToken} />
-			</div>
-		</BrowserRouter>
+			</BrowserRouter>
+		</div>
 	);
 };
 

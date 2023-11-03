@@ -1,6 +1,5 @@
 import { useSelector } from "react-redux";
 import SpotifyPlayer from "react-spotify-web-playback";
-
 import {
 	selectCurrentTrack,
 	selectIsPlaying,
@@ -13,7 +12,7 @@ export const Player = ({ accessToken }) => {
 	const isPlaying = useSelector(selectIsPlaying);
 
 	return (
-		<div className="col-span-2">
+		<div className="col-span-2 flex items-center">
 			<SpotifyPlayer
 				locale={true}
 				name="Groovy"
@@ -31,8 +30,7 @@ export const Player = ({ accessToken }) => {
 					sliderHandleColor: "#fff",
 					sliderTrackColor: "#666",
 					trackArtistColor: "#ccc",
-					trackNameColor: "#fff",
-
+					trackNameColor: "#fff"
 				}}
 			/>
 		</div>

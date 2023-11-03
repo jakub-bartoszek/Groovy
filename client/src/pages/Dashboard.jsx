@@ -8,12 +8,12 @@ import {
 import { Search } from "../components/Search/Search";
 import { Player } from "../components/Player";
 import { Home } from "../components/Home/Home";
-import { LikedTracks } from "../components/LikedTracks";
 import { Playlist } from "../components/Playlist/Playlist";
 import { Artist } from "../components/Artist/Artist";
 import { AccountBar } from "../components/AccountBar/AccountBar";
 import { useEffect, useRef, useState } from "react";
 import useAuth from "../utils/useAuth";
+import { LikedSongs } from "../components/LikedSongs";
 
 
 const Dashboard = ({ code }) => {
@@ -40,11 +40,11 @@ const Dashboard = ({ code }) => {
 			<div className="grid grid-cols-[auto_2fr]  grid-rows-[1fr_80px] gap-2 bg-[black] h-screen max-h-screen p-2">
 				<Sidebar accessToken={accessToken} />
 				<div ref={contentWrapperRef} className="flex flex-col h-[100%] overflow-hidden rounded-xl relative">
-					<AccountBar accessToken={accessToken} />
+					<AccountBar width={width} accessToken={accessToken} />
 					<Routes>
 						<Route
 							path="/artists/:id"
-							element={<Artist accessToken={accessToken} />}
+							element={<Artist width={width} accessToken={accessToken} />}
 						/>
 						<Route
 							path="/playlists/:id"
@@ -52,7 +52,7 @@ const Dashboard = ({ code }) => {
 						/>
 						<Route
 							path="/liked"
-							element={<LikedTracks width={width} accessToken={accessToken} />}
+							element={<LikedSongs width={width} accessToken={accessToken} />}
 						/>
 						<Route
 							path="/search"

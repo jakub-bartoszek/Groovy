@@ -20,7 +20,8 @@ export const AccountBar = ({ accessToken, width }) => {
 				backgroundColor: `rgba(${bgColor?.R}, ${bgColor?.G}, ${bgColor?.B}, ${opacity})`,
 				transition: "background-color 0.1s linear"
 			}}
-			className={`grid grid-cols-[auto_1fr_auto_auto_auto] gap-3 px-5 items-center w-full absolute top-0 h-[72px] z-10 text-white`}
+			className={`gap-3 px-5 items-center w-full absolute top-0 h-[72px] z-10 text-white
+			${window.innerWidth > 500 ? "grid grid-cols-[auto_1fr_auto_auto_auto]" : "grid grid-cols-[auto_1fr_auto]"}`}
 		>
 			<button
 				onClick={() => navigate(-1)}
@@ -33,20 +34,24 @@ export const AccountBar = ({ accessToken, width }) => {
 					<SearchBar accessToken={accessToken} />
 				)}
 			</div>
-			<button
-				className={`h-8 ${
-					width < 700 ? "w-8" : "px-4"
-				} bg-[#000000aa] text-muted rounded-full flex items-center justify-center hover:scale-105 hover:text-white`}
-			>
-				{width > 700 ? (
-					"Download app"
-				) : (
-					<DownloadIcon className="h-6" />
-				)}
-			</button>
-			<button className="h-8 w-8 bg-[#000000aa] text-muted rounded-full flex items-center justify-center hover:scale-105 hover:text-white">
-				<BellIcon className="h-6" />
-			</button>
+			{window.innerWidth > 500 && (
+				<>
+					<button
+						className={`h-8 ${
+							width < 700 ? "w-8" : "px-4"
+						} bg-[#000000aa] text-muted rounded-full flex items-center justify-center hover:scale-105 hover:text-white`}
+					>
+						{width > 700 ? (
+							"Download app"
+						) : (
+							<DownloadIcon className="h-6" />
+						)}
+					</button>
+					<button className="h-8 w-8 bg-[#000000aa] text-muted rounded-full flex items-center justify-center hover:scale-105 hover:text-white">
+						<BellIcon className="h-6" />
+					</button>
+				</>
+			)}
 			<div
 				tabIndex={1}
 				className="group relative cursor-pointer"

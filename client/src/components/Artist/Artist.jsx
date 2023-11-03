@@ -129,16 +129,14 @@ export const Artist = ({ width, accessToken }) => {
 								)}
 							</div>
 							<div className="flex flex-col justify-between drop-shadow-md overflow-hidden">
-								<p>Artist</p>
-								<p
+								<span>Artist</span>
+								<span
 									className={`font-bold text-ellipsis whitespace-nowrap overflow-hidden
-									${
-										width < 700 ? "text-5xl" : "text-7xl"
-									}`}
+									${width < 700 ? "text-5xl" : "text-7xl"}`}
 								>
-									{artist.name}
-								</p>
-								<p>{artist.followersCount} followers</p>
+									<h1>{artist.name}</h1>
+								</span>
+								<span>{artist.followersCount} followers</span>
 							</div>
 						</div>
 					</div>

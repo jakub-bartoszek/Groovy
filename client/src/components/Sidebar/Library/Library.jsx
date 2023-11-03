@@ -31,7 +31,7 @@ export const Library = ({ width, accessToken }) => {
 				<div className="w-8 h-8 flex items-center justify-center">
 					<LibraryIcon size={22} />
 				</div>
-				{width > 70 && <p>Library</p>}
+				{width > 70 && <span>Library</span>}
 			</h2>
 			{width > 70 && (
 				<div

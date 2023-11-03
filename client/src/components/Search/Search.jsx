@@ -1,14 +1,22 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { CategoryButton } from "../common/CategoryButton";
 import axios from "axios";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { selectSearchQuery } from "../../utils/searchSlice";
+import { nanoid } from "@reduxjs/toolkit";
+import { setBgColor, setOpacity } from "../../utils/spotifyDataSlice";
 
 export const Search = ({ accessToken, width }) => {
 	const searchQuery = useSelector(selectSearchQuery);
 	const [searchResults, setSearchResults] = useState();
 	const [category, setCategory] = useState("track");
 	const contentWrapper = useRef(null);
+
+	const dispatch = useDispatch();
+
+	useEffect(() => {
+		dispatch(setBgColor({ R: 18, G: 18, B: 18 }));
+	});
 
 	useEffect(() => {
 		if (accessToken) {
@@ -34,7 +42,7 @@ export const Search = ({ accessToken, width }) => {
 	return (
 		<div className="h-full overflow-hidden relative rounded-[10px] text-white flex flex-col bg-[#121212]">
 			<div
-				className="gap-2 py-2 px-4 flex overflow-x-scroll items-center hide-scrollbar scroll-smooth sticky top-[72px]"
+				className="gap-2 p-4 flex overflow-x-scroll items-center hide-scrollbar scroll-smooth sticky top-[72px]"
 				ref={contentWrapper}
 			>
 				<CategoryButton
@@ -49,11 +57,11 @@ export const Search = ({ accessToken, width }) => {
 				/>
 			</div>
 			{category === "track" && searchResults && (
-				<ul className="h-full overflow-y-scroll mt-[72px]">
+				<ul className="h-full overflow-y-scroll mt-[72px] px-2">
 					{searchResults.tracks?.items.map((track) => (
 						<li
-							key={track.id}
-							className="flex items-center gap-4 p-2 hover:bg-[#ffffff33] rounded-[10px]"
+							key={nanoid()}
+							className="flex items-center gap-4 p-2 hover:bg-[#ffffff33] rounded-[10px] overflow-hidden"
 						>
 							<img
 								className="w-12 h-12 rounded-[10px]"
@@ -63,9 +71,13 @@ export const Search = ({ accessToken, width }) => {
 								}
 								alt={track.name}
 							/>
-							<div className="flex flex-col">
-								<p>{track.name}</p>
-								<p>{track.artists[0].name}</p>
+							<div className="flex flex-col overflow-hidden">
+								<span className="text-ellipsis whitespace-nowrap overflow-hidden font-semibold">
+									{track.name}
+								</span>
+								<span className="text-ellipsis whitespace-nowrap overflow-hidden text-muted">
+									{track.artists[0].name}
+								</span>
 							</div>
 						</li>
 					))}
@@ -87,7 +99,7 @@ export const Search = ({ accessToken, width }) => {
 				>
 					{searchResults.artists?.items.map((artist) => (
 						<li
-							key={artist.id}
+							key={nanoid()}
 							className="flex flex-col gap-4 p-8 bg-[#181818] rounded-[10px]"
 						>
 							<div className="bg-black min-w-36 min-h-36 w-36 h-36 rounded-full self-center">
@@ -99,10 +111,10 @@ export const Search = ({ accessToken, width }) => {
 								/>
 							</div>
 							<div>
-								<p>
+								<span>
 									<b>{artist.name}</b>
-								</p>
-								<p className="text-sm">Artist</p>
+								</span>
+								<span className="text-sm">Artist</span>
 							</div>
 						</li>
 					))}

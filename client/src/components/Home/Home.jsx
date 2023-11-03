@@ -6,6 +6,7 @@ import {
 	setOpacity
 } from "../../utils/spotifyDataSlice";
 import { Tile } from "./Tile";
+import { NavLink } from "react-router-dom";
 
 export const Home = ({ accessToken, width }) => {
 	const dispatch = useDispatch();
@@ -63,14 +64,16 @@ export const Home = ({ accessToken, width }) => {
 					<ul
 						className={`grid gap-4 font-semibold
 						${width > 900 && "grid-cols-3"}
-						${(width > 550 && width < 900) && "grid-cols-2"}
+						${width > 550 && width < 900 && "grid-cols-2"}
 						${width < 550 && "grid-cols-1"}`}
 					>
+						<NavLink to="/liked">
 						<Tile
 							width={width}
 							name="Liked songs"
 							imgSrc="https://misc.scdn.co/liked-songs/liked-songs-300.png"
 						/>
+						</NavLink>
 						{recentlyPlayedTracks.map((track) => (
 							<Tile
 								width={width}

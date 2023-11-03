@@ -10,12 +10,12 @@ import {
 import ColorThief from "colorthief/dist/color-thief.mjs";
 import { ArtistTopTracks } from "./ArtistTopTracks";
 
-export const Artist = ({ accessToken }) => {
+export const Artist = ({ width, accessToken }) => {
 	const { id } = useParams();
 	const [artist, setArtist] = useState({});
 	const [topTracks, setTopTracks] = useState([]);
 
-const bgColor = useSelector(selectBgColor)	
+	const bgColor = useSelector(selectBgColor);
 	const scrollRef = useRef();
 	const dispatch = useDispatch();
 
@@ -34,8 +34,6 @@ const bgColor = useSelector(selectBgColor)
 		),
 		[setOpacity]
 	);
-
-
 
 	useEffect(() => {
 		const getArtist = async () => {
@@ -83,8 +81,8 @@ const bgColor = useSelector(selectBgColor)
 									: track.album.images[0].url,
 							uri: track.uri,
 							duration: (track.duration_ms / 60000)
-							.toFixed(2)
-							.toString(),
+								.toFixed(2)
+								.toString()
 						};
 					})
 				);
@@ -110,7 +108,7 @@ const bgColor = useSelector(selectBgColor)
 					>
 						<div className="flex self-end gap-4 w-full p-5 bg-gradient-to-t from-[#00000070]">
 							<div className="min-w-[190px] w-[190px] h-[190px] lg:h-[232px] lg:min-w-[232px] rounded-full">
-							{artist.image && (
+								{artist.image && (
 									<img
 										className="h-full w-full shadow-2xl image object-cover rounded-full"
 										ref={imageRef}
@@ -130,14 +128,24 @@ const bgColor = useSelector(selectBgColor)
 									/>
 								)}
 							</div>
-							<div className="flex flex-col justify-between drop-shadow-md">
-							<p>Artist</p>
-							<p className="text-7xl font-bold ">{artist.name}</p>
-							<p>{artist.followersCount} followers</p>
+							<div className="flex flex-col justify-between drop-shadow-md overflow-hidden">
+								<p>Artist</p>
+								<p
+									className={`font-bold text-ellipsis whitespace-nowrap overflow-hidden
+									${
+										width < 700 ? "text-5xl" : "text-7xl"
+									}`}
+								>
+									{artist.name}
+								</p>
+								<p>{artist.followersCount} followers</p>
 							</div>
 						</div>
 					</div>
-					<ArtistTopTracks accessToken={accessToken} tracks={topTracks}/>
+					<ArtistTopTracks
+						accessToken={accessToken}
+						tracks={topTracks}
+					/>
 				</div>
 			)}
 		</div>

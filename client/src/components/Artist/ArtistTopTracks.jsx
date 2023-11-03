@@ -15,7 +15,7 @@ export const ArtistTopTracks = ({ tracks }) => {
 	}, [id]);
 
 	return (
-		<div className="w-full px-10">
+		<div className="w-full px-5">
 			<h2 className="text-2xl font-semibold py-5">Popular</h2>
 			{tracks.slice(0, showMore ? 10 : 5)?.map((track) => {
 				return (
@@ -24,7 +24,7 @@ export const ArtistTopTracks = ({ tracks }) => {
 							dispatch(setCurrentTrack(track.uri));
 						}}
 						key={track.id}
-						className="grid grid-cols-[5%_50%_35%_10%] cursor-pointer rounded-[10px] hover:bg-[#ffffff22] group"
+						className="grid grid-cols-[7%_48%_30%_15%] cursor-pointer rounded-[10px] hover:bg-[#ffffff22] group"
 					>
 						<div className="flex p-2 items-center justify-center group-hover:hidden">
 							{track.index}

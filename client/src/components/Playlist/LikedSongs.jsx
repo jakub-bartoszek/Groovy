@@ -6,9 +6,9 @@ import {
 	selectOpacity,
 	setBgColor,
 	setOpacity
-} from "../utils/spotifyDataSlice";
-import { PlaylistTracks } from "./Playlist/PlaylistTracks";
-import { PlayButton } from "./common/PlayButton";
+} from "../../utils/spotifyDataSlice";
+import { PlaylistTracks } from "./PlaylistTracks";
+import { PlayButton } from "../common/PlayButton";
 
 export const LikedSongs = ({ accessToken, width }) => {
 	const dispatch = useDispatch();
@@ -105,7 +105,7 @@ export const LikedSongs = ({ accessToken, width }) => {
 						<div className="flex flex-col justify-between">
 							<div>Playlist</div>
 							<div className="flex flex-col gap-4">
-								<p className="text-5xl lg:text-7xl font-bold">Liked songs</p>
+								<span className="text-5xl lg:text-7xl font-bold">Liked songs</span>
 							</div>
 						</div>
 					</div>

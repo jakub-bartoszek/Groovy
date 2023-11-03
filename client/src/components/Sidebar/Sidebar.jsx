@@ -63,7 +63,7 @@ export const Sidebar = ({ accessToken }) => {
 							<div className="h-8 w-8 flex items-center justify-center">
 								<HomeIcon size={22} />
 							</div>
-							{width > 70 && <p>Home</p>}
+							{width > 70 && <span>Home</span>}
 						</button>
 					</NavLink>
 					<NavLink to="/search">
@@ -71,7 +71,7 @@ export const Sidebar = ({ accessToken }) => {
 							<div className="h-8 w-8 flex items-center justify-center">
 								<SearchIcon size={22} />
 							</div>
-							{width > 70 && <p>Search</p>}
+							{width > 70 && <span>Search</span>}
 						</button>
 					</NavLink>
 				</nav>

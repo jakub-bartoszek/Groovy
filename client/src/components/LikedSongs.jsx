@@ -10,7 +10,7 @@ import {
 import { PlaylistTracks } from "./Playlist/PlaylistTracks";
 import { PlayButton } from "./common/PlayButton";
 
-export const LikedTracks = ({ accessToken, width }) => {
+export const LikedSongs = ({ accessToken, width }) => {
 	const dispatch = useDispatch();
 	const [playlist, setPlaylist] = useState();
 	const opacity = useSelector(selectOpacity);

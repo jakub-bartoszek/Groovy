@@ -3,36 +3,40 @@ import { setCurrentTrack } from "../../utils/spotifyDataSlice";
 import { PlayIcon } from "../../assets/icons/play";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { nanoid } from "@reduxjs/toolkit";
 
 export const ArtistTopTracks = ({ tracks }) => {
 	const { id } = useParams();
 	const dispatch = useDispatch();
 
 	const [showMore, setShowMore] = useState(false);
-  
+
 	useEffect(() => {
 		setShowMore(false);
 	}, [id]);
 
 	return (
-		<div className="w-full px-5">
+		<div className="w-full px-2">
 			<h2 className="text-2xl font-semibold py-5">Popular</h2>
 			{tracks.slice(0, showMore ? 10 : 5)?.map((track) => {
 				return (
 					<div
-						onClick={() => {
-							dispatch(setCurrentTrack(track.uri));
-						}}
-						key={track.id}
-						className="grid grid-cols-[7%_48%_30%_15%] cursor-pointer rounded-[10px] hover:bg-[#ffffff22] group"
+						className="grid grid-cols-[1rem_2fr_1fr_minmax(60px,_1fr)] gap-4 px-4 py-2 group
+						rounded-[10px] hover:bg-[#ffffff22]"
+						key={nanoid()}
 					>
-						<div className="flex p-2 items-center justify-center group-hover:hidden">
+						<span className="flex items-center justify-center group-hover:hidden">
 							{track.index}
-						</div>
-						<div className="hidden p-2 items-center justify-center group-hover:flex">
-							<PlayIcon size={14} />
-						</div>
-						<div className="flex items-center gap-4 p-2 pl-0">
+						</span>
+						<button
+							onClick={() => {
+								dispatch(setCurrentTrack(track.uri));
+							}}
+							className="hidden items-center justify-center group-hover:flex cursor-pointer"
+						>
+							<PlayIcon size={10} />
+						</button>
+						<div className="flex items-center gap-4 text-ellipsis whitespace-nowrap overflow-hidden">
 							<div className="h-[40px] w-[40px] min-h-[40px] min-w-[40px] bg-black">
 								{track.image && (
 									<img
@@ -42,35 +46,32 @@ export const ArtistTopTracks = ({ tracks }) => {
 									/>
 								)}
 							</div>
-							<div className="overflow-hidden flex flex-col justify-center">
-								<p
-									className={`font-semibold text-ellipsis whitespace-nowrap overflow-hidden`}
-								>
+							<div className="flex flex-col justify-center overflow-hidden">
+								<span className="font-semibold text-ellipsis whitespace-nowrap overflow-hidden">
 									{track.name}
-								</p>
-								<p className="text-muted text-ellipsis whitespace-nowrap overflow-hidden">
+								</span>
+								<span className="text-muted text-ellipsis whitespace-nowrap overflow-hidden">
 									{track.artists.join(", ")}
-								</p>
+								</span>
 							</div>
 						</div>
-						<div className="flex p-2">
-							<div className="overflow-hidden flex flex-col justify-center">
-								<p
-									className={`text-ellipsis whitespace-nowrap overflow-hidden`}
-								>
-									{track.album}
-								</p>
-							</div>
+						<div className="flex items-center overflow-hidden">
+							<span className="text-ellipsis whitespace-nowrap overflow-hidden">
+								{track.album}
+							</span>
 						</div>
-						<div className="flex p-2 items-center justify-center">
-							<p className=" text-ellipsis whitespace-nowrap overflow-hidden">
-								{track.duration.replace(".", ":")}
-							</p>
+						<div className="flex items-center justify-center">
+							<span>{track.duration.replace(".", ":")}</span>
 						</div>
 					</div>
 				);
 			})}
-      <button onClick={() => setShowMore(!showMore)}>Show {showMore ? "less" : "more"}</button>
+			<button
+				className="p-5 font-semibold text-muted hover:text-white"
+				onClick={() => setShowMore(!showMore)}
+			>
+				Show {showMore ? "less" : "more"}
+			</button>
 		</div>
 	);
 };

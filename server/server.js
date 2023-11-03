@@ -6,6 +6,7 @@ const app = express();
 
 app.use(cors());
 app.use(bodyParser.json());
+const path = require('path');
 
 app.post("/refresh", (req, res) => {
 
@@ -48,12 +49,11 @@ app.post("/login", (req, res) => {
       res.sendStatus(400);
     });
 });
-
 app.listen(3001);
 
-// app.use(express.static(path.resolve(__dirname, '/public')));
 
-
+// app.listen(3000);
+// app.use(express.static(path.resolve(__dirname, './public')));
 // app.get('*', (req, res) => {
-//   res.sendFile(path.resolve(__dirname, '/public/index.html'));
+//   res.sendFile(path.resolve(__dirname, './public/index.html'));
 // });

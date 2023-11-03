@@ -1,15 +1,10 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
-import {
-	selectToken,
-	setCurrentTrack
-} from "../../../../utils/spotifyDataSlice";
-import { TopTrackItem } from "../TopTrackItem";
+import {TopTrackItem} from "./TopTrackItem";
+import { nanoid } from "@reduxjs/toolkit";
 
 export const TopTracks = ({ accessToken, width }) => {
 	const [topTracks, setTopTracks] = useState([]);
-	const dispatch = useDispatch();
 
 	useEffect(() => {
 		const getTopTracks = async () => {
@@ -33,6 +28,7 @@ export const TopTracks = ({ accessToken, width }) => {
 
 	return topTracks.map((track) => (
 			<TopTrackItem 
+			key={nanoid()}
 			item={track}
 			width={width}/>
 	));

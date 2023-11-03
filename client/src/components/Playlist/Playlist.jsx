@@ -39,6 +39,12 @@ export const Playlist = ({ accessToken, width }) => {
 	);
 
 	useEffect(() => {
+		if(scrollRef.current){
+			scrollRef.current.scrollTop = 0
+		}
+	}, [id])
+
+	useEffect(() => {
 		const getPlaylistItems = async () => {
 			const response = await axios.get(
 				`https://api.spotify.com/v1/playlists/${id}?limit=50`,
@@ -131,14 +137,14 @@ export const Playlist = ({ accessToken, width }) => {
 							<div className="flex flex-col justify-between overflow-hidden">
 								<div>Playlist</div>
 								<div className="flex flex-col gap-4 overflow-hidden">
-									<p className="text-5xl lg:text-7xl font-bold text-ellipsis whitespace-nowrap overflow-hidden">
+									<span className="text-5xl lg:text-7xl font-bold text-ellipsis whitespace-nowrap overflow-hidden">
 										{playlist.name}
-									</p>
+									</span>
 									<div className="flex items-center gap-2">
-										<p className="text-sm">
+										<span className="text-sm">
 											<b>{playlist.owner}</b>
 											{` • ${playlist.tracksCount} tracks`}
-										</p>
+										</span>
 									</div>
 								</div>
 							</div>

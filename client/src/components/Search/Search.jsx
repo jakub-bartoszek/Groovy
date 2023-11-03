@@ -48,7 +48,6 @@ export const Search = ({ accessToken, width }) => {
 					name={"Track"}
 				/>
 			</div>
-			<p>{width}</p>
 			{category === "track" && searchResults && (
 				<ul className="h-full overflow-y-scroll mt-[72px]">
 					{searchResults.tracks?.items.map((track) => (

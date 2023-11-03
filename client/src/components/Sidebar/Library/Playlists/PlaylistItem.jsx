@@ -16,7 +16,7 @@ export const PlaylistItem = ({
 				}`}
 			>
 				<div className="h-11 w-11 rounded-md bg-[#282828] flex items-center justify-center relative">
-					<MusicNoteIcon className="w-6" />
+					<MusicNoteIcon className="w-6 text-muted" />
 					{likedSongs ? (
 						<img
 							alt={likedSongs ? "Liked songs" : item.name}

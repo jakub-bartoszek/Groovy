@@ -21,12 +21,15 @@ export const PlaylistTracks = ({ tracks, opacity, width }) => {
 						opacity >= 1 ? "1" : "0"
 					})`
 				}}
-				className="px-5 mt-5 sticky top-[72px]"
+				className="px-3 mt-5 sticky top-[72px]"
 			>
 				<div
-					className={`grid grid-cols-[5%_35%_30%_20%_10%] border-b-2 border-[#ffffff11] mb-5 ${
-						width <= 600 && "grid-cols-[5%_45%_35%_15%]"
-					}`}
+					className={`grid border-b-2 border-[#ffffff11] mb-5
+			${
+				width <= 600
+					? "grid-cols-[7%_44%_34%_14%]"
+					: "grid-cols-[4%_35%_30%_20%_10%]"
+			}`}
 				>
 					<p className="flex p-2 justify-center">#</p>
 					<p className="flex p-2">Title</p>
@@ -41,7 +44,7 @@ export const PlaylistTracks = ({ tracks, opacity, width }) => {
 					</p>
 				</div>
 			</div>
-			<div className="px-5">
+			<div className="px-3">
 				{tracks?.map((track) => {
 					const date = new Date(track.dateAdded);
 					return (
@@ -50,11 +53,14 @@ export const PlaylistTracks = ({ tracks, opacity, width }) => {
 								dispatch(setCurrentTrack(track.uri));
 							}}
 							key={track.id}
-							className={`grid grid-cols-[5%_35%_30%_20%_10%] cursor-pointer rounded-[10px] hover:bg-[#ffffff22] group ${
-								width <= 600 && "grid-cols-[5%_45%_35%_15%]"
-							}`}
+							className={`grid hover:bg-[#ffffff22] rounded-md
+					 group ${
+							width <= 600
+								? "grid-cols-[7%_44%_34%_14%]"
+								: "grid-cols-[4%_35%_30%_20%_10%]"
+						}`}
 						>
-							<div className="flex p-2 items-center justify-center group-hover:hidden">
+							<div className="flex p-2 justify-center items-center group-hover:hidden text-xs">
 								{track.index}
 							</div>
 							<div className="hidden p-2 items-center justify-center group-hover:flex">

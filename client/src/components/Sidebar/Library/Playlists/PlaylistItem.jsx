@@ -8,7 +8,7 @@ export const PlaylistItem = ({
 	path,
 	likedSongs
 }) => (
-	<li key={item? item.id : nanoid()}>
+	<li key={nanoid()}>
 		<NavLink to={path}>
 			<div
 				className={`flex items-center gap-3 p-2 rounded-md hover:bg-[#1a1a1a] cursor-pointer playlist ${
@@ -36,13 +36,13 @@ export const PlaylistItem = ({
 					)}
 				</div>
 				{width > 70 && (
-					<div>
-						<p className="font-semibold text-white">
+					<div className="flex flex-col">
+						<span className="font-semibold text-white">
 							{likedSongs ? "Liked songs" : item.name}
-						</p>
-						<p className=" text-sm">
+						</span>
+						<span className=" text-sm">
 							{!likedSongs && `Playlist • ${item.owner.display_name}`}
-						</p>
+						</span>
 					</div>
 				)}
 			</div>

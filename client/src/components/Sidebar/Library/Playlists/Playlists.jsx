@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { PlaylistItem } from "./PlaylistItem";
+import { nanoid } from "@reduxjs/toolkit";
 
 export const Playlists = ({ accessToken, width }) => {
 	const [playlists, setPlaylists] = useState([]);
@@ -28,6 +29,7 @@ export const Playlists = ({ accessToken, width }) => {
 	return (
 		<>
 			<PlaylistItem
+				key={nanoid()}
 				path={`/liked`}
 				name="Liked songs"
 				likedSongs={true}
@@ -35,6 +37,7 @@ export const Playlists = ({ accessToken, width }) => {
 			/>
 			{playlists.map((playlist) => (
 				<PlaylistItem
+					key={nanoid()}
 					path={`/playlists/${playlist.id}`}
 					item={playlist}
 					width={width}

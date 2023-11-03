@@ -14,7 +14,6 @@ export const Tile = ({ track, name, imgSrc, width }) => {
 
 	return (
 		<li
-			key={track ? track.track.id : nanoid()}
 			onClick={() => {
 				track && dispatch(setCurrentTrack(track.track.uri));
 			}}
@@ -39,9 +38,9 @@ export const Tile = ({ track, name, imgSrc, width }) => {
 					alt="Track cover"
 					crossOrigin="Anonymous"
 				/>
-				<p className={`px-4 ${width < 800 && "text-sm"}`}>
+				<span className={`px-4 ${width < 800 && "text-sm"}`}>
 					{track ? track.track.name : name}
-				</p>
+				</span>
 			</div>
 		</li>
 	);

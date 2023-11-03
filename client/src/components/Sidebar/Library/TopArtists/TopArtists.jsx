@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 import { ArtistItem } from "./ArtistItem";
+import { nanoid } from "@reduxjs/toolkit";
 
 export const TopArtists = ({ accessToken, width }) => {
 	const [topArtists, setTopArtists] = useState([]);
@@ -28,6 +29,7 @@ export const TopArtists = ({ accessToken, width }) => {
 
 	return topArtists.map((artist) => (
 		<ArtistItem
+		key={nanoid()}
 			item={artist}
 			width={width}
 			path={`/artists/${artist.id}`}

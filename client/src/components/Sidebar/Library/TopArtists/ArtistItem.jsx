@@ -1,7 +1,8 @@
+import { nanoid } from "@reduxjs/toolkit";
 import { NavLink } from "react-router-dom";
 
 export const ArtistItem = ({ item, width, path }) => (
-	<li key={item.id}>
+	<li key={nanoid()}>
 		<NavLink to={path}>
 			<div
 				className={`flex items-center gap-3 p-2 rounded-md hover:bg-[#1a1a1a] cursor-pointer playlist ${
@@ -18,9 +19,9 @@ export const ArtistItem = ({ item, width, path }) => (
 					)}
 				</div>
 				{width > 70 && (
-					<div>
-						<p className="font-semibold text-white">{item.name}</p>
-						<p className=" text-sm">Artist</p>
+					<div className="flex flex-col">
+						<span className="font-semibold text-white">{item.name}</span>
+						<span className=" text-sm">Artist</span>
 					</div>
 				)}
 			</div>

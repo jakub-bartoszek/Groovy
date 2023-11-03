@@ -59,7 +59,7 @@ export const Home = ({ accessToken, width }) => {
 					}}
 					className="pt-[72px] p-4 bg-red-500"
 				>
-					<h1 className=" text-3xl font-bold py-6">Hello!{window.innerWidth}</h1>
+					<h1 className=" text-3xl font-bold py-6">Hello!</h1>
 					<ul
 						className={`grid gap-4 font-semibold
 						${width > 900 && "grid-cols-3"}

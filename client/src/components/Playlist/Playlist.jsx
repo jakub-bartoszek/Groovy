@@ -13,6 +13,7 @@ import {
 import axios from "axios";
 import ColorThief from "colorthief/dist/color-thief.mjs";
 import { PlayIcon } from "../../assets/icons/play";
+import MusicNoteIcon from "@heroicons/react/outline/MusicNoteIcon";
 
 export const Playlist = ({ accessToken, width }) => {
 	const dispatch = useDispatch();
@@ -105,10 +106,11 @@ export const Playlist = ({ accessToken, width }) => {
 						}}
 					>
 						<div className="flex self-end gap-4 w-full p-5 bg-gradient-to-t from-[#00000070]">
-							<div className="bg-black min-w-[190px] h-[190px] lg:h-[232px] lg:min-w-[232px]">
+							<div className="bg-[#282828] min-w-[190px] h-[190px] lg:h-[232px] lg:min-w-[232px] relative flex items-center justify-center">
+								<MusicNoteIcon className="w-20 text-muted" />
 								{playlist.image && (
 									<img
-										className="h-full w-full shadow-2xl object-cover image"
+										className="h-full w-full shadow-2xl object-cover absolute top-0"
 										ref={imageRef}
 										onLoad={() => {
 											const img = imageRef.current;
@@ -142,20 +144,29 @@ export const Playlist = ({ accessToken, width }) => {
 							</div>
 						</div>
 					</div>
-					<div
-						onClick={() => {
-							dispatch(setCurrentTrack(playlist.queue[0]));
-							dispatch(addToQueue(playlist.queue.slice(1)));
-						}}
-						className="w-14 h-14 flex items-center justify-center cursor-pointer m-5 bg-green-500 rounded-full text-black p-2"
-					>
-						<PlayIcon size={20} />
-					</div>
-					<PlaylistTracks
-						width={width}
-						opacity={opacity}
-						tracks={tracks}
-					/>
+
+					{tracks.length > 0 ? (
+						<>
+							<div
+								onClick={() => {
+									dispatch(setCurrentTrack(playlist.queue[0]));
+									dispatch(addToQueue(playlist.queue.slice(1)));
+								}}
+								className="w-14 h-14 flex items-center justify-center cursor-pointer m-5 bg-green-500 rounded-full text-black p-2"
+							>
+								<PlayIcon size={20} />
+							</div>
+							<PlaylistTracks
+								width={width}
+								opacity={opacity}
+								tracks={tracks}
+							/>
+						</>
+					) : (
+						<div className="flex justify-center p-10 text-muted">
+							No tracks yet...
+						</div>
+					)}
 				</div>
 			)}
 		</div>

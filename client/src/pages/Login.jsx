@@ -1,5 +1,5 @@
 const clientId = "34b03478831b4560911d57f64b00b9ea";
-const redirectUri = "http://localhost:3000";
+const redirectUri = "https://groovy-wrnj.onrender.com";
 const apiUrl = "https://accounts.spotify.com/authorize";
 const scope = [
 	"user-read-email",

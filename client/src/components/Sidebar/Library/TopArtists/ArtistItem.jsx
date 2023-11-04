@@ -12,8 +12,8 @@ export const ArtistItem = ({ item, width, path }) => (
 				<div className="h-11 w-11 rounded-full bg-[#282828] flex items-center justify-center relative">
 					{item.images[0] && (
 						<img
-							alt={item.name}
 							className="h-11 w-11 rounded-full absolute"
+							alt={item.name}
 							src={item?.images[item.images.length - 1]?.url}
 						/>
 					)}

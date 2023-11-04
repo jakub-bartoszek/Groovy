@@ -2,17 +2,16 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { PlaylistTracks } from "./PlaylistTracks";
 import { useDispatch, useSelector } from "react-redux";
+import { addToQueue, setCurrentTrack } from "../../utils/playerSlice";
 import {
-	addToQueue,
 	selectBgColor,
 	selectOpacity,
 	setBgColor,
-	setCurrentTrack,
 	setOpacity
-} from "../../utils/spotifyDataSlice";
+} from "../../utils/colorsSlice";
 import axios from "axios";
 import ColorThief from "colorthief/dist/color-thief.mjs";
-import { PlayIcon } from "../../assets/icons/play";
+import { PlayIcon } from "../../assets/icons/PlayIcon";
 import MusicNoteIcon from "@heroicons/react/outline/MusicNoteIcon";
 
 export const Playlist = ({ accessToken, width }) => {
@@ -39,10 +38,10 @@ export const Playlist = ({ accessToken, width }) => {
 	);
 
 	useEffect(() => {
-		if(scrollRef.current){
-			scrollRef.current.scrollTop = 0
+		if (scrollRef.current) {
+			scrollRef.current.scrollTop = 0;
 		}
-	}, [id])
+	}, [id]);
 
 	useEffect(() => {
 		const getPlaylistItems = async () => {
@@ -66,9 +65,7 @@ export const Playlist = ({ accessToken, width }) => {
 						: response.data.images[0].url,
 				followersCount: response.data.followers.total,
 				tracksCount: response.data.tracks.total,
-				queue: response.data.tracks.items.map(
-					(track) => track.track.uri
-				)
+				queue: response.data.tracks.items.map((track) => track.track.uri)
 			});
 
 			setTracks(
@@ -80,12 +77,9 @@ export const Playlist = ({ accessToken, width }) => {
 						artists: track.track.artists.map((artist) => artist.name),
 						album: track.track.album.name,
 						image:
-							track.track.album.images[
-								track.track.album.images.length - 1
-							]?.url,
-						duration: (track.track.duration_ms / 60000)
-							.toFixed(2)
-							.toString(),
+							track.track.album.images[track.track.album.images.length - 1]
+								?.url,
+						duration: (track.track.duration_ms / 60000).toFixed(2).toString(),
 						dateAdded: track.added_at,
 						uri: track.track.uri
 					};
@@ -100,9 +94,9 @@ export const Playlist = ({ accessToken, width }) => {
 		<div className="h-full overflow-hidden relative rounded-[10px] text-white">
 			{playlist && (
 				<div
+					className="h-full overflow-y-scroll bg-[#121212]"
 					ref={scrollRef}
 					onScroll={throttledScroll}
-					className="h-full overflow-y-scroll bg-[#121212]"
 				>
 					<div
 						className="w-full h-[350px] flex"
@@ -124,9 +118,7 @@ export const Playlist = ({ accessToken, width }) => {
 											const G = colorThief.getColor(img)[1];
 											const B = colorThief.getColor(img)[2];
 
-											dispatch(
-												setBgColor({ R: R, G: G, B: B, A: 0 })
-											);
+											dispatch(setBgColor({ R: R, G: G, B: B, A: 0 }));
 										}}
 										src={playlist.image}
 										alt="Liked songs"
@@ -150,15 +142,14 @@ export const Playlist = ({ accessToken, width }) => {
 							</div>
 						</div>
 					</div>
-
 					{tracks.length > 0 ? (
 						<>
 							<div
+								className="w-14 h-14 flex items-center justify-center cursor-pointer m-5 bg-green-500 rounded-full text-black p-2"
 								onClick={() => {
 									dispatch(setCurrentTrack(playlist.queue[0]));
 									dispatch(addToQueue(playlist.queue.slice(1)));
 								}}
-								className="w-14 h-14 flex items-center justify-center cursor-pointer m-5 bg-green-500 rounded-full text-black p-2"
 							>
 								<PlayIcon size={20} />
 							</div>

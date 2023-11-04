@@ -1,7 +1,7 @@
 import { Resizable } from "re-resizable";
 import { useEffect, useRef, useState } from "react";
-import { HomeIcon } from "../../assets/icons/home";
-import { SearchIcon } from "../../assets/icons/search";
+import { HomeIcon } from "../../assets/icons/HomeIcon";
+import { SearchIcon } from "../../assets/icons/SearchIcon";
 import { Library } from "./Library/Library";
 import { NavLink } from "react-router-dom";
 

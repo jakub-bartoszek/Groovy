@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import {TopTrackItem} from "./TopTrackItem";
+import { TopTrackItem } from "./TopTrackItem";
 import { nanoid } from "@reduxjs/toolkit";
 
 export const TopTracks = ({ accessToken, width }) => {
@@ -18,6 +18,7 @@ export const TopTracks = ({ accessToken, width }) => {
 						}
 					}
 				);
+				
 				const items = response.data.items;
 				setTopTracks(items);
 			}
@@ -27,9 +28,10 @@ export const TopTracks = ({ accessToken, width }) => {
 	}, [accessToken]);
 
 	return topTracks.map((track) => (
-			<TopTrackItem 
+		<TopTrackItem
 			key={nanoid()}
 			item={track}
-			width={width}/>
+			width={width}
+		/>
 	));
 };

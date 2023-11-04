@@ -6,7 +6,7 @@ import {
 	selectBgColor,
 	setBgColor,
 	setOpacity
-} from "../../utils/spotifyDataSlice";
+} from "../../utils/colorsSlice";
 import ColorThief from "colorthief/dist/color-thief.mjs";
 import { ArtistTopTracks } from "./ArtistTopTracks";
 
@@ -14,14 +14,11 @@ export const Artist = ({ width, accessToken }) => {
 	const { id } = useParams();
 	const [artist, setArtist] = useState({});
 	const [topTracks, setTopTracks] = useState([]);
-
 	const bgColor = useSelector(selectBgColor);
 	const scrollRef = useRef();
 	const dispatch = useDispatch();
-
 	const colorThief = new ColorThief();
 	const imageRef = useRef();
-
 	const _ = require("lodash");
 
 	const throttledScroll = useCallback(
@@ -95,9 +92,9 @@ export const Artist = ({ width, accessToken }) => {
 		<div className="h-full overflow-hidden relative rounded-[10px] text-white">
 			{artist && (
 				<div
+					className="h-full overflow-y-scroll bg-[#121212]"
 					ref={scrollRef}
 					onScroll={throttledScroll}
-					className="h-full overflow-y-scroll bg-[#121212]"
 				>
 					<div
 						className="w-full h-[350px] flex"

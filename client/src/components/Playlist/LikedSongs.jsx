@@ -6,7 +6,7 @@ import {
 	selectOpacity,
 	setBgColor,
 	setOpacity
-} from "../../utils/spotifyDataSlice";
+} from "../../utils/colorsSlice";
 import { PlaylistTracks } from "./PlaylistTracks";
 import { PlayButton } from "../common/PlayButton";
 
@@ -17,7 +17,6 @@ export const LikedSongs = ({ accessToken, width }) => {
 	const bgColor = useSelector(selectBgColor);
 	const [tracks, setTracks] = useState();
 	const scrollRef = useRef();
-
 	const _ = require("lodash");
 
 	const throttledScroll = useCallback(
@@ -33,15 +32,12 @@ export const LikedSongs = ({ accessToken, width }) => {
 
 	useEffect(() => {
 		const getLikedTracks = async () => {
-			const response = await axios.get(
-				`https://api.spotify.com/v1/me/tracks`,
-				{
-					headers: {
-						Authorization: "Bearer " + accessToken,
-						"Content-Type": "application/json"
-					}
+			const response = await axios.get(`https://api.spotify.com/v1/me/tracks`, {
+				headers: {
+					Authorization: "Bearer " + accessToken,
+					"Content-Type": "application/json"
 				}
-			);
+			});
 
 			setPlaylist({
 				queue: response.data.items.map((track) => track.track.uri)
@@ -56,12 +52,9 @@ export const LikedSongs = ({ accessToken, width }) => {
 						artists: track.track.artists.map((artist) => artist.name),
 						album: track.track.album.name,
 						image:
-							track.track.album.images[
-								track.track.album.images.length - 1
-							]?.url,
-						duration: (track.track.duration_ms / 60000)
-							.toFixed(2)
-							.toString(),
+							track.track.album.images[track.track.album.images.length - 1]
+								?.url,
+						duration: (track.track.duration_ms / 60000).toFixed(2).toString(),
 						dateAdded: track.added_at,
 						uri: track.track.uri
 					};
@@ -75,9 +68,9 @@ export const LikedSongs = ({ accessToken, width }) => {
 	return (
 		<div className="h-full overflow-hidden relative rounded-[10px] text-white">
 			<div
+				className="h-full overflow-y-scroll bg-[#121212]"
 				ref={scrollRef}
 				onScroll={throttledScroll}
-				className="h-full overflow-y-scroll bg-[#121212]"
 			>
 				<div
 					className="w-full h-[350px] flex"
@@ -105,7 +98,9 @@ export const LikedSongs = ({ accessToken, width }) => {
 						<div className="flex flex-col justify-between">
 							<div>Playlist</div>
 							<div className="flex flex-col gap-4">
-								<span className="text-5xl lg:text-7xl font-bold">Liked songs</span>
+								<span className="text-5xl lg:text-7xl font-bold">
+									Liked songs
+								</span>
 							</div>
 						</div>
 					</div>

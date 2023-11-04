@@ -29,7 +29,7 @@ export const TopArtists = ({ accessToken, width }) => {
 
 	return topArtists.map((artist) => (
 		<ArtistItem
-		key={nanoid()}
+			key={nanoid()}
 			item={artist}
 			width={width}
 			path={`/artists/${artist.id}`}

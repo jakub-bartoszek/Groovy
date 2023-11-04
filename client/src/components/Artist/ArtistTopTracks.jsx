@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
-import { setCurrentTrack } from "../../utils/spotifyDataSlice";
-import { PlayIcon } from "../../assets/icons/play";
+import { setCurrentTrack } from "../../utils/playerSlice";
+import { PlayIcon } from "../../assets/icons/PlayIcon";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { nanoid } from "@reduxjs/toolkit";
@@ -8,7 +8,6 @@ import { nanoid } from "@reduxjs/toolkit";
 export const ArtistTopTracks = ({ tracks }) => {
 	const { id } = useParams();
 	const dispatch = useDispatch();
-
 	const [showMore, setShowMore] = useState(false);
 
 	useEffect(() => {

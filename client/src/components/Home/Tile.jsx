@@ -1,11 +1,8 @@
 import ColorThief from "colorthief/dist/color-thief.mjs";
 import { useRef } from "react";
 import { useDispatch } from "react-redux";
-import {
-	setBgColor,
-	setCurrentTrack
-} from "../../utils/spotifyDataSlice";
-import { nanoid } from "@reduxjs/toolkit";
+import { setCurrentTrack } from "../../utils/playerSlice";
+import { setBgColor } from "../../utils/colorsSlice";
 
 export const Tile = ({ track, name, imgSrc, width }) => {
 	const dispatch = useDispatch();
@@ -14,12 +11,13 @@ export const Tile = ({ track, name, imgSrc, width }) => {
 
 	return (
 		<li
+			className="cursor-pointer bg-white bg-opacity-10 rounded-[10px] relative"
 			onClick={() => {
 				track && dispatch(setCurrentTrack(track.track.uri));
 			}}
-			className="cursor-pointer bg-white bg-opacity-10 rounded-[10px] relative"
 		>
 			<div
+				className="aboslute flex items-center"
 				onMouseEnter={() => {
 					if (imageRef.current) {
 						const img = imageRef.current;
@@ -29,11 +27,10 @@ export const Tile = ({ track, name, imgSrc, width }) => {
 						dispatch(setBgColor({ R: R, G: G, B: B, A: 1 }));
 					}
 				}}
-				className="aboslute flex items-center"
 			>
 				<img
-					ref={imageRef}
 					className="rounded-[10px] h-[64px] w-[64px] shadow-xl"
+					ref={imageRef}
 					src={track ? track.track.album.images[2].url : imgSrc}
 					alt="Track cover"
 					crossOrigin="Anonymous"

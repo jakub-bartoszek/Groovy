@@ -4,14 +4,13 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { selectSearchQuery } from "../../utils/searchSlice";
 import { nanoid } from "@reduxjs/toolkit";
-import { setBgColor, setOpacity } from "../../utils/spotifyDataSlice";
+import { setBgColor } from "../../utils/colorsSlice";
 
 export const Search = ({ accessToken, width }) => {
 	const searchQuery = useSelector(selectSearchQuery);
 	const [searchResults, setSearchResults] = useState();
 	const [category, setCategory] = useState("track");
 	const contentWrapper = useRef(null);
-
 	const dispatch = useDispatch();
 
 	useEffect(() => {
@@ -32,6 +31,7 @@ export const Search = ({ accessToken, width }) => {
 					);
 					setSearchResults(response.data);
 				};
+
 				getSearchResults();
 			} else {
 				setSearchResults([]);
@@ -60,15 +60,12 @@ export const Search = ({ accessToken, width }) => {
 				<ul className="h-full overflow-y-scroll mt-[72px] px-2">
 					{searchResults.tracks?.items.map((track) => (
 						<li
-							key={nanoid()}
 							className="flex items-center gap-4 p-2 hover:bg-[#ffffff33] rounded-[10px] overflow-hidden"
+							key={nanoid()}
 						>
 							<img
 								className="w-12 h-12 rounded-[10px]"
-								src={
-									track.album.images[track.album.images.length - 1]
-										.url
-								}
+								src={track.album.images[track.album.images.length - 1].url}
 								alt={track.name}
 							/>
 							<div className="flex flex-col overflow-hidden">
@@ -93,14 +90,12 @@ export const Search = ({ accessToken, width }) => {
 					${width < 1350 && width >= 1250 && "grid-cols-5"}
 					${width < 1250 && width >= 1050 && "grid-cols-4"}
 					${width < 1050 && width >= 700 && "grid-cols-3"}
-					${width < 700 && width >= 500 && "grid-cols-2"}
-
-`}
+					${width < 700 && width >= 500 && "grid-cols-2"}`}
 				>
 					{searchResults.artists?.items.map((artist) => (
 						<li
-							key={nanoid()}
 							className="flex flex-col gap-4 p-8 bg-[#181818] rounded-[10px]"
+							key={nanoid()}
 						>
 							<div className="bg-black min-w-36 min-h-36 w-36 h-36 rounded-full self-center">
 								<img

@@ -4,7 +4,7 @@ import {
 	selectCurrentTrack,
 	selectIsPlaying,
 	selectQueue
-} from "../utils/spotifyDataSlice";
+} from "../utils/playerSlice";
 
 export const Player = ({ accessToken }) => {
 	const track = useSelector(selectCurrentTrack);

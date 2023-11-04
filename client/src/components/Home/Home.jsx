@@ -1,18 +1,13 @@
 import axios from "axios";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-	selectBgColor,
-	setOpacity
-} from "../../utils/spotifyDataSlice";
+import { selectBgColor, setOpacity } from "../../utils/colorsSlice";
 import { Tile } from "./Tile";
 import { NavLink } from "react-router-dom";
 
 export const Home = ({ accessToken, width }) => {
 	const dispatch = useDispatch();
-	const [recentlyPlayedTracks, setRecentlyPlayedTracks] = useState(
-		[]
-	);
+	const [recentlyPlayedTracks, setRecentlyPlayedTracks] = useState([]);
 	const bgColor = useSelector(selectBgColor);
 	const scrollRef = useRef();
 	const _ = require("lodash");
@@ -48,17 +43,17 @@ export const Home = ({ accessToken, width }) => {
 	return (
 		<div className="h-full overflow-hidden relative bg-[#121212] rounded-[10px] text-white">
 			<div
+				className="text-white h-full overflow-y-scroll"
 				ref={scrollRef}
 				onScroll={throttledScroll}
-				className="text-white h-full overflow-y-scroll"
 			>
 				<div
+					className="pt-[72px] p-4 bg-red-500"
 					style={{
 						backgroundImage: `linear-gradient(rgba(18, 18, 18, 0.7), #121212)`,
 						backgroundColor: `rgba(${bgColor?.R}, ${bgColor?.G}, ${bgColor?.B}, 1)`,
 						transition: "0.3s linear"
 					}}
-					className="pt-[72px] p-4 bg-red-500"
 				>
 					<h1 className=" text-3xl font-bold py-6">Hello!</h1>
 					<ul
@@ -68,11 +63,11 @@ export const Home = ({ accessToken, width }) => {
 						${width < 550 && "grid-cols-1"}`}
 					>
 						<NavLink to="/liked">
-						<Tile
-							width={width}
-							name="Liked songs"
-							imgSrc="https://misc.scdn.co/liked-songs/liked-songs-300.png"
-						/>
+							<Tile
+								width={width}
+								name="Liked songs"
+								imgSrc="https://misc.scdn.co/liked-songs/liked-songs-300.png"
+							/>
 						</NavLink>
 						{recentlyPlayedTracks.map((track) => (
 							<Tile
@@ -82,7 +77,6 @@ export const Home = ({ accessToken, width }) => {
 						))}
 					</ul>
 				</div>
-				<div className="bg-[#121212] h-full w-full"></div>
 			</div>
 		</div>
 	);

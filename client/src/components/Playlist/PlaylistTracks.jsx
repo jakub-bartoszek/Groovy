@@ -1,21 +1,19 @@
 import { useDispatch } from "react-redux";
-import {
-	setCurrentTrack,
-	setOpacity
-} from "../../utils/spotifyDataSlice";
+import { setCurrentTrack } from "../../utils/playerSlice";
+import { setOpacity } from "../../utils/colorsSlice";
 import ClockIcon from "@heroicons/react/outline/ClockIcon";
-import { PlayIcon } from "../../assets/icons/play";
+import { PlayIcon } from "../../assets/icons/PlayIcon";
 import { nanoid } from "@reduxjs/toolkit";
 import { useEffect } from "react";
 
 export const PlaylistTracks = ({ tracks, opacity, width }) => {
+	const dispatch = useDispatch();
+
 	const dateFormat = {
 		year: "numeric",
 		month: "short",
 		day: "numeric"
 	};
-
-	const dispatch = useDispatch();
 
 	useEffect(() => {
 		dispatch(setOpacity(0));
@@ -24,12 +22,10 @@ export const PlaylistTracks = ({ tracks, opacity, width }) => {
 	return (
 		<div className="w-full text-sm">
 			<div
-				style={{
-					backgroundColor: `rgba(18, 18, 18, ${
-						opacity >= 1 ? "1" : "0"
-					})`
-				}}
 				className="px-2 mt-5 sticky top-[72px]"
+				style={{
+					backgroundColor: `rgba(18, 18, 18, ${opacity >= 1 ? "1" : "0"})`
+				}}
 			>
 				<div
 					className={`grid gap-4 px-4 py-2 border-b-2 border-[#ffffff11] mb-5 text-muted
@@ -40,12 +36,7 @@ export const PlaylistTracks = ({ tracks, opacity, width }) => {
 					<span>#</span>
 					<span>Title</span>
 					{width >= 550 && <span>Album</span>}
-
-					{width >= 750 && (
-						<div>
-							<span>Date Added</span>
-						</div>
-					)}
+					{width >= 750 && <span>Date Added</span>}
 					<div className="flex justify-center">
 						<ClockIcon className="w-5" />
 					</div>
@@ -66,10 +57,10 @@ export const PlaylistTracks = ({ tracks, opacity, width }) => {
 								{track.index}
 							</span>
 							<button
+								className="hidden items-center justify-center group-hover:flex cursor-pointer"
 								onClick={() => {
 									dispatch(setCurrentTrack(track.uri));
 								}}
-								className="hidden items-center justify-center group-hover:flex cursor-pointer"
 							>
 								<PlayIcon size={10} />
 							</button>
@@ -101,9 +92,7 @@ export const PlaylistTracks = ({ tracks, opacity, width }) => {
 							)}
 							{width >= 750 && (
 								<div className="overflow-hidden flex items-center">
-									<span>
-										{date.toLocaleDateString(undefined, dateFormat)}
-									</span>
+									<span>{date.toLocaleDateString(undefined, dateFormat)}</span>
 								</div>
 							)}
 							<div className="flex items-center justify-center">

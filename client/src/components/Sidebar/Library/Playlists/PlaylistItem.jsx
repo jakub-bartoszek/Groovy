@@ -2,12 +2,7 @@ import MusicNoteIcon from "@heroicons/react/outline/MusicNoteIcon";
 import { nanoid } from "@reduxjs/toolkit";
 import { NavLink } from "react-router-dom";
 
-export const PlaylistItem = ({
-	item,
-	width,
-	path,
-	likedSongs
-}) => (
+export const PlaylistItem = ({ item, width, path, likedSongs }) => (
 	<li key={nanoid()}>
 		<NavLink to={path}>
 			<div
@@ -19,11 +14,9 @@ export const PlaylistItem = ({
 					<MusicNoteIcon className="w-6 text-muted" />
 					{likedSongs ? (
 						<img
-							alt={likedSongs ? "Liked songs" : item.name}
 							className="h-11 w-11 rounded-md absolute"
-							src={
-								"https://misc.scdn.co/liked-songs/liked-songs-64.png"
-							}
+							alt={likedSongs ? "Liked songs" : item.name}
+							src={"https://misc.scdn.co/liked-songs/liked-songs-64.png"}
 						/>
 					) : (
 						item.images[0] && (

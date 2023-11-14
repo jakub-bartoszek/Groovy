@@ -18,8 +18,6 @@ export const Playlists = ({ accessToken, width }) => {
 		}
 	}, [dispatch, accessToken]);
 
-	console.log(playlists);
-
 	return (
 		<>
 			<PlaylistItem

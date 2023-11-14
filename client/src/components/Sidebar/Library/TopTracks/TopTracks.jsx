@@ -2,30 +2,21 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { TopTrackItem } from "./TopTrackItem";
 import { nanoid } from "@reduxjs/toolkit";
+import { useDispatch, useSelector } from "react-redux";
+import {
+	fetchTopTracks,
+	selectTopTracks
+} from "../../../../utils/redux/librarySlice";
 
 export const TopTracks = ({ accessToken, width }) => {
-	const [topTracks, setTopTracks] = useState([]);
+	const topTracks = useSelector(selectTopTracks);
+	const dispatch = useDispatch();
 
 	useEffect(() => {
-		const getTopTracks = async () => {
-			if (accessToken) {
-				const response = await axios.get(
-					`https://api.spotify.com/v1/me/top/tracks/`,
-					{
-						headers: {
-							Authorization: "Bearer " + accessToken,
-							"Content-Type": "application/json"
-						}
-					}
-				);
-				
-				const items = response.data.items;
-				setTopTracks(items);
-			}
-		};
-
-		getTopTracks();
-	}, [accessToken]);
+		if (accessToken) {
+			dispatch(fetchTopTracks(accessToken));
+		}
+	}, [dispatch, accessToken]);
 
 	return topTracks.map((track) => (
 		<TopTrackItem

@@ -1,6 +1,6 @@
 import { nanoid } from "@reduxjs/toolkit";
 import { useDispatch } from "react-redux";
-import { setCurrentTrack } from "../../../../utils/playerSlice";
+import { setCurrentTrack } from "../../../../utils/redux/playerSlice";
 
 export const TopTrackItem = ({ item, width }) => {
 	const dispatch = useDispatch();

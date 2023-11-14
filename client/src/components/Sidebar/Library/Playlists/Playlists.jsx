@@ -2,20 +2,23 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { PlaylistItem } from "./PlaylistItem";
 import { nanoid } from "@reduxjs/toolkit";
-import { fetchPlaylists, selectPlaylists } from "../../../../utils/redux/librarySlice";
+import {
+	fetchPlaylists,
+	selectPlaylists
+} from "../../../../utils/redux/librarySlice";
 import { useDispatch, useSelector } from "react-redux";
 
 export const Playlists = ({ accessToken, width }) => {
-const playlists = useSelector(selectPlaylists)
-	const dispatch = useDispatch()
+	const playlists = useSelector(selectPlaylists);
+	const dispatch = useDispatch();
 
 	useEffect(() => {
-		if(accessToken){
-			dispatch(fetchPlaylists(accessToken))
+		if (accessToken) {
+			dispatch(fetchPlaylists(accessToken));
 		}
 	}, [dispatch, accessToken]);
 
-	console.log(playlists)
+	console.log(playlists);
 
 	return (
 		<>

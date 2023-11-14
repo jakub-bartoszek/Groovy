@@ -1,31 +1,22 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
+import { useEffect } from "react";
 
 import { ArtistItem } from "./ArtistItem";
 import { nanoid } from "@reduxjs/toolkit";
+import { useDispatch, useSelector } from "react-redux";
+import {
+	fetchTopArtists,
+	selectTopArtists
+} from "../../../../utils/redux/librarySlice";
 
 export const TopArtists = ({ accessToken, width }) => {
-	const [topArtists, setTopArtists] = useState([]);
-
+	const topArtists = useSelector(selectTopArtists);
+	const dispatch = useDispatch();
+	
 	useEffect(() => {
-		const getTopArtists = async () => {
-			if (accessToken) {
-				const response = await axios.get(
-					`https://api.spotify.com/v1/me/top/artists/`,
-					{
-						headers: {
-							Authorization: "Bearer " + accessToken,
-							"Content-Type": "application/json"
-						}
-					}
-				);
-				const items = response.data.items;
-				setTopArtists(items);
-			}
-		};
-
-		getTopArtists();
-	}, [accessToken]);
+		if (accessToken) {
+			dispatch(fetchTopArtists(accessToken));
+		}
+	}, [dispatch, accessToken]);
 
 	return topArtists.map((artist) => (
 		<ArtistItem

@@ -12,18 +12,19 @@ import {
 import axios from "axios";
 import ColorThief from "colorthief/dist/color-thief.mjs";
 import MusicNoteIcon from "@heroicons/react/outline/MusicNoteIcon";
+import { fetchPlaylist, selectPlaylist } from "../../utils/redux/playlistSlice";
 
 export const Playlist = ({ accessToken, width }) => {
 	const dispatch = useDispatch();
 	const opacity = useSelector(selectOpacity);
 	const { id } = useParams();
-	const [playlist, setPlaylist] = useState();
-	const [tracks, setTracks] = useState();
 	const imageRef = useRef();
 	const bgColor = useSelector(selectBgColor);
 	const colorThief = new ColorThief();
 	const scrollRef = useRef();
 	const _ = require("lodash");
+	const playlist = useSelector(selectPlaylist);
+	const [tracks, setTracks] = useState([]);
 
 	const throttledScroll = useCallback(
 		_.throttle(
@@ -43,32 +44,15 @@ export const Playlist = ({ accessToken, width }) => {
 	}, [id]);
 
 	useEffect(() => {
-		const getPlaylistItems = async () => {
-			const response = await axios.get(
-				`https://api.spotify.com/v1/playlists/${id}?limit=50`,
-				{
-					headers: {
-						Authorization: "Bearer " + accessToken,
-						"Content-Type": "application/json"
-					}
-				}
-			);
-			setPlaylist({
-				id: response.data.id,
-				name: response.data.name,
-				owner: response.data.owner.display_name,
-				ownerId: response.data.owner.id,
-				image:
-					response.data.images.length === 0
-						? null
-						: response.data.images[0].url,
-				followersCount: response.data.followers.total,
-				tracksCount: response.data.tracks.total,
-				queue: response.data.tracks.items.map((track) => track.track.uri)
-			});
+		if (accessToken && id) {
+			dispatch(fetchPlaylist({ accessToken, id }));
+		}
+	}, [dispatch, accessToken, id]);
 
+	useEffect(() => {
+		if (playlist && playlist.id === id) {
 			setTracks(
-				response.data.tracks.items.map((track, index) => {
+				playlist.tracks.items.map((track, index) => {
 					return {
 						index: index + 1,
 						id: track.track.id,
@@ -84,14 +68,12 @@ export const Playlist = ({ accessToken, width }) => {
 					};
 				})
 			);
-		};
-
-		getPlaylistItems();
-	}, [accessToken, id]);
+		}
+	}, [playlist, id]);
 
 	return (
 		<div className="h-full overflow-hidden relative rounded-[10px] text-white">
-			{playlist && (
+			{playlist && playlist.id === id && (
 				<div
 					className="h-full overflow-y-scroll bg-[#121212]"
 					ref={scrollRef}
@@ -111,7 +93,7 @@ export const Playlist = ({ accessToken, width }) => {
 								}`}
 							>
 								<MusicNoteIcon className="w-20 text-muted" />
-								{playlist.image && (
+								{playlist.images.length > 0 && (
 									<img
 										className="h-full w-full shadow-2xl object-cover absolute top-0"
 										ref={imageRef}
@@ -123,7 +105,7 @@ export const Playlist = ({ accessToken, width }) => {
 
 											dispatch(setBgColor({ R: R, G: G, B: B, A: 0 }));
 										}}
-										src={playlist.image}
+										src={playlist.images[playlist.images.length - 1].url}
 										alt="Liked songs"
 										crossOrigin="Anonymous"
 									/>
@@ -142,8 +124,8 @@ export const Playlist = ({ accessToken, width }) => {
 									</span>
 									<div className="flex items-center gap-2">
 										<span className="text-sm">
-											<b>{playlist.owner}</b>
-											{` • ${playlist.tracksCount} tracks`}
+											<b>{playlist.owner.display_name}</b>
+											{` • ${playlist.tracks.total} tracks`}
 										</span>
 									</div>
 								</div>

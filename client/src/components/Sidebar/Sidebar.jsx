@@ -40,9 +40,9 @@ export const Sidebar = ({ accessToken }) => {
 				x: [70].concat(snap)
 			}}
 			maxWidth={
-				(window.innerWidth > 900 && "420px") ||
-				(window.innerWidth < 900 && window.innerWidth > 700 && "300px") ||
-				(window.innerWidth < 700 && "70px")
+				(window.innerWidth >= 1000 && "420px") ||
+				(window.innerWidth < 1000 && window.innerWidth >= 820 && "300px") ||
+				(window.innerWidth < 820 && "70px")
 			}
 			defaultSize={{
 				width: "300px",

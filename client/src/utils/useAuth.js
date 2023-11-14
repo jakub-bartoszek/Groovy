@@ -8,7 +8,7 @@ export default function useAuth(code) {
 
 
   useEffect(() => {
-    axios.post('https://groovy-wrnj.onrender.com/login', { code })
+    axios.post('http://localhost:3001/login', { code })
       .then(res => {
         setAccessToken(res.data.accessToken);
         setRefreshToken(res.data.refreshToken);
@@ -30,7 +30,7 @@ export default function useAuth(code) {
     if (!refreshToken || !expiresIn) return;
     const interval = setInterval(() => {
 
-      axios.post('https://groovy-wrnj.onrender.com/refresh', { refreshToken })
+      axios.post('http://localhost:3001/refresh', { refreshToken })
         .then(res => {
           setAccessToken(res.data.accessToken);
           setExpiresIn(res.data.expiresIn);

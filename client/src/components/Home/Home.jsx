@@ -4,10 +4,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectBgColor, setOpacity } from "../../utils/redux/colorsSlice";
 import { Tile } from "./Tile";
 import { NavLink } from "react-router-dom";
+import {
+	fetchRecentlyPlayed,
+	selectRecentlyPlayed
+} from "../../utils/redux/homeSlice";
 
 export const Home = ({ accessToken, width }) => {
 	const dispatch = useDispatch();
-	const [recentlyPlayedTracks, setRecentlyPlayedTracks] = useState([]);
+	const recentlyPlayed = useSelector(selectRecentlyPlayed);
 	const bgColor = useSelector(selectBgColor);
 	const scrollRef = useRef();
 	const _ = require("lodash");
@@ -25,20 +29,9 @@ export const Home = ({ accessToken, width }) => {
 
 	useEffect(() => {
 		if (accessToken) {
-			const getRecentlyPlayedTracks = async () => {
-				const response = await axios.get(
-					`https://api.spotify.com/v1/me/player/recently-played?limit=5`,
-					{
-						headers: {
-							Authorization: "Bearer " + accessToken
-						}
-					}
-				);
-				setRecentlyPlayedTracks(response.data.items);
-			};
-			getRecentlyPlayedTracks();
+			dispatch(fetchRecentlyPlayed(accessToken));
 		}
-	}, [accessToken]);
+	}, [dispatch, accessToken]);
 
 	return (
 		<div className="h-full overflow-hidden relative bg-[#121212] rounded-[10px] text-white">
@@ -69,7 +62,7 @@ export const Home = ({ accessToken, width }) => {
 								imgSrc="https://misc.scdn.co/liked-songs/liked-songs-300.png"
 							/>
 						</NavLink>
-						{recentlyPlayedTracks.map((track) => (
+						{recentlyPlayed.map((track) => (
 							<Tile
 								width={width}
 								track={track}

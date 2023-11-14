@@ -49,11 +49,8 @@ app.post("/login", (req, res) => {
     });
 });
 
-// app.listen(process.env.PORT);
-
-
-app.listen(3000);
-app.use(express.static(path.resolve(__dirname, '../client/build')));
-app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, '../client/build/index.html'));
-});
+app.listen(3001);
+// app.use(express.static(path.resolve(__dirname, '../client/build')));
+// app.get('*', (req, res) => {
+//   res.sendFile(path.resolve(__dirname, '../client/build/index.html'));
+// });

@@ -20,6 +20,7 @@
 		"react-router-dom": "^6.16.0",
 		"react-scripts": "5.0.1",
 		"react-spotify-web-playback": "^0.14.1",
+		"redux-saga": "^1.2.3",
 		"spotify-web-api-node": "^5.0.2",
 		"swiper": "^10.3.1",
 		"web-vitals": "^2.1.4"

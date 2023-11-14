@@ -9,7 +9,6 @@ import {
 	setBgColor,
 	setOpacity
 } from "../../utils/redux/colorsSlice";
-import axios from "axios";
 import ColorThief from "colorthief/dist/color-thief.mjs";
 import MusicNoteIcon from "@heroicons/react/outline/MusicNoteIcon";
 import { fetchPlaylist, selectPlaylist } from "../../utils/redux/playlistSlice";
@@ -25,6 +24,8 @@ export const Playlist = ({ accessToken, width }) => {
 	const _ = require("lodash");
 	const playlist = useSelector(selectPlaylist);
 	const [tracks, setTracks] = useState([]);
+	const [queue, setQueue] = useState();
+
 
 	const throttledScroll = useCallback(
 		_.throttle(
@@ -51,6 +52,7 @@ export const Playlist = ({ accessToken, width }) => {
 
 	useEffect(() => {
 		if (playlist && playlist.id === id) {
+			setQueue(playlist.tracks.items.map((track) => track.track.uri));
 			setTracks(
 				playlist.tracks.items.map((track, index) => {
 					return {
@@ -134,7 +136,7 @@ export const Playlist = ({ accessToken, width }) => {
 					</div>
 					{tracks.length > 0 ? (
 						<>
-							<PlayButton playlist={playlist} />
+							<PlayButton queue={queue} />
 							<PlaylistTracks
 								width={width}
 								opacity={opacity}

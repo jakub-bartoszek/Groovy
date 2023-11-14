@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
+import { useEffect } from "react";
 import { PlaylistItem } from "./PlaylistItem";
 import { nanoid } from "@reduxjs/toolkit";
 import {

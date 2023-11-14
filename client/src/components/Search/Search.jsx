@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { CategoryButton } from "../common/CategoryButton";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";

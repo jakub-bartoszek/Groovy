@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-
 import { ArtistItem } from "./ArtistItem";
 import { nanoid } from "@reduxjs/toolkit";
 import { useDispatch, useSelector } from "react-redux";

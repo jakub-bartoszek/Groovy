@@ -1,6 +1,7 @@
 import { put, call, takeLatest } from 'redux-saga/effects';
-import { fetchPlaylist, setPlaylist } from '../redux/playlistSlice';
+import { fetchLikedSongs, fetchPlaylist, setLikedSongs, setPlaylist } from '../redux/playlistSlice';
 import { getPlaylist } from './getPlaylist';
+import { getLikedSongs } from './getLikedSongs';
 
 function* fetchPlaylistHandler(accessToken, id) {
   try {
@@ -12,8 +13,18 @@ function* fetchPlaylistHandler(accessToken, id) {
   }
 }
 
+function* fetchLikedSongsHandler(accessToken) {
+  try {
+    const likedSongs = yield call(getLikedSongs, accessToken.payload);
+    yield put(setLikedSongs(likedSongs));
+  }
+  catch (error) {
+    yield call(alert, "Something went wrong!");
+  }
+}
+
 
 export function* playlistSaga() {
   yield takeLatest(fetchPlaylist.type, fetchPlaylistHandler);
-
+  yield takeLatest(fetchLikedSongs.type, fetchLikedSongsHandler);
 }

@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -9,15 +8,20 @@ import {
 } from "../../utils/redux/colorsSlice";
 import { PlaylistTracks } from "./PlaylistTracks";
 import { PlayButton } from "../common/PlayButton";
+import {
+	fetchLikedSongs,
+	selectLikedSongs
+} from "../../utils/redux/playlistSlice";
 
 export const LikedSongs = ({ accessToken, width }) => {
 	const dispatch = useDispatch();
-	const [playlist, setPlaylist] = useState();
+	const [queue, setQueue] = useState();
 	const opacity = useSelector(selectOpacity);
 	const bgColor = useSelector(selectBgColor);
-	const [tracks, setTracks] = useState();
+	const likedSongs = useSelector(selectLikedSongs);
 	const scrollRef = useRef();
 	const _ = require("lodash");
+	const [tracks, setTracks] = useState();
 
 	const throttledScroll = useCallback(
 		_.throttle(
@@ -31,20 +35,16 @@ export const LikedSongs = ({ accessToken, width }) => {
 	);
 
 	useEffect(() => {
-		const getLikedTracks = async () => {
-			const response = await axios.get(`https://api.spotify.com/v1/me/tracks`, {
-				headers: {
-					Authorization: "Bearer " + accessToken,
-					"Content-Type": "application/json"
-				}
-			});
+		if (accessToken) {
+			dispatch(fetchLikedSongs(accessToken));
+		}
+	}, [dispatch, accessToken]);
 
-			setPlaylist({
-				queue: response.data.items.map((track) => track.track.uri)
-			});
-
+	useEffect(() => {
+		if (likedSongs) {
+			setQueue(likedSongs.map((track) => track.track.uri));
 			setTracks(
-				response.data.items.map((track, index) => {
+				likedSongs.map((track, index) => {
 					return {
 						index: index + 1,
 						id: track.track.id,
@@ -60,10 +60,8 @@ export const LikedSongs = ({ accessToken, width }) => {
 					};
 				})
 			);
-		};
-
-		getLikedTracks();
-	}, [accessToken]);
+		}
+	}, [likedSongs]);
 
 	return (
 		<div className="h-full overflow-hidden relative rounded-[10px] text-white">
@@ -112,7 +110,7 @@ export const LikedSongs = ({ accessToken, width }) => {
 						</div>
 					</div>
 				</div>
-				<PlayButton playlist={playlist} />
+				<PlayButton queue={queue} />
 				<PlaylistTracks
 					width={width}
 					opacity={opacity}

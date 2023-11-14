@@ -2,16 +2,15 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { PlaylistTracks } from "./PlaylistTracks";
 import { useDispatch, useSelector } from "react-redux";
-import { addToQueue, setCurrentTrack } from "../../utils/playerSlice";
+import { PlayButton } from "../common/PlayButton";
 import {
 	selectBgColor,
 	selectOpacity,
 	setBgColor,
 	setOpacity
-} from "../../utils/colorsSlice";
+} from "../../utils/redux/colorsSlice";
 import axios from "axios";
 import ColorThief from "colorthief/dist/color-thief.mjs";
-import { PlayIcon } from "../../assets/icons/PlayIcon";
 import MusicNoteIcon from "@heroicons/react/outline/MusicNoteIcon";
 
 export const Playlist = ({ accessToken, width }) => {
@@ -99,14 +98,18 @@ export const Playlist = ({ accessToken, width }) => {
 					onScroll={throttledScroll}
 				>
 					<div
-						className="w-full h-[350px] flex"
+						className={`w-full flex ${width > 550 ? "h-[350px]" : "h-[200px]"}`}
 						style={{
 							backgroundColor: `rgb(${bgColor.R}, ${bgColor.G}, ${bgColor.B})`,
 							boxShadow: `0 0 200px 80px #000000aa, 0 0 200px 80px rgb(${bgColor.R}, ${bgColor.G}, ${bgColor.B})`
 						}}
 					>
 						<div className="flex self-end gap-4 w-full p-5 bg-gradient-to-t from-[#00000070]">
-							<div className="bg-[#282828] min-w-[190px] h-[190px] lg:h-[232px] lg:min-w-[232px] relative flex items-center justify-center">
+							<div
+								className={`bg-[#282828] relative flex items-center justify-center ${
+									width > 550 ? "h-48 w-48" : "h-24 w-24"
+								}`}
+							>
 								<MusicNoteIcon className="w-20 text-muted" />
 								{playlist.image && (
 									<img
@@ -129,7 +132,12 @@ export const Playlist = ({ accessToken, width }) => {
 							<div className="flex flex-col justify-between overflow-hidden">
 								<div>Playlist</div>
 								<div className="flex flex-col gap-4 overflow-hidden">
-									<span className="text-5xl lg:text-7xl font-bold text-ellipsis whitespace-nowrap overflow-hidden">
+									<span
+										className={`font-bold 
+								${width >= 700 && "text-7xl"}
+								${width < 700 && width > 550 && "text-5xl"}
+								${width < 550 && "text-3xl"}`}
+									>
 										{playlist.name}
 									</span>
 									<div className="flex items-center gap-2">
@@ -144,15 +152,7 @@ export const Playlist = ({ accessToken, width }) => {
 					</div>
 					{tracks.length > 0 ? (
 						<>
-							<div
-								className="w-14 h-14 flex items-center justify-center cursor-pointer m-5 bg-green-500 rounded-full text-black p-2"
-								onClick={() => {
-									dispatch(setCurrentTrack(playlist.queue[0]));
-									dispatch(addToQueue(playlist.queue.slice(1)));
-								}}
-							>
-								<PlayIcon size={20} />
-							</div>
+							<PlayButton playlist={playlist} />
 							<PlaylistTracks
 								width={width}
 								opacity={opacity}

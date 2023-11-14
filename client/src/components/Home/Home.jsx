@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { selectBgColor, setOpacity } from "../../utils/colorsSlice";
+import { selectBgColor, setOpacity } from "../../utils/redux/colorsSlice";
 import { Tile } from "./Tile";
 import { NavLink } from "react-router-dom";
 

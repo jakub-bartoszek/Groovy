@@ -2,11 +2,7 @@ import axios from "axios";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import {
-	selectBgColor,
-	setBgColor,
-	setOpacity
-} from "../../utils/colorsSlice";
+import { selectBgColor, setBgColor, setOpacity } from "../../utils/redux/colorsSlice";
 import ColorThief from "colorthief/dist/color-thief.mjs";
 import { ArtistTopTracks } from "./ArtistTopTracks";
 
@@ -77,9 +73,7 @@ export const Artist = ({ width, accessToken }) => {
 									? null
 									: track.album.images[0].url,
 							uri: track.uri,
-							duration: (track.duration_ms / 60000)
-								.toFixed(2)
-								.toString()
+							duration: (track.duration_ms / 60000).toFixed(2).toString()
 						};
 					})
 				);
@@ -97,14 +91,18 @@ export const Artist = ({ width, accessToken }) => {
 					onScroll={throttledScroll}
 				>
 					<div
-						className="w-full h-[350px] flex"
+						className={`w-full flex ${width > 550 ? "h-[350px]" : "h-[200px]"}`}
 						style={{
 							backgroundColor: `rgb(${bgColor.R}, ${bgColor.G}, ${bgColor.B})`,
 							boxShadow: `0 0 200px 80px #000000aa, 0 0 200px 80px rgb(${bgColor.R}, ${bgColor.G}, ${bgColor.B})`
 						}}
 					>
 						<div className="flex self-end gap-4 w-full p-5 bg-gradient-to-t from-[#00000070]">
-							<div className="min-w-[190px] w-[190px] h-[190px] lg:h-[232px] lg:min-w-[232px] rounded-full">
+							<div
+								className={`bg-black rounded-full ${
+									width > 550 ? "h-48 w-48" : "h-24 w-24"
+								}`}
+							>
 								{artist.image && (
 									<img
 										className="h-full w-full shadow-2xl image object-cover rounded-full"
@@ -115,9 +113,7 @@ export const Artist = ({ width, accessToken }) => {
 											const G = colorThief.getColor(img)[1];
 											const B = colorThief.getColor(img)[2];
 
-											dispatch(
-												setBgColor({ R: R, G: G, B: B, A: 0 })
-											);
+											dispatch(setBgColor({ R: R, G: G, B: B, A: 0 }));
 										}}
 										src={artist.image}
 										alt={artist.name}
@@ -140,6 +136,7 @@ export const Artist = ({ width, accessToken }) => {
 					<ArtistTopTracks
 						accessToken={accessToken}
 						tracks={topTracks}
+						width={width}
 					/>
 				</div>
 			)}

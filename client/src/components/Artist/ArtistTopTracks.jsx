@@ -1,11 +1,11 @@
 import { useDispatch } from "react-redux";
-import { setCurrentTrack } from "../../utils/playerSlice";
+import { setCurrentTrack } from "../../utils/redux/playerSlice";
 import { PlayIcon } from "../../assets/icons/PlayIcon";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { nanoid } from "@reduxjs/toolkit";
 
-export const ArtistTopTracks = ({ tracks }) => {
+export const ArtistTopTracks = ({ tracks, width }) => {
 	const { id } = useParams();
 	const dispatch = useDispatch();
 	const [showMore, setShowMore] = useState(false);
@@ -20,8 +20,11 @@ export const ArtistTopTracks = ({ tracks }) => {
 			{tracks.slice(0, showMore ? 10 : 5)?.map((track) => {
 				return (
 					<div
-						className="grid grid-cols-[1rem_2fr_1fr_minmax(60px,_1fr)] gap-4 px-4 py-2 group
-						rounded-[10px] hover:bg-[#ffffff22]"
+						className={`gap-4 px-4 py-2 group rounded-[10px] hover:bg-[#ffffff22] ${
+							width > 500
+								? "grid grid-cols-[1rem_2fr_1fr_minmax(60px,_1fr)]"
+								: "grid grid-cols-[1rem_2fr_minmax(60px,_1fr)]"
+						}`}
 						key={nanoid()}
 					>
 						<span className="flex items-center justify-center group-hover:hidden">
@@ -54,11 +57,13 @@ export const ArtistTopTracks = ({ tracks }) => {
 								</span>
 							</div>
 						</div>
-						<div className="flex items-center overflow-hidden">
-							<span className="text-ellipsis whitespace-nowrap overflow-hidden">
-								{track.album}
-							</span>
-						</div>
+						{width > 500 && (
+							<div className="flex items-center overflow-hidden">
+								<span className="text-ellipsis whitespace-nowrap overflow-hidden">
+									{track.album}
+								</span>
+							</div>
+						)}
 						<div className="flex items-center justify-center">
 							<span>{track.duration.replace(".", ":")}</span>
 						</div>

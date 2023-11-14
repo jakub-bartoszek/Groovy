@@ -1,7 +1,7 @@
 import { LeftArrowIcon } from "../../assets/icons/LeftArrowIcon";
 import BellIcon from "@heroicons/react/outline/BellIcon";
 import DownloadIcon from "@heroicons/react/outline/DownloadIcon";
-import { selectBgColor, selectOpacity } from "../../utils/colorsSlice";
+import { selectBgColor, selectOpacity } from "../../utils/redux/colorsSlice";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { SearchBar } from "./SearchBar";

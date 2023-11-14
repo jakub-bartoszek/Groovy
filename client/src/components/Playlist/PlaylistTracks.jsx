@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
-import { setCurrentTrack } from "../../utils/playerSlice";
-import { setOpacity } from "../../utils/colorsSlice";
+import { setCurrentTrack } from "../../utils/redux/playerSlice";
+import { setOpacity } from "../../utils/redux/colorsSlice";
 import ClockIcon from "@heroicons/react/outline/ClockIcon";
 import { PlayIcon } from "../../assets/icons/PlayIcon";
 import { nanoid } from "@reduxjs/toolkit";
@@ -29,9 +29,9 @@ export const PlaylistTracks = ({ tracks, opacity, width }) => {
 			>
 				<div
 					className={`grid gap-4 px-4 py-2 border-b-2 border-[#ffffff11] mb-5 text-muted
-						${width >= 750 && "grid-cols-[1rem_6fr_4fr_3fr_minmax(120px,_1fr)]"}
-						${width < 750 && "grid-cols-[1rem_4fr_2fr_minmax(120px,_1fr)]"}
-						${width < 550 && "grid-cols-[1rem_3fr_minmax(120px,_1fr)]"}`}
+					${width >= 750 && "grid-cols-[1rem_6fr_4fr_3fr_minmax(16px,_1fr)]"}
+					${width < 750 && width >= 550 && "grid-cols-[1rem_4fr_2fr_minmax(120px,_1fr)]"}
+					${width < 550 && "grid-cols-[1rem_3fr_minmax(60px,_1fr)]"}`}
 				>
 					<span>#</span>
 					<span>Title</span>
@@ -47,10 +47,10 @@ export const PlaylistTracks = ({ tracks, opacity, width }) => {
 					const date = new Date(track.dateAdded);
 					return (
 						<div
-							className={`grid hover:bg-[#ffffff22] rounded-md group gap-4 px-4 
-						${width >= 750 && "grid-cols-[1rem_6fr_4fr_3fr_minmax(16px,_1fr)]"}
-						${width < 750 && "grid-cols-[1rem_4fr_2fr_minmax(120px,_1fr)]"}
-						${width < 550 && "grid-cols-[1rem_3fr_minmax(120px,_1fr)]"}`}
+							className={`grid rounded-md group gap-4 px-4 hover:bg-[#ffffff22] text-muted
+							${width >= 750 && "grid-cols-[1rem_6fr_4fr_3fr_minmax(16px,_1fr)]"}
+							${width < 750 && width >= 550 && "grid-cols-[1rem_4fr_2fr_minmax(120px,_1fr)]"}
+							${width < 550 && "grid-cols-[1rem_3fr_minmax(60px,_1fr)]"}`}
 							key={nanoid()}
 						>
 							<span className="flex items-center justify-center group-hover:hidden">
@@ -74,7 +74,7 @@ export const PlaylistTracks = ({ tracks, opacity, width }) => {
 										/>
 									)}
 								</div>
-								<div className="overflow-hidden">
+								<div className="overflow-hidden flex flex-col">
 									<span className="text-ellipsis whitespace-nowrap overflow-hidden">
 										{track.name}
 									</span>

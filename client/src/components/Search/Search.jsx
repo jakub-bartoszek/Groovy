@@ -2,9 +2,9 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { CategoryButton } from "../common/CategoryButton";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { selectSearchQuery } from "../../utils/searchSlice";
+import { selectSearchQuery } from "../../utils/redux/searchSlice";
 import { nanoid } from "@reduxjs/toolkit";
-import { setBgColor } from "../../utils/colorsSlice";
+import { setBgColor } from "../../utils/redux/colorsSlice";
 
 export const Search = ({ accessToken, width }) => {
 	const searchQuery = useSelector(selectSearchQuery);
@@ -105,7 +105,7 @@ export const Search = ({ accessToken, width }) => {
 									crossOrigin="Anonymous"
 								/>
 							</div>
-							<div>
+							<div className={`flex flex-col ${width < 500 && "items-center"}`}>
 								<span>
 									<b>{artist.name}</b>
 								</span>

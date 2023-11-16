@@ -112,7 +112,7 @@ export const Playlist = ({ accessToken, width }) => {
 									>
 										<div className="flex self-end gap-4 w-full p-5 bg-gradient-to-t from-[#00000070]">
 											<div
-												className={`bg-[#282828] relative flex items-center justify-center ${
+												className={`bg-[#282828] relative flex items-center justify-center aspect-square ${
 													width > 550 ? "h-48 w-48" : "h-24 w-24"
 												}`}
 											>

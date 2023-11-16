@@ -14,11 +14,14 @@ import { AccountBar } from "../components/AccountBar/AccountBar";
 import { useEffect, useRef, useState } from "react";
 import useAuth from "../utils/useAuth";
 import { LikedSongs } from "../components/Playlist/LikedSongs";
+import { useDispatch } from "react-redux";
+import { fetchRecentlyPlayed } from "../utils/redux/homeSlice";
 
 const Dashboard = ({ code }) => {
 	const [width, setWidth] = useState();
 	const contentWrapperRef = useRef();
 	const accessToken = useAuth(code);
+	const dispatch = useDispatch()
 
 	useEffect(() => {
 		const element = contentWrapperRef.current;
@@ -32,6 +35,12 @@ const Dashboard = ({ code }) => {
 			};
 		}
 	}, [width]);
+
+	useEffect(() => {
+		if (accessToken) {
+			dispatch(fetchRecentlyPlayed(accessToken));
+		}
+	}, [accessToken]);
 
 	return (
 		<div className="overflow-hidden w-screen max-w-screen h-screen max-h-screen">

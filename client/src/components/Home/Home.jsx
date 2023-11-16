@@ -2,10 +2,9 @@ import { useCallback, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectBgColor, setOpacity } from "../../utils/redux/colorsSlice";
 import { Tile } from "./Tile";
-import {Loader} from "../../assets/Loader";
+import { Loader } from "../../assets/Loader";
 import { NavLink } from "react-router-dom";
 import {
-	fetchRecentlyPlayed,
 	selectRecentlyPlayed,
 	selectStatus
 } from "../../utils/redux/homeSlice";
@@ -29,12 +28,6 @@ export const Home = ({ accessToken, width }) => {
 		[setOpacity]
 	);
 
-	useEffect(() => {
-		if (accessToken) {
-			dispatch(fetchRecentlyPlayed(accessToken));
-		}
-	}, [dispatch, accessToken]);
-
 	return (
 		<div className="h-full overflow-hidden relative bg-[#121212] rounded-[10px] text-white">
 			<div
@@ -53,7 +46,11 @@ export const Home = ({ accessToken, width }) => {
 					<h1 className=" text-3xl font-bold py-6">Hello!</h1>
 					{
 						{
-							loading: <div className="flex items-center justify-center"><Loader/></div>,
+							loading: (
+								<div className="flex items-center justify-center">
+									<Loader />
+								</div>
+							),
 							error: <>Error</>,
 							success: (
 								<ul

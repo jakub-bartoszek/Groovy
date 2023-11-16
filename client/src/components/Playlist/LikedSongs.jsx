@@ -93,7 +93,7 @@ export const LikedSongs = ({ accessToken, width }) => {
 								style={{
 									backgroundColor: `rgb(${bgColor.R}, ${bgColor.G}, ${bgColor.B})`,
 									boxShadow: `0 0 200px 80px #000000aa, 0 0 200px 80px rgb(${bgColor.R}, ${bgColor.G}, ${bgColor.B})`,
-									transition: "background-color 300ms linear"
+									transition: "all 300ms linear"
 								}}
 							>
 								<div className="flex self-end gap-4 w-full p-5 bg-gradient-to-t from-[#00000070]">

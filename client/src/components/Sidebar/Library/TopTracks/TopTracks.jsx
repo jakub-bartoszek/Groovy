@@ -1,21 +1,10 @@
-import { useEffect } from "react";
 import { TopTrackItem } from "./TopTrackItem";
 import { nanoid } from "@reduxjs/toolkit";
-import { useDispatch, useSelector } from "react-redux";
-import {
-	fetchTopTracks,
-	selectTopTracks
-} from "../../../../utils/redux/librarySlice";
+import { useSelector } from "react-redux";
+import { selectTopTracks } from "../../../../utils/redux/librarySlice";
 
 export const TopTracks = ({ accessToken, width }) => {
 	const topTracks = useSelector(selectTopTracks);
-	const dispatch = useDispatch();
-
-	useEffect(() => {
-		if (accessToken) {
-			dispatch(fetchTopTracks(accessToken));
-		}
-	}, [dispatch, accessToken]);
 
 	return topTracks.map((track) => (
 		<TopTrackItem

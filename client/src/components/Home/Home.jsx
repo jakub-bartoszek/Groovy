@@ -1,12 +1,13 @@
-import axios from "axios";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectBgColor, setOpacity } from "../../utils/redux/colorsSlice";
 import { Tile } from "./Tile";
+import {Loader} from "../../assets/Loader";
 import { NavLink } from "react-router-dom";
 import {
 	fetchRecentlyPlayed,
-	selectRecentlyPlayed
+	selectRecentlyPlayed,
+	selectStatus
 } from "../../utils/redux/homeSlice";
 
 export const Home = ({ accessToken, width }) => {
@@ -15,6 +16,7 @@ export const Home = ({ accessToken, width }) => {
 	const bgColor = useSelector(selectBgColor);
 	const scrollRef = useRef();
 	const _ = require("lodash");
+	const status = useSelector(selectStatus);
 
 	const throttledScroll = useCallback(
 		_.throttle(
@@ -49,26 +51,35 @@ export const Home = ({ accessToken, width }) => {
 					}}
 				>
 					<h1 className=" text-3xl font-bold py-6">Hello!</h1>
-					<ul
-						className={`grid gap-4 font-semibold
-						${width > 900 && "grid-cols-3"}
-						${width > 550 && width < 900 && "grid-cols-2"}
-						${width < 550 && "grid-cols-1"}`}
-					>
-						<NavLink to="/liked">
-							<Tile
-								width={width}
-								name="Liked songs"
-								imgSrc="https://misc.scdn.co/liked-songs/liked-songs-300.png"
-							/>
-						</NavLink>
-						{recentlyPlayed.map((track) => (
-							<Tile
-								width={width}
-								track={track}
-							/>
-						))}
-					</ul>
+					{
+						{
+							loading: <div className="flex items-center justify-center"><Loader/></div>,
+							error: <>Error</>,
+							success: (
+								<ul
+									className={`grid gap-4 font-semibold ${
+										width > 900 && "grid-cols-3"
+									} ${width > 550 && width < 900 && "grid-cols-2"} ${
+										width < 550 && "grid-cols-1"
+									}`}
+								>
+									<NavLink to="/liked">
+										<Tile
+											width={width}
+											name="Liked songs"
+											imgSrc="https://misc.scdn.co/liked-songs/liked-songs-300.png"
+										/>
+									</NavLink>
+									{recentlyPlayed.map((track) => (
+										<Tile
+											width={width}
+											track={track}
+										/>
+									))}
+								</ul>
+							)
+						}[status]
+					}
 				</div>
 			</div>
 		</div>

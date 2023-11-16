@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { LibraryIcon } from "../../../assets/icons/LibraryIcon";
 import { LeftArrowIcon } from "../../../assets/icons/LeftArrowIcon";
 import { RightArrowIcon } from "../../../assets/icons/RightArrowIcon";
@@ -7,16 +7,34 @@ import { CategoryButton } from "../../common/CategoryButton";
 import { Playlists } from "./Playlists/Playlists";
 import { TopTracks } from "./TopTracks/TopTracks";
 import { TopArtists } from "./TopArtists/TopArtists";
+import {
+	fetchPlaylists,
+	fetchTopArtists,
+	fetchTopTracks,
+	selectStatus
+} from "../../../utils/redux/librarySlice";
+import { useDispatch, useSelector } from "react-redux";
+import { Loader } from "../../../assets/Loader";
 
 export const Library = ({ width, accessToken }) => {
 	const contentWrapper = useRef(null);
 	const [libraryScrollPosition, setLibraryScrollPosition] = useState(0);
 	const [scrollPosition, setScrollPosition] = useState("left");
 	const [category, setCategory] = useState("all");
+	const status = useSelector(selectStatus);
+	const dispatch = useDispatch();
 
 	const handleScroll = (event) => {
 		setLibraryScrollPosition(event.currentTarget.scrollTop);
 	};
+
+	useEffect(() => {
+		if (accessToken) {
+			dispatch(fetchPlaylists(accessToken));
+			dispatch(fetchTopArtists(accessToken));
+			dispatch(fetchTopTracks(accessToken));
+		}
+	}, [dispatch, accessToken]);
 
 	return (
 		<div className="rounded-[10px] text-[#b3b3b3] bg-[#121212] h-full overflow-hidden flex flex-col">
@@ -60,78 +78,138 @@ export const Library = ({ width, accessToken }) => {
 						className="gap-2 h-8 overflow-x-scroll hide-scrollbar scroll-smooth grid grid-flow-col"
 						ref={contentWrapper}
 					>
-						{}
-						{category !== "all" ? (
+						{category !== "all" && (
 							<button
 								className="bg-[#242424] h-8 w-8 flex items-center justify-center rounded-full"
 								onClick={() => setCategory("all")}
 							>
 								<CrossIcon size={18} />
 							</button>
-						) : null}
-						{category === "playlists" || category === "all" ? (
-							<CategoryButton
-								category={category}
-								setCategory={setCategory}
-								name="Playlists"
-							/>
-						) : null}
-						{category === "artists" || category === "all" ? (
-							<CategoryButton
-								category={category}
-								setCategory={setCategory}
-								name="Artists"
-							/>
-						) : null}
-						{category === "tracks" || category === "all" ? (
-							<CategoryButton
-								category={category}
-								setCategory={setCategory}
-								name="Tracks"
-							/>
-						) : null}
-						{category === "albums" || category === "all" ? (
-							<CategoryButton
-								category={category}
-								setCategory={setCategory}
-								name="Albums"
-							/>
-						) : null}
-						{category === "podcasts" || category === "all" ? (
-							<CategoryButton
-								category={category}
-								setCategory={setCategory}
-								name="Podcasts"
-							/>
-						) : null}
+						)}
+						{
+							{
+								playlists: (
+									<CategoryButton
+										category={category}
+										setCategory={setCategory}
+										name="Playlists"
+									/>
+								),
+								artists: (
+									<CategoryButton
+										category={category}
+										setCategory={setCategory}
+										name="Artists"
+									/>
+								),
+								tracks: (
+									<CategoryButton
+										category={category}
+										setCategory={setCategory}
+										name="Tracks"
+									/>
+								),
+								albums: (
+									<CategoryButton
+										category={category}
+										setCategory={setCategory}
+										name="Albums"
+									/>
+								),
+								podcasts: (
+									<CategoryButton
+										category={category}
+										setCategory={setCategory}
+										name="Podcasts"
+									/>
+								),
+								all: (
+									<>
+										<CategoryButton
+											category={category}
+											setCategory={setCategory}
+											name="Playlists"
+										/>
+										<CategoryButton
+											category={category}
+											setCategory={setCategory}
+											name="Artists"
+										/>
+										<CategoryButton
+											category={category}
+											setCategory={setCategory}
+											name="Tracks"
+										/>
+										<CategoryButton
+											category={category}
+											setCategory={setCategory}
+											name="Albums"
+										/>
+										<CategoryButton
+											category={category}
+											setCategory={setCategory}
+											name="Podcasts"
+										/>
+									</>
+								)
+							}[category]
+						}
 					</div>
 				</div>
 			)}
-			<ul
-				onScroll={handleScroll}
-				className={`p-1 h-full overflow-y-scroll ${
-					width <= 70 && "hide-scrollbar"
-				}`}
-			>
-				{category === "playlists" || category === "all" ? (
-					<Playlists
-						width={width}
-						accessToken={accessToken}
-					/>
-				) : null}
-				{category === "tracks" || category === "all" ? (
-					<TopTracks
-						width={width}
-						accessToken={accessToken}
-					/>
-				) : null}
-				{category === "artists" || category === "all" ? (
-					<TopArtists
-						width={width}
-						accessToken={accessToken}
-					/>
-				) : null}
-			</ul>
+			{
+				{
+					loading: <Loader />,
+					error: <>Error</>,
+					success: (
+						<ul
+							onScroll={handleScroll}
+							className={`p-1 h-full overflow-y-scroll ${
+								width <= 70 && "hide-scrollbar"
+							}`}
+						>
+							{
+								{
+									playlists: (
+										<Playlists
+											width={width}
+											accessToken={accessToken}
+										/>
+									),
+									tracks: (
+										<TopTracks
+											width={width}
+											accessToken={accessToken}
+										/>
+									),
+									artists: (
+										<TopArtists
+											width={width}
+											accessToken={accessToken}
+										/>
+									),
+									all: (
+										<>
+											<Playlists
+												width={width}
+												accessToken={accessToken}
+											/>
+											<TopTracks
+												width={width}
+												accessToken={accessToken}
+											/>
+											<TopArtists
+												width={width}
+												accessToken={accessToken}
+											/>
+										</>
+									)
+								}[category]
+							}
+						</ul>
+					)
+				}[status]
+			}
 		</div>
 	);
 };

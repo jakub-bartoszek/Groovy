@@ -24,7 +24,8 @@ export const PlaylistTracks = ({ tracks, opacity, width }) => {
 			<div
 				className="px-2 mt-5 sticky top-[72px]"
 				style={{
-					backgroundColor: `rgba(18, 18, 18, ${opacity >= 1 ? "1" : "0"})`
+					backgroundColor: `rgba(18, 18, 18, ${opacity >= 1 ? "1" : "0"})`,
+					transition: "background-color 300ms"
 				}}
 			>
 				<div

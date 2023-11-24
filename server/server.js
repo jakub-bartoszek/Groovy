@@ -11,7 +11,7 @@ app.use(bodyParser.json());
 app.post("/refresh", (req, res) => {
   const refreshToken = req.body.refreshToken;
   const spotifyApi = new spotifyWebApi({
-    redirectUri: process.env.REDIRECT_URI,
+    redirectUri: req.body.redirectUri,
     clientId: req.body.clientId,
     clientSecret: req.body.clientSecret,
     refreshToken
@@ -34,7 +34,7 @@ app.post("/refresh", (req, res) => {
 app.post("/login", (req, res) => {
   const code = req.body.code;
   const spotifyApi = new spotifyWebApi({
-    redirectUri: process.env.REDIRECT_URI,
+    redirectUri: req.body.redirectUri,
     clientId: req.body.clientId,
     clientSecret: req.body.clientSecret,
   });
@@ -51,8 +51,9 @@ app.post("/login", (req, res) => {
     });
 });
 
-app.listen(3001);
-// app.use(express.static(path.resolve(__dirname, '../client/build')));
-// app.get('*', (req, res) => {
-//   res.sendFile(path.resolve(__dirname, '../client/build/index.html'));
-// });
+app.listen(3000);
+
+app.use(express.static(path.resolve(__dirname, '../client/build')));
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '../client/build/index.html'));
+});

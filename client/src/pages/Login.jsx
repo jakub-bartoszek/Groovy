@@ -11,7 +11,7 @@ export default function Login() {
 	const dispatch = useDispatch();
 	const [clientId, setClientId] = useState("");
 	const [clientSecret, setClientSecret] = useState("");
-	const redirectUri = "http://localhost:3000";
+	const redirectUri = JSON.parse(localStorage.getItem("redirect_uri"));
 	const apiUrl = "https://accounts.spotify.com/authorize";
 	const scope = [
 		"user-read-email",

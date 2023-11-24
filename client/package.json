@@ -53,6 +53,7 @@
 	},
 	"devDependencies": {
 		"@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+		"dotenv": "^16.3.1",
 		"postcss": "^8.4.31",
 		"tailwindcss": "^3.3.3",
 		"tailwindcss-background-extended": "^0.1.0",

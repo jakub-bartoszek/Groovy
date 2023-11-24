@@ -1,7 +1,5 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { selectClientId, selectClientSecret } from './redux/spotifySlice';
-import { useSelector } from 'react-redux';
 
 export default function useAuth(code) {
   const [accessToken, setAccessToken] = useState();
@@ -9,9 +7,10 @@ export default function useAuth(code) {
   const [expiresIn, setExpiresIn] = useState();
   const clientId = JSON.parse(localStorage.getItem("client_id"));
   const clientSecret = JSON.parse(localStorage.getItem("client_secret"));
+  const redirectUri = JSON.parse(localStorage.getItem("redirect_uri"));
 
   useEffect(() => {
-    axios.post('http://localhost:3001/login', { code, clientId, clientSecret })
+    axios.post('http://localhost:3000/login', { code, clientId, clientSecret, redirectUri })
       .then(res => {
         setAccessToken(res.data.accessToken);
         setRefreshToken(res.data.refreshToken);
@@ -26,14 +25,14 @@ export default function useAuth(code) {
           window.location = `/`;
         }
       });
-  }, [code, clientId, clientSecret]);
+  }, [code, clientId, clientSecret, redirectUri]);
 
 
   useEffect(() => {
     if (!refreshToken || !expiresIn) return;
     const interval = setInterval(() => {
 
-      axios.post('http://localhost:3001/refresh', { refreshToken, clientId, clientSecret })
+      axios.post('http://localhost:3000/refresh', { refreshToken, clientId, clientSecret, redirectUri })
         .then(res => {
           setAccessToken(res.data.accessToken);
           setExpiresIn(res.data.expiresIn);

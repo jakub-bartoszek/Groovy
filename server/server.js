@@ -12,10 +12,12 @@ app.post("/refresh", (req, res) => {
   const refreshToken = req.body.refreshToken;
   const spotifyApi = new spotifyWebApi({
     redirectUri: process.env.REDIRECT_URI,
-    clientId: process.env.CLIENT_ID,
-    clientSecret: process.env.CLIENT_SECRET,
+    clientId: req.body.clientId,
+    clientSecret: req.body.clientSecret,
     refreshToken
   });
+
+  console.log(process.env.REDIRECT_URI)
 
   spotifyApi.refreshAccessToken()
     .then(data => {
@@ -33,8 +35,8 @@ app.post("/login", (req, res) => {
   const code = req.body.code;
   const spotifyApi = new spotifyWebApi({
     redirectUri: process.env.REDIRECT_URI,
-    clientId: process.env.CLIENT_ID,
-    clientSecret: process.env.CLIENT_SECRET,
+    clientId: req.body.clientId,
+    clientSecret: req.body.clientSecret,
   });
 
   spotifyApi.authorizationCodeGrant(code)

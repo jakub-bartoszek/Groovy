@@ -6,6 +6,7 @@ import colorsReducer from "./utils/redux/colorsSlice";
 import libraryReducer from "./utils/redux/librarySlice";
 import homeReducer from "./utils/redux/homeSlice";
 import playlistReducer from "./utils/redux/playlistSlice";
+import spotifyReducer from "./utils/redux/spotifySlice";
 
 import rootSaga from "./utils/saga/rootSaga";
 
@@ -13,6 +14,7 @@ const sagaMiddleware = createSagaMiddleware();
 
 const store = configureStore({
   reducer: {
+    spotify: spotifyReducer,
     player: playerReducer,
     search: searchReducer,
     colors: colorsReducer,

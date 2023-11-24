@@ -10,7 +10,7 @@ export default function useAuth(code) {
   const redirectUri = JSON.parse(localStorage.getItem("redirect_uri"));
 
   useEffect(() => {
-    axios.post('http://localhost:3000/login', { code, clientId, clientSecret, redirectUri })
+    axios.post(`${redirectUri}/login`, { code, clientId, clientSecret, redirectUri })
       .then(res => {
         setAccessToken(res.data.accessToken);
         setRefreshToken(res.data.refreshToken);
@@ -32,7 +32,7 @@ export default function useAuth(code) {
     if (!refreshToken || !expiresIn) return;
     const interval = setInterval(() => {
 
-      axios.post('http://localhost:3000/refresh', { refreshToken, clientId, clientSecret, redirectUri })
+      axios.post(`${redirectUri}/refresh`, { refreshToken, clientId, clientSecret, redirectUri })
         .then(res => {
           setAccessToken(res.data.accessToken);
           setExpiresIn(res.data.expiresIn);

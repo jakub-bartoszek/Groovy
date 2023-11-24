@@ -18,12 +18,8 @@ export default function useAuth(code) {
         window.history.pushState({}, null, `/`);
       })
       .catch((err) => {
-        if (process.env.NODE_ENV === "development" && err) {
-          console.log(err.message);
-        }
-        else {
-          window.location = `/`;
-        }
+        console.log(err.message);
+
       });
   }, [code, clientId, clientSecret, redirectUri]);
 
@@ -37,8 +33,8 @@ export default function useAuth(code) {
           setAccessToken(res.data.accessToken);
           setExpiresIn(res.data.expiresIn);
         })
-        .catch(() => {
-          window.location = `/`;
+        .catch((err) => {
+          console.log(err.message);
         });
     }, (expiresIn - 60) * 1000);
 

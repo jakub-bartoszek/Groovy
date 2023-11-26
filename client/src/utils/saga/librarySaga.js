@@ -5,46 +5,46 @@ import { getTopArtists } from './getTopArtists';
 import { getTopTracks } from './getTopTracks';
 
 function* fetchPlaylistsHandler(accessToken) {
-  try {
-    yield delay(1000);
-    yield put(setStatus("loading"));
-    const playlists = yield call(getPlaylists, accessToken.payload);
-    yield put(setPlaylists(playlists));
-    yield put(setStatus("success"));
-  }
-  catch (error) {
-    yield put(setStatus("error"));
-  }
+	try {
+		yield delay(1000);
+		yield put(setStatus("loading"));
+		const playlists = yield call(getPlaylists, accessToken.payload);
+		yield put(setPlaylists(playlists));
+		yield put(setStatus("success"));
+	}
+	catch (error) {
+		yield put(setStatus("error"));
+	}
 }
 
 function* fetchTopArtistsHandler(accessToken) {
-  try {
-    yield delay(1000);
-    yield put(setStatus("loading"));
-    const topArtists = yield call(getTopArtists, accessToken.payload);
-    yield put(setTopArtists(topArtists));
-    yield put(setStatus("success"));
-  }
-  catch (error) {
-    yield put(setStatus("error"));
-  }
+	try {
+		yield delay(1000);
+		yield put(setStatus("loading"));
+		const topArtists = yield call(getTopArtists, accessToken.payload);
+		yield put(setTopArtists(topArtists));
+		yield put(setStatus("success"));
+	}
+	catch (error) {
+		yield put(setStatus("error"));
+	}
 }
 
 function* fetchTopTracksHandler(accessToken) {
-  try {
-    yield delay(1000);
-    yield put(setStatus("loading"));
-    const topTracks = yield call(getTopTracks, accessToken.payload);
-    yield put(setTopTracks(topTracks));
-    yield put(setStatus("success"));
-  }
-  catch (error) {
-    yield put(setStatus("error"));
-  }
+	try {
+		yield delay(1000);
+		yield put(setStatus("loading"));
+		const topTracks = yield call(getTopTracks, accessToken.payload);
+		yield put(setTopTracks(topTracks));
+		yield put(setStatus("success"));
+	}
+	catch (error) {
+		yield put(setStatus("error"));
+	}
 }
 
 export function* librarySaga() {
-  yield takeLatest(fetchPlaylists.type, fetchPlaylistsHandler);
-  yield takeLatest(fetchTopArtists.type, fetchTopArtistsHandler);
-  yield takeLatest(fetchTopTracks.type, fetchTopTracksHandler);
+	yield takeLatest(fetchPlaylists.type, fetchPlaylistsHandler);
+	yield takeLatest(fetchTopArtists.type, fetchTopArtistsHandler);
+	yield takeLatest(fetchTopTracks.type, fetchTopTracksHandler);
 }

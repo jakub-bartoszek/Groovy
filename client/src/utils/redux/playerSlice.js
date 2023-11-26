@@ -1,25 +1,25 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const playerSlice = createSlice({
-  name: "player",
-  initialState: {
-    isPlaying: false,
-    currentTrack: [],
-    queue: [],
-  },
-  reducers: {
-    setCurrentTrack: (state, { payload }) => {
-      state.currentTrack = ([payload]);
-      state.isPlaying = true;
-    },
-    addToQueue: (state, { payload }) => {
-      state.queue = (payload);
-      state.isPlaying = true;
-    },
-    setIsPlaying: (state) => {
-      state.isPlaying = !state.isPlaying;
-    },
-  },
+	name: "player",
+	initialState: {
+		isPlaying: false,
+		currentTrack: [],
+		queue: [],
+	},
+	reducers: {
+		setCurrentTrack: (state, { payload }) => {
+			state.currentTrack = ([payload]);
+			state.isPlaying = true;
+		},
+		addToQueue: (state, { payload }) => {
+			state.queue = (payload);
+			state.isPlaying = true;
+		},
+		setIsPlaying: (state) => {
+			state.isPlaying = !state.isPlaying;
+		},
+	},
 });
 
 export const { addToQueue, setCurrentTrack, setIsPlaying } = playerSlice.actions;

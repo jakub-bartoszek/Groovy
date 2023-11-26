@@ -1,26 +1,26 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const playlistSlice = createSlice({
-  name: "playlist",
-  initialState: {
-    playlist: {
-    },
-    status: "",
-    likedSongs: []
+ name: "playlist",
+ initialState: {
+  playlist: {
   },
-  reducers: {
-    fetchPlaylist: (state) => { },
-    setStatus: (state, { payload }) => {
-      state.status = payload;
-    },
-    fetchLikedSongs: (state) => { },
-    setPlaylist: (state, { payload }) => {
-      state.playlist = payload;
-    },
-    setLikedSongs: (state, { payload }) => {
-      state.likedSongs = payload;
-    }
+  status: "",
+  likedSongs: []
+ },
+ reducers: {
+  fetchPlaylist: (state) => { },
+  setStatus: (state, { payload }) => {
+   state.status = payload;
+  },
+  fetchLikedSongs: (state) => { },
+  setPlaylist: (state, { payload }) => {
+   state.playlist = payload;
+  },
+  setLikedSongs: (state, { payload }) => {
+   state.likedSongs = payload;
   }
+ }
 });
 
 export const { fetchPlaylist, fetchLikedSongs, setPlaylist, setLikedSongs, setStatus } = playlistSlice.actions;

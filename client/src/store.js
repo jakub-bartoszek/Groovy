@@ -13,16 +13,16 @@ import rootSaga from "./utils/saga/rootSaga";
 const sagaMiddleware = createSagaMiddleware();
 
 const store = configureStore({
-  reducer: {
-    spotify: spotifyReducer,
-    player: playerReducer,
-    search: searchReducer,
-    colors: colorsReducer,
-    library: libraryReducer,
-    home: homeReducer,
-    playlist: playlistReducer,
-  },
-  middleware: [sagaMiddleware],
+	reducer: {
+		spotify: spotifyReducer,
+		player: playerReducer,
+		search: searchReducer,
+		colors: colorsReducer,
+		library: libraryReducer,
+		home: homeReducer,
+		playlist: playlistReducer,
+	},
+	middleware: [sagaMiddleware],
 });
 
 sagaMiddleware.run(rootSaga);

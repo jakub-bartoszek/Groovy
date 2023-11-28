@@ -32,15 +32,18 @@ export const PlaylistTracks = ({ tracks, opacity, width }) => {
      className={`grid gap-4 px-4 py-2 border-b-2 border-[#ffffff11] mb-5 text-muted
 					${width >= 750 && "grid-cols-[1rem_6fr_4fr_3fr_minmax(16px,_1fr)]"}
 					${width < 750 && width >= 550 && "grid-cols-[1rem_4fr_2fr_minmax(120px,_1fr)]"}
-					${width < 550 && "grid-cols-[1rem_3fr_minmax(60px,_1fr)]"}`}
+					${width < 550 && width >= 350 && "grid-cols-[1rem_3fr_minmax(60px,_1fr)]"}
+     ${width < 350 && "grid-cols-[1rem_1fr]"}`}
     >
      <span>#</span>
      <span>Title</span>
      {width >= 550 && <span>Album</span>}
      {width >= 750 && <span>Date Added</span>}
-     <div className="flex justify-center">
-      <ClockIcon className="w-5" />
-     </div>
+     {width >= 350 && (
+      <div className="flex justify-center">
+       <ClockIcon className="w-5" />
+      </div>
+     )}
     </div>
    </div>
    <div className="px-2">
@@ -51,7 +54,10 @@ export const PlaylistTracks = ({ tracks, opacity, width }) => {
        className={`grid rounded-md group gap-4 px-4 hover:bg-[#ffffff22] text-muted
 							${width >= 750 && "grid-cols-[1rem_6fr_4fr_3fr_minmax(16px,_1fr)]"}
 							${width < 750 && width >= 550 && "grid-cols-[1rem_4fr_2fr_minmax(120px,_1fr)]"}
-							${width < 550 && "grid-cols-[1rem_3fr_minmax(60px,_1fr)]"}`}
+       ${
+        width < 550 && width >= 350 && "grid-cols-[1rem_3fr_minmax(60px,_1fr)]"
+       }
+       ${width < 350 && "grid-cols-[1rem_1fr]"}`}
        key={nanoid()}
       >
        <span className="flex items-center justify-center group-hover:hidden">
@@ -96,9 +102,11 @@ export const PlaylistTracks = ({ tracks, opacity, width }) => {
          <span>{date.toLocaleDateString(undefined, dateFormat)}</span>
         </div>
        )}
-       <div className="flex items-center justify-center">
-        <span>{track.duration.replace(".", ":")}</span>
-       </div>
+       {width >= 350 && (
+        <div className="flex items-center justify-center">
+         <span>{track.duration.replace(".", ":")}</span>
+        </div>
+       )}
       </div>
      );
     })}

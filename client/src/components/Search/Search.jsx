@@ -6,10 +6,11 @@ import {
  fetchSearchResults,
  selectSearchQuery,
  selectSearchResults,
- selectStatus
+ selectStatus,
 } from "../../utils/redux/searchSlice";
-import { nanoid } from "@reduxjs/toolkit";
 import { setBgColor } from "../../utils/redux/colorsSlice";
+import { TrackResults } from "./TrackResults";
+import { ArtistResults } from "./ArtistResults";
 
 export const Search = ({ accessToken, width }) => {
  const searchQuery = useSelector(selectSearchQuery);
@@ -38,7 +39,7 @@ export const Search = ({ accessToken, width }) => {
  return (
   <div className="h-full overflow-hidden relative rounded-[10px] text-white flex flex-col bg-[#121212]">
    <div
-    className="gap-2 p-4 flex overflow-x-scroll items-center hide-scrollbar scroll-smooth sticky top-[72px]"
+    className="flex gap-2 p-2 sticky top-[72px]"
     ref={contentWrapper}
    >
     <CategoryButton
@@ -64,67 +65,24 @@ export const Search = ({ accessToken, width }) => {
       <>
        {
         {
-         track: (
-          <ul className="h-full overflow-y-scroll mt-[72px] px-2">
-           {searchResults.tracks?.items.length > 0 ? (
-            <>
-             {searchResults.tracks?.items.map((track) => (
-              <li
-               className="flex items-center gap-4 p-2 hover:bg-[#ffffff33] rounded-[10px] overflow-hidden"
-               key={nanoid()}
-              >
-               <img
-                className="w-12 h-12 rounded-[10px]"
-                src={track.album.images[track.album.images.length - 1].url}
-                alt={track.name}
-               />
-               <div className="flex flex-col overflow-hidden">
-                <span className="text-ellipsis whitespace-nowrap overflow-hidden font-semibold">
-                 {track.name}
-                </span>
-                <span className="text-ellipsis whitespace-nowrap overflow-hidden text-muted">
-                 {track.artists[0].name}
-                </span>
-               </div>
-              </li>
-             ))}
-            </>
-           ) : (
-            <span className="text-muted">No tracks found...</span>
-           )}
-          </ul>
-         ),
-         artist: (
-          <ul className="h-full overflow-y-scroll mt-[72px] gap-4 p-4 grid grid-cols-[repeat(auto-fit,_minmax(170px,_1fr))]">
-           {searchResults.artists?.items.length > 0 ? (
-            <>
-             {searchResults.artists?.items.map((artist) => (
-              <li
-               className="flex flex-col gap-4 p-8 bg-[#181818] rounded-[10px] aspect-[16/23]"
-               key={nanoid()}
-              >
-               <div className="bg-black rounded-full self-center w-32 h-32 ">
-                <img
-                 className="h-full w-full shadow-2xl object-cover rounded-full"
-                 src={artist.images[0]?.url}
-                 alt="Liked songs"
-                 crossOrigin="Anonymous"
-                />
-               </div>
-               <div className="flex flex-col overflow-hidden">
-                <span className="overflow-hidden text-ellipsis  whitespace-nowrap">
-                 <b>{artist.name}</b>
-                </span>
-                <span className="text-sm text-muted">Artist</span>
-               </div>
-              </li>
-             ))}
-            </>
-           ) : (
-            <span className="text-muted">No artists found...</span>
-           )}
-          </ul>
-         )
+         track:
+          searchResults.tracks?.items.length > 0 ? (
+           <TrackResults searchResults={searchResults} />
+          ) : searchQuery ? (
+           <span className="text-muted mt-[72px] px-4">No tracks found...</span>
+          ) : (
+           <></>
+          ),
+         artist:
+          searchResults.artists?.items.length > 0 ? (
+           <ArtistResults searchResults={searchResults} />
+          ) : searchQuery ? (
+           <span className="text-muted mt-[72px] px-4">
+            No artists found...
+           </span>
+          ) : (
+           <></>
+          )
         }[category]
        }
       </>

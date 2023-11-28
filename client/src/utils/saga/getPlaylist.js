@@ -1,7 +1,6 @@
 import axios from "axios";
 
 export const getPlaylist = async (accessToken, id) => {
-	try {
 		if (accessToken && id) {
 			const response = await axios.get(
 				`https://api.spotify.com/v1/playlists/${id}?limit=50`, {
@@ -13,8 +12,4 @@ export const getPlaylist = async (accessToken, id) => {
 			);
 			return await response.data;
 		}
-	}
-	catch (err) {
-		console.log(err);
-	}
 };

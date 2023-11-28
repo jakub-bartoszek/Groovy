@@ -6,9 +6,9 @@ import { getLikedSongs } from './getLikedSongs';
 function* fetchPlaylistHandler(accessToken, id) {
 	try {
 		yield put(setStatus("loading"));
-		yield delay(1000);
 		const playlist = yield call(getPlaylist, accessToken.payload.accessToken, accessToken.payload.id);
 		yield put(setPlaylist(playlist));
+		yield delay(500);
 		yield put(setStatus("success"));
 
 	}
@@ -20,9 +20,9 @@ function* fetchPlaylistHandler(accessToken, id) {
 function* fetchLikedSongsHandler(accessToken) {
 	try {
 		yield put(setStatus("loading"));
-		yield delay(1000);
 		const likedSongs = yield call(getLikedSongs, accessToken.payload);
 		yield put(setLikedSongs(likedSongs));
+		yield delay(500);
 		yield put(setStatus("success"));
 	}
 	catch (error) {

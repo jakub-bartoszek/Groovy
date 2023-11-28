@@ -5,9 +5,9 @@ import { getSearchResults } from './getSearchResults';
 function* fetchSearchResultsHandler({ payload }) {
 	try {
 		yield put(setStatus("loading"));
-		yield delay(500);
 		const searchResults = yield call(getSearchResults, payload.accessToken, payload.searchQuery, payload.category);
 		yield put(setSearchResults(searchResults));
+		yield delay(500);
 		yield put(setStatus("success"));
 	}
 	catch (error) {

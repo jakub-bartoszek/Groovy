@@ -6,10 +6,10 @@ import { getTopTracks } from './getTopTracks';
 
 function* fetchPlaylistsHandler(accessToken) {
 	try {
-		yield delay(1000);
 		yield put(setStatus("loading"));
 		const playlists = yield call(getPlaylists, accessToken.payload);
 		yield put(setPlaylists(playlists));
+		yield delay(500);
 		yield put(setStatus("success"));
 	}
 	catch (error) {
@@ -19,10 +19,10 @@ function* fetchPlaylistsHandler(accessToken) {
 
 function* fetchTopArtistsHandler(accessToken) {
 	try {
-		yield delay(1000);
 		yield put(setStatus("loading"));
 		const topArtists = yield call(getTopArtists, accessToken.payload);
 		yield put(setTopArtists(topArtists));
+		yield delay(500);
 		yield put(setStatus("success"));
 	}
 	catch (error) {
@@ -32,7 +32,7 @@ function* fetchTopArtistsHandler(accessToken) {
 
 function* fetchTopTracksHandler(accessToken) {
 	try {
-		yield delay(1000);
+		yield delay(500);
 		yield put(setStatus("loading"));
 		const topTracks = yield call(getTopTracks, accessToken.payload);
 		yield put(setTopTracks(topTracks));

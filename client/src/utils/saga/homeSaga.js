@@ -5,9 +5,9 @@ import { getRecentlyPlayed } from './getRecentlyPlayed';
 function* fetchRecentlyPlayedHandler(accessToken) {
 	try {
 		yield put(setStatus("loading"));
-		yield delay(1000);
 		const recentlyPlayed = yield call(getRecentlyPlayed, accessToken.payload);
 		yield put(setRecentlyPlayed(recentlyPlayed));
+		yield delay(500);
 		yield put(setStatus("success"));
 	}
 	catch (error) {

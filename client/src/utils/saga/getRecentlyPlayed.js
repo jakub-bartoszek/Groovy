@@ -1,7 +1,6 @@
 import axios from "axios";
 
 export const getRecentlyPlayed = async (accessToken) => {
-	try {
 		if (accessToken) {
 			const response = await axios.get(
 				`https://api.spotify.com/v1/me/player/recently-played?limit=5`, {
@@ -13,8 +12,4 @@ export const getRecentlyPlayed = async (accessToken) => {
 			);
 			return await response.data.items;
 		}
-	}
-	catch (err) {
-		console.log(err);
-	}
 };

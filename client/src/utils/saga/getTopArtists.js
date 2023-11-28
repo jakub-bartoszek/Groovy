@@ -1,7 +1,6 @@
 import axios from "axios";
 
 export const getTopArtists = async (accessToken) => {
-	try {
 		if (accessToken) {
 			const response = await axios.get(
 				`https://api.spotify.com/v1/me/top/artists/`,
@@ -14,8 +13,4 @@ export const getTopArtists = async (accessToken) => {
 			);
 			return await response.data.items;
 		}
-	}
-	catch (err) {
-		console.log(err);
-	}
 };

@@ -101,7 +101,7 @@ export const Artist = ({ width, accessToken }) => {
      >
       <div className="flex self-end gap-4 w-full p-5 bg-gradient-to-t from-[#00000070]">
        <div
-        className={`bg-black rounded-full ${
+        className={`bg-black rounded-full aspect-square ${
          width > 550 ? "h-48 w-48" : "h-24 w-24"
         }`}
        >
@@ -125,11 +125,10 @@ export const Artist = ({ width, accessToken }) => {
        </div>
        <div className="flex flex-col justify-between drop-shadow-md overflow-hidden">
         <span>Artist</span>
-        <span
-         className={`font-bold text-ellipsis whitespace-nowrap overflow-hidden
-									${width < 700 ? "text-5xl" : "text-7xl"}`}
-        >
-         <h1>{artist.name}</h1>
+        <span className={`font-bold ${width < 700 ? "text-4xl" : "text-7xl"}`}>
+         <h1 className="text-ellipsis whitespace-nowrap overflow-hidden">
+          {artist.name}
+         </h1>
         </span>
         <span>{artist.followersCount} followers</span>
        </div>

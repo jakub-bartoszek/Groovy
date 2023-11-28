@@ -93,7 +93,11 @@ export const LikedSongs = ({ accessToken, width }) => {
         }}
        >
         <div className="flex self-end gap-4 w-full p-5 bg-gradient-to-t from-[#00000070]">
-         <div className={`bg-black ${width > 550 ? "h-48 w-48" : "h-24 w-24"}`}>
+         <div
+          className={`bg-black aspect-square ${
+           width > 550 ? "h-48 w-48" : "h-24 w-24"
+          }`}
+         >
           <img
            className="h-full w-full shadow-2xl object-cover image"
            onLoad={() => {
@@ -108,13 +112,14 @@ export const LikedSongs = ({ accessToken, width }) => {
            crossOrigin="Anonymous"
           />
          </div>
-         <div className="flex flex-col justify-between">
+         <div className="flex flex-col justify-between overflow-hidden">
           <span>Playlist</span>
           <div className="flex flex-col gap-4">
            <span
-            className={`font-bold ${width >= 700 && "text-7xl"} ${
-             width < 700 && width > 550 && "text-5xl"
-            } ${width < 550 && "text-3xl"}`}
+            className={`font-bold text-ellipsis overflow-hidden
+            ${width >= 700 && "text-7xl"}
+            ${width < 700 && width > 550 && "text-5xl"}
+            ${width < 550 && "text-3xl"}`}
            >
             Liked songs
            </span>

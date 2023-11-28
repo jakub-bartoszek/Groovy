@@ -52,11 +52,11 @@ export const AccountBar = ({ accessToken, width }) => {
     className="group relative cursor-pointer"
     tabIndex={1}
    >
-    <div className="h-8 w-8 bg-[#000000aa] rounded-full flex items-center justify-center  hover:scale-105" />{" "}
+    <div className="h-8 w-8 bg-[#000000aa] rounded-full flex items-center justify-center  hover:scale-105" />
     {/* Imitation of user's avatar */}
     <ul className="absolute right-0 top-10 w-56 bg-[#282828] text-sm p-1 rounded-[10px] hidden group-focus-within:block scale-100 z-20">
      <li>
-      <button className="hover:bg-[#3e3e3e] p-3 w-full text-left">
+      <button className="hover:bg-[#3e3e3e] p-3 w-full text-left rounded-t-[10px]">
        Account
       </button>
      </li>
@@ -79,7 +79,7 @@ export const AccountBar = ({ accessToken, width }) => {
       </button>
      </li>
      <li>
-      <button className="hover:bg-[#3e3e3e] p-3 w-full text-left border-t-[1px] border-t-[#ffffff50]">
+      <button onClick={() => window.location = `/`} className="hover:bg-[#3e3e3e] p-3 w-full text-left border-t-[1px] border-t-[#ffffff50] rounded-b-[10px]">
        Logout
       </button>
      </li>

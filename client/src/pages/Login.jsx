@@ -1,14 +1,6 @@
-import { useDispatch, useSelector } from "react-redux";
-import {
- selectClientId,
- selectClientSecret,
- setClientId,
- setClientSecret
-} from "../utils/redux/spotifySlice";
 import { useState } from "react";
 
 export default function Login() {
- const dispatch = useDispatch();
  const [clientId, setClientId] = useState(
   JSON.parse(localStorage.getItem("client_id")) || ""
  );
@@ -39,9 +31,9 @@ export default function Login() {
   <div className="flex justify-center h-[100vh] items-center bg-[#121212] text-white">
    <form className="flex flex-col gap-8">
     <label className="flex flex-col ">
-     Client id:
+     <span className="text-muted">Client id:</span>
      <input
-      className="text-black"
+      className="p-2 rounded-full bg-[#181818]"
       value={clientId}
       onChange={(e) => {
        setClientId(e.target.value);
@@ -50,9 +42,9 @@ export default function Login() {
      />
     </label>
     <label className="flex flex-col ">
-     Client secret:
+     <span className="text-muted">Client secret:</span>
      <input
-      className="text-black"
+      className="p-2 rounded-full bg-[#181818]"
       value={clientSecret}
       onChange={(e) => {
        setClientSecret(e.target.value);

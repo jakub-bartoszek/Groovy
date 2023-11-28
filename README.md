@@ -1,70 +1,81 @@
-# Getting Started with Create React App
+# Spotify clone
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+[This app is hosted here.](https://groovy-qsov.onrender.com/)
 
-## Available Scripts
+Please be patient. I'm using free [onrender](https://render.com/) plan and it takes some time before the page fully loads.
 
-In the project directory, you can run:
+## How does it work?
 
-### `npm start`
+This App fetches your Spotify data through [Spotify API](https://developer.spotify.com/documentation/web-api), for example: Your saved tracks, Playlists, Followed Artists etc.
+My Spotify clone allows you to search for artists and songs. If you are Spotify Premium user, you can also play songs!
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## The things i used to make this project
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- React
+- Redux
+- Redux toolkit
+- Redux saga
+- React router
+- React spotify web playback
+- Spotify web api node
+- Axios
+- Color thief
+- Lodash
+- Re-resizable
+- Tailwind css
+- Express
+- Cors
+- Body parser
 
-### `npm test`
+## Features in my App
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- 5 recently listened songs displayed in Homepage and Liked songs playlist.
+- Resizable sidebar with navigation and Library that contains your playlists, top tracks and artists. You can switch between categories.
+- Artist page
+- Playlist page
+- Liked songs page
+- Dynamic background color, based on artist, playlist or track image.
+- Top bar changing opacity based on scroll position.
+- Working search, where you can search for artists and tracks.
+- Responsive styles
 
-### `npm run build`
+## How to use it?
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+To use my app you need to go through a few steps:
+- Log in to the [Spotify for developers](https://developer.spotify.com/) website with your spotify account. Make sure you are logged into [Spotify](https://spotify.com/) with the same account!
+- Go to the [Dashboard](https://developer.spotify.com/dashboard).
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+  ![image](https://github.com/jakub-bartoszek-developer/Groovy/assets/113419864/86970941-f274-4ede-8643-5cbe27379343)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- Press [Create App](https://developer.spotify.com/dashboard/create).
+- You need to complete the form.
+- Make sure to paste link to my page (https://groovy-qsov.onrender.com) inside Redirect URI field and choose Web API.
 
-### `npm run eject`
+  ![image](https://github.com/jakub-bartoszek-developer/Groovy/assets/113419864/87c4e20d-b556-445a-9ecc-4afbb03b5f88)
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+  ![image](https://github.com/jakub-bartoszek-developer/Groovy/assets/113419864/2a55f383-06e2-4b8c-8c9e-5ab33d974113)
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- Once you are on page with your created app, you have to go to Settings.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+  ![image](https://github.com/jakub-bartoszek-developer/Groovy/assets/113419864/cd94f33a-3fd3-4769-b3a9-b0efadd81b0e)
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+- Copy Client ID and Client Secret.
 
-## Learn More
+  ![image](https://github.com/jakub-bartoszek-developer/Groovy/assets/113419864/4b4f12a2-ab5b-4b06-be8d-dd3a9ed54cf3)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- And paste them in Login form inside my App.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+  ![image](https://github.com/jakub-bartoszek-developer/Groovy/assets/113419864/e62a2c54-a303-48fc-a14e-dba004114de2)
 
-### Code Splitting
+- Remember that Client secret is sensitive. Do not share it!
+- If you are worried about it, you can reset it in Settings of your App
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+  ![image](https://github.com/jakub-bartoszek-developer/Groovy/assets/113419864/6cf8f5f2-3058-45ff-8337-0254f86ade5e)
 
-### Analyzing the Bundle Size
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
 
-### Making a Progressive Web App
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
 
-### Advanced Configuration
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
 
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+  

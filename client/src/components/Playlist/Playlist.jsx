@@ -135,9 +135,11 @@ export const Playlist = ({ accessToken, width }) => {
             <div>Playlist</div>
             <div className="flex flex-col gap-4 overflow-hidden">
              <span
-              className={`font-bold ${width >= 700 && "text-7xl"} ${
-               width < 700 && width > 550 && "text-5xl"
-              } ${width < 550 && "text-3xl"}`}
+              className={`font-bold text-ellipsis overflow-hidden ${
+               width >= 700 && "text-7xl"
+              } ${width < 700 && width > 550 && "text-5xl"} ${
+               width < 550 && "text-3xl"
+              }`}
              >
               {playlist.name}
              </span>

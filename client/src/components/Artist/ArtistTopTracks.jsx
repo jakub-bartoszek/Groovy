@@ -23,7 +23,7 @@ export const ArtistTopTracks = ({ tracks, width }) => {
       className={`gap-4 px-4 py-2 group rounded-[10px] hover:bg-[#ffffff22] ${
        width > 500
         ? "grid grid-cols-[1rem_2fr_1fr_minmax(60px,_1fr)]"
-        : "grid grid-cols-[1rem_2fr_minmax(60px,_1fr)]"
+        : width > 350 ? "grid grid-cols-[1rem_2fr_minmax(60px,_1fr)]" : "grid grid-cols-[1rem_1fr]"
       }`}
       key={nanoid()}
      >
@@ -64,9 +64,11 @@ export const ArtistTopTracks = ({ tracks, width }) => {
         </span>
        </div>
       )}
-      <div className="flex items-center justify-center">
-       <span>{track.duration.replace(".", ":")}</span>
-      </div>
+      {width > 350 && (
+       <div className="flex items-center justify-center">
+        <span>{track.duration.replace(".", ":")}</span>
+       </div>
+      )}
      </div>
     );
    })}

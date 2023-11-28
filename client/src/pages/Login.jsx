@@ -9,8 +9,12 @@ import { useState } from "react";
 
 export default function Login() {
  const dispatch = useDispatch();
- const [clientId, setClientId] = useState("");
- const [clientSecret, setClientSecret] = useState("");
+ const [clientId, setClientId] = useState(
+  JSON.parse(localStorage.getItem("client_id")) || ""
+ );
+ const [clientSecret, setClientSecret] = useState(
+  JSON.parse(localStorage.getItem("client_secret")) || ""
+ );
  const redirectUri = JSON.parse(localStorage.getItem("redirect_uri"));
  const apiUrl = "https://accounts.spotify.com/authorize";
  const scope = [

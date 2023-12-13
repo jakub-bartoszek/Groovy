@@ -7,7 +7,7 @@ Please be patient. I'm using free [onrender](https://render.com/) plan and it ta
 ## How does it work?
 
 This App fetches your Spotify data through [Spotify API](https://developer.spotify.com/documentation/web-api), for example: Your saved tracks, Playlists, Followed Artists etc.
-My Spotify clone allows you to search for artists and songs. If you are Spotify Premium user, you can also play songs!
+Groovy allows you to search for artists and songs. If you are Spotify Premium user, you can also play songs!
 
 ## The things i used to make this project
 

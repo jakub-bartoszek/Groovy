@@ -6,7 +6,7 @@ import {
  fetchSearchResults,
  selectSearchQuery,
  selectSearchResults,
- selectStatus,
+ selectStatus
 } from "../../utils/redux/searchSlice";
 import { setBgColor } from "../../utils/redux/colorsSlice";
 import { TrackResults } from "./TrackResults";

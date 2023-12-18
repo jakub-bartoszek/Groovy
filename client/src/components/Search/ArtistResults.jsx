@@ -9,7 +9,7 @@ export const ArtistResults = ({ searchResults }) => (
     key={nanoid()}
    >
     <NavLink
-     className="flex flex-col gap-4"
+     className="flex flex-col gap-4 overflow-hidden"
      to={`/artists/${artist.id}`}
     >
      <div className="w-[85%] aspect-square rounded-full self-center shadow-xl">
@@ -21,9 +21,7 @@ export const ArtistResults = ({ searchResults }) => (
       />
      </div>
      <div className="flex flex-col">
-      <span>
-       <b>{artist.name}</b>
-      </span>
+      <span className=" text-ellipsis overflow-hidden">{artist.name}</span>
       <span className="text-sm text-muted">Artist</span>
      </div>
     </NavLink>

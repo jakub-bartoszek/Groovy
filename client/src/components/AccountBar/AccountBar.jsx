@@ -79,7 +79,10 @@ export const AccountBar = ({ accessToken, width }) => {
       </button>
      </li>
      <li>
-      <button onClick={() => window.location = `/`} className="hover:bg-[#3e3e3e] p-3 w-full text-left border-t-[1px] border-t-[#ffffff50] rounded-b-[10px]">
+      <button
+       onClick={() => (window.location = `/`)}
+       className="hover:bg-[#3e3e3e] p-3 w-full text-left border-t-[1px] border-t-[#ffffff50] rounded-b-[10px]"
+      >
        Logout
       </button>
      </li>

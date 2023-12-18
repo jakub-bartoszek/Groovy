@@ -4,12 +4,12 @@ import { setCurrentTrack } from "../../utils/redux/playerSlice";
 
 export const TrackResults = ({ searchResults }) => {
  const dispatch = useDispatch();
- 
+
  return (
   <ul className="h-full overflow-y-scroll mt-[72px] px-2">
    {searchResults.tracks?.items.map((track) => (
     <li
-     className="flex items-center gap-4 p-2 hover:bg-[#ffffff33] rounded-[10px] overflow-hidden"
+     className="flex items-center gap-4 p-2 hover:bg-[#ffffff33] rounded-[10px] overflow-hidden cursor-pointer"
      key={nanoid()}
      onClick={() => {
       track && dispatch(setCurrentTrack(track.uri));

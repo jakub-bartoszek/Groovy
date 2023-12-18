@@ -20,22 +20,22 @@ export const ArtistTopTracks = ({ tracks, width }) => {
    {tracks.slice(0, showMore ? 10 : 5)?.map((track) => {
     return (
      <div
-      className={`gap-4 px-4 py-2 group rounded-[10px] hover:bg-[#ffffff22] ${
+      className={`gap-4 px-4 py-2 group rounded-[10px] hover:bg-[#ffffff22] cursor-pointer ${
        width > 500
         ? "grid grid-cols-[1rem_2fr_1fr_minmax(60px,_1fr)]"
-        : width > 350 ? "grid grid-cols-[1rem_2fr_minmax(60px,_1fr)]" : "grid grid-cols-[1rem_1fr]"
+        : width > 350
+        ? "grid grid-cols-[1rem_2fr_minmax(60px,_1fr)]"
+        : "grid grid-cols-[1rem_1fr]"
       }`}
       key={nanoid()}
+      onClick={() => {
+       dispatch(setCurrentTrack(track.uri));
+      }}
      >
       <span className="flex items-center justify-center group-hover:hidden">
        {track.index}
       </span>
-      <button
-       onClick={() => {
-        dispatch(setCurrentTrack(track.uri));
-       }}
-       className="hidden items-center justify-center group-hover:flex cursor-pointer"
-      >
+      <button className="hidden items-center justify-center group-hover:flex">
        <PlayIcon size={10} />
       </button>
       <div className="flex items-center gap-4 text-ellipsis whitespace-nowrap overflow-hidden">

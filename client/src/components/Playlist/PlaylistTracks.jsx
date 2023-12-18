@@ -51,7 +51,7 @@ export const PlaylistTracks = ({ tracks, opacity, width }) => {
      const date = new Date(track.dateAdded);
      return (
       <div
-       className={`grid rounded-md group gap-4 px-4 hover:bg-[#ffffff22] text-muted
+       className={`grid rounded-md group gap-4 px-4 hover:bg-[#ffffff22] text-muted  cursor-pointer
 							${width >= 750 && "grid-cols-[1rem_6fr_4fr_3fr_minmax(16px,_1fr)]"}
 							${width < 750 && width >= 550 && "grid-cols-[1rem_4fr_2fr_minmax(120px,_1fr)]"}
        ${
@@ -59,16 +59,14 @@ export const PlaylistTracks = ({ tracks, opacity, width }) => {
        }
        ${width < 350 && "grid-cols-[1rem_1fr]"}`}
        key={nanoid()}
+       onClick={() => {
+        dispatch(setCurrentTrack(track.uri));
+       }}
       >
        <span className="flex items-center justify-center group-hover:hidden">
         {track.index}
        </span>
-       <button
-        className="hidden items-center justify-center group-hover:flex cursor-pointer"
-        onClick={() => {
-         dispatch(setCurrentTrack(track.uri));
-        }}
-       >
+       <button className="hidden items-center justify-center group-hover:flex">
         <PlayIcon size={10} />
        </button>
        <div className="flex items-center gap-4 py-2 overflow-hidden">

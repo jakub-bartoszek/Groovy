@@ -1,12 +1,8 @@
 import { useSelector } from "react-redux";
 import SpotifyPlayer from "react-spotify-web-playback";
-import {
- selectCurrentTrack,
- selectIsPlaying,
- selectQueue
-} from "../../utils/redux/playerSlice";
+import { selectCurrentTrack, selectIsPlaying, selectQueue } from "../../utils/redux/playerSlice";
 
-export const Player = ({ accessToken }) => {
+const Player = ({ accessToken }) => {
  const track = useSelector(selectCurrentTrack);
  const queue = useSelector(selectQueue);
  const isPlaying = useSelector(selectIsPlaying);
@@ -19,7 +15,7 @@ export const Player = ({ accessToken }) => {
     syncExternalDevice={true}
     showSaveIcon={true}
     play={isPlaying}
-    uris={track.concat(queue)}
+    uris={[...track, ...queue]}
     token={accessToken}
     styles={{
      activeColor: "#1cb954",
@@ -36,3 +32,5 @@ export const Player = ({ accessToken }) => {
   </div>
  );
 };
+
+export default Player;

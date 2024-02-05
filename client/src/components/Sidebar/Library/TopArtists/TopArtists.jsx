@@ -1,17 +1,23 @@
-import { ArtistItem } from "./ArtistItem";
+import React from "react";
 import { nanoid } from "@reduxjs/toolkit";
 import { useSelector } from "react-redux";
 import { selectTopArtists } from "../../../../utils/redux/librarySlice";
+import ArtistItem from "./ArtistItem";
 
-export const TopArtists = ({ accessToken, width }) => {
-	const topArtists = useSelector(selectTopArtists);
+const TopArtists = ({ width }) => {
+ const topArtists = useSelector(selectTopArtists);
 
-	return topArtists.map((artist) => (
-		<ArtistItem
-			key={nanoid()}
-			item={artist}
-			width={width}
-			path={`/artists/${artist.id}`}
-		/>
-	));
+ return (
+  <>
+   {topArtists.map((artist) => (
+    <ArtistItem
+     key={nanoid()}
+     item={artist}
+     width={width}
+     path={`/artists/${artist.id}`}
+    />
+   ))}
+  </>
+ );
 };
+export default TopArtists;

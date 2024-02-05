@@ -1,7 +1,7 @@
 import { nanoid } from "@reduxjs/toolkit";
 import { NavLink } from "react-router-dom";
 
-export const ArtistResults = ({ searchResults }) => (
+const ArtistResults = ({ searchResults }) => (
  <ul className="overflow-y-scroll mt-[72px] p-2 gap-2 grid grid-cols-[repeat(auto-fit,_minmax(120px,_1fr))] grid-rows-[max-content]">
   {searchResults.artists?.items.map((artist) => (
    <li
@@ -29,3 +29,5 @@ export const ArtistResults = ({ searchResults }) => (
   ))}
  </ul>
 );
+
+export default ArtistResults;

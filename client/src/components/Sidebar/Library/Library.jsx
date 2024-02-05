@@ -3,10 +3,10 @@ import { LibraryIcon } from "../../../assets/icons/LibraryIcon";
 import { LeftArrowIcon } from "../../../assets/icons/LeftArrowIcon";
 import { RightArrowIcon } from "../../../assets/icons/RightArrowIcon";
 import { CrossIcon } from "../../../assets/icons/CrossIcon";
-import { CategoryButton } from "../../CategoryButton/CategoryButton";
-import { Playlists } from "./Playlists/Playlists";
-import { TopTracks } from "./TopTracks/TopTracks";
-import { TopArtists } from "./TopArtists/TopArtists";
+import CategoryButton from "../../CategoryButton/CategoryButton";
+import Playlists from "./Playlists/Playlists";
+import TopTracks from "./TopTracks/TopTracks";
+import TopArtists from "./TopArtists/TopArtists";
 import {
  fetchPlaylists,
  fetchTopArtists,
@@ -16,7 +16,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { Loader } from "../../../assets/Loader";
 
-export const Library = ({ width, accessToken }) => {
+const Library = ({ width, accessToken }) => {
  const contentWrapper = useRef(null);
  const [libraryScrollPosition, setLibraryScrollPosition] = useState(0);
  const [scrollPosition, setScrollPosition] = useState("left");
@@ -36,11 +36,83 @@ export const Library = ({ width, accessToken }) => {
   }
  }, [dispatch, accessToken]);
 
+ const renderCategories = () => {
+  const categoryButtons = {
+   playlists: (
+    <CategoryButton
+     category={category}
+     setCategory={setCategory}
+     name="Playlists"
+    />
+   ),
+   artists: (
+    <CategoryButton
+     category={category}
+     setCategory={setCategory}
+     name="Artists"
+    />
+   ),
+   tracks: (
+    <CategoryButton
+     category={category}
+     setCategory={setCategory}
+     name="Tracks"
+    />
+   ),
+   albums: (
+    <CategoryButton
+     category={category}
+     setCategory={setCategory}
+     name="Albums"
+    />
+   ),
+   podcasts: (
+    <CategoryButton
+     category={category}
+     setCategory={setCategory}
+     name="Podcasts"
+    />
+   ),
+   all: (
+    <>
+     <CategoryButton
+      category={category}
+      setCategory={setCategory}
+      name="Playlists"
+     />
+     <CategoryButton
+      category={category}
+      setCategory={setCategory}
+      name="Artists"
+     />
+     <CategoryButton
+      category={category}
+      setCategory={setCategory}
+      name="Tracks"
+     />
+     <CategoryButton
+      category={category}
+      setCategory={setCategory}
+      name="Albums"
+     />
+     <CategoryButton
+      category={category}
+      setCategory={setCategory}
+      name="Podcasts"
+     />
+    </>
+   )
+  };
+
+  return categoryButtons[category];
+ };
+
  return (
   <div className="rounded-[10px] text-[#b3b3b3] bg-[#121212] h-full overflow-hidden flex flex-col">
    <h2
-    className={`flex items-center gap-4 py-4 px-[19px] font-bold
-				${(width <= 70) & (libraryScrollPosition !== 0) && "shadow-bottom"}`}
+    className={`flex items-center gap-4 py-4 px-[19px] font-bold ${
+     width <= 70 && libraryScrollPosition !== 0 && "shadow-bottom"
+    }`}
    >
     <div className="w-8 h-8 flex items-center justify-center">
      <LibraryIcon size={22} />
@@ -49,13 +121,14 @@ export const Library = ({ width, accessToken }) => {
    </h2>
    {width > 70 && (
     <div
-     className={`relative flex items-center px-4 h-14 py-2
-					${libraryScrollPosition !== 0 && "shadow-bottom"}`}
+     className={`relative flex items-center px-4 h-14 py-2 ${
+      libraryScrollPosition !== 0 && "shadow-bottom"
+     }`}
     >
      <button
-      className={`bg-[#242424] flex items-center justify-center h-8 w-8 rounded-full absolute left-4 shadow-left
-						${scrollPosition === "left" ? "hidden" : ""}
-						${category !== "all" ? "hidden" : ""}`}
+      className={`bg-[#242424] flex items-center justify-center h-8 w-8 rounded-full absolute left-4 shadow-left ${
+       scrollPosition === "left" ? "hidden" : ""
+      } ${category !== "all" && "hidden"}`}
       onClick={() => {
        setScrollPosition("left");
        contentWrapper.current.scrollLeft -= 1000;
@@ -64,9 +137,9 @@ export const Library = ({ width, accessToken }) => {
       <LeftArrowIcon size={18} />
      </button>
      <button
-      className={`bg-[#242424] flex items-center justify-center h-8 w-8 rounded-full absolute right-4 shadow-right
-						${scrollPosition === "right" ? "hidden" : ""}
-						${category !== "all" ? "hidden" : ""}`}
+      className={`bg-[#242424] flex items-center justify-center h-8 w-8 rounded-full absolute right-4 shadow-right ${
+       scrollPosition === "right" ? "hidden" : ""
+      } ${category !== "all" && "hidden"}`}
       onClick={() => {
        setScrollPosition("right");
        contentWrapper.current.scrollLeft += 1000;
@@ -86,74 +159,7 @@ export const Library = ({ width, accessToken }) => {
         <CrossIcon size={18} />
        </button>
       )}
-      {
-       {
-        playlists: (
-         <CategoryButton
-          category={category}
-          setCategory={setCategory}
-          name="Playlists"
-         />
-        ),
-        artists: (
-         <CategoryButton
-          category={category}
-          setCategory={setCategory}
-          name="Artists"
-         />
-        ),
-        tracks: (
-         <CategoryButton
-          category={category}
-          setCategory={setCategory}
-          name="Tracks"
-         />
-        ),
-        albums: (
-         <CategoryButton
-          category={category}
-          setCategory={setCategory}
-          name="Albums"
-         />
-        ),
-        podcasts: (
-         <CategoryButton
-          category={category}
-          setCategory={setCategory}
-          name="Podcasts"
-         />
-        ),
-        all: (
-         <>
-          <CategoryButton
-           category={category}
-           setCategory={setCategory}
-           name="Playlists"
-          />
-          <CategoryButton
-           category={category}
-           setCategory={setCategory}
-           name="Artists"
-          />
-          <CategoryButton
-           category={category}
-           setCategory={setCategory}
-           name="Tracks"
-          />
-          <CategoryButton
-           category={category}
-           setCategory={setCategory}
-           name="Albums"
-          />
-          <CategoryButton
-           category={category}
-           setCategory={setCategory}
-           name="Podcasts"
-          />
-         </>
-        )
-       }[category]
-      }
+      {renderCategories()}
      </div>
     </div>
    )}
@@ -168,9 +174,7 @@ export const Library = ({ width, accessToken }) => {
      success: (
       <ul
        onScroll={handleScroll}
-       className={`p-1 h-full overflow-y-scroll ${
-        width <= 70 && "hide-scrollbar"
-       }`}
+       className={`p-1 h-full overflow-y-scroll ${width <= 70 && "hide-scrollbar"}`}
       >
        {
         {
@@ -217,3 +221,5 @@ export const Library = ({ width, accessToken }) => {
   </div>
  );
 };
+
+export default Library;

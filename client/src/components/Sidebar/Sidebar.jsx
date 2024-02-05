@@ -1,22 +1,14 @@
+import React, { useEffect, useRef, useState } from "react";
 import { Resizable } from "re-resizable";
-import { useEffect, useRef, useState } from "react";
+import { NavLink } from "react-router-dom";
 import { HomeIcon } from "../../assets/icons/HomeIcon";
 import { SearchIcon } from "../../assets/icons/SearchIcon";
-import { Library } from "./Library/Library";
-import { NavLink } from "react-router-dom";
+import Library from "./Library/Library";
 
-export const Sidebar = ({ accessToken }) => {
+const Sidebar = ({ accessToken }) => {
  const [width, setWidth] = useState();
  const sidebarRef = useRef();
- let snap = [];
-
- function returnMe() {
-  for (var i = 285; i < 421; i++) {
-   snap.push(i);
-   if (i === 420) return snap;
-  }
- }
- returnMe();
+ const snap = Array.from({ length: 136 }, (_, index) => 285 + index);
 
  useEffect(() => {
   const element = sidebarRef.current;
@@ -31,23 +23,20 @@ export const Sidebar = ({ accessToken }) => {
   }
  }, [width]);
 
+ const calculateMaxWidth = () => {
+  if (window.innerWidth >= 1000) return "420px";
+  if (window.innerWidth < 1000 && window.innerWidth >= 820) return "300px";
+  return "70px";
+ };
+
  return (
   <Resizable
    className="h-full overflow-hidden"
    snapGap={150}
    minWidth="70px"
-   snap={{
-    x: [70].concat(snap)
-   }}
-   maxWidth={
-    (window.innerWidth >= 1000 && "420px") ||
-    (window.innerWidth < 1000 && window.innerWidth >= 820 && "300px") ||
-    (window.innerWidth < 820 && "70px")
-   }
-   defaultSize={{
-    width: "300px",
-    height: "100%"
-   }}
+   snap={{ x: [70, ...snap] }}
+   maxWidth={calculateMaxWidth()}
+   defaultSize={{ width: "300px", height: "100%" }}
   >
    <div
     className="h-full grid grid-flow-row grid-rows-[auto_1fr] gap-2 overflow-hidden"
@@ -85,3 +74,5 @@ export const Sidebar = ({ accessToken }) => {
   </Resizable>
  );
 };
+
+export default Sidebar;

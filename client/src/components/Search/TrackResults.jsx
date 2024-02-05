@@ -1,8 +1,9 @@
+import React from "react";
 import { nanoid } from "@reduxjs/toolkit";
 import { useDispatch } from "react-redux";
 import { setCurrentTrack } from "../../utils/redux/playerSlice";
 
-export const TrackResults = ({ searchResults }) => {
+const TrackResults = ({ searchResults }) => {
  const dispatch = useDispatch();
 
  return (
@@ -15,21 +16,27 @@ export const TrackResults = ({ searchResults }) => {
       track && dispatch(setCurrentTrack(track.uri));
      }}
     >
-     <img
-      className="w-12 h-12 rounded-[10px]"
-      src={track.album.images[track.album.images.length - 1].url}
-      alt={track.name}
-     />
-     <div className="flex flex-col overflow-hidden">
-      <span className="text-ellipsis whitespace-nowrap overflow-hidden font-semibold">
-       {track.name}
-      </span>
-      <span className="text-ellipsis whitespace-nowrap overflow-hidden text-muted">
-       {track.artists[0].name}
-      </span>
-     </div>
+     {track && (
+      <>
+       <img
+        className="w-12 h-12 rounded-[10px]"
+        src={track.album.images[track.album.images.length - 1].url}
+        alt={track.name}
+       />
+       <div className="flex flex-col overflow-hidden">
+        <span className="text-ellipsis whitespace-nowrap overflow-hidden font-semibold">
+         {track.name}
+        </span>
+        <span className="text-ellipsis whitespace-nowrap overflow-hidden text-muted">
+         {track.artists[0].name}
+        </span>
+       </div>
+      </>
+     )}
     </li>
    ))}
   </ul>
  );
 };
+
+export default TrackResults;

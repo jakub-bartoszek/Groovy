@@ -6,14 +6,17 @@ import { PlayIcon } from "../../assets/icons/PlayIcon";
 import { nanoid } from "@reduxjs/toolkit";
 import { useEffect } from "react";
 
-export const PlaylistTracks = ({ tracks, opacity, width }) => {
- const dispatch = useDispatch();
-
+const formatDate = (date) => {
  const dateFormat = {
   year: "numeric",
   month: "short",
   day: "numeric"
  };
+ return date.toLocaleDateString(undefined, dateFormat);
+};
+
+export const PlaylistTracks = ({ tracks, opacity, width }) => {
+ const dispatch = useDispatch();
 
  useEffect(() => {
   dispatch(setOpacity(0));
@@ -54,18 +57,14 @@ export const PlaylistTracks = ({ tracks, opacity, width }) => {
        className={`grid rounded-md group gap-4 px-4 hover:bg-[#ffffff22] text-muted  cursor-pointer
 							${width >= 750 && "grid-cols-[1rem_6fr_4fr_3fr_minmax(16px,_1fr)]"}
 							${width < 750 && width >= 550 && "grid-cols-[1rem_4fr_2fr_minmax(120px,_1fr)]"}
-       ${
-        width < 550 && width >= 350 && "grid-cols-[1rem_3fr_minmax(60px,_1fr)]"
-       }
+       ${width < 550 && width >= 350 && "grid-cols-[1rem_3fr_minmax(60px,_1fr)]"}
        ${width < 350 && "grid-cols-[1rem_1fr]"}`}
        key={nanoid()}
        onClick={() => {
         dispatch(setCurrentTrack(track.uri));
        }}
       >
-       <span className="flex items-center justify-center group-hover:hidden">
-        {track.index}
-       </span>
+       <span className="flex items-center justify-center group-hover:hidden">{track.index}</span>
        <button className="hidden items-center justify-center group-hover:flex">
         <PlayIcon size={10} />
        </button>
@@ -80,9 +79,7 @@ export const PlaylistTracks = ({ tracks, opacity, width }) => {
          )}
         </div>
         <div className="overflow-hidden flex flex-col">
-         <span className="text-ellipsis whitespace-nowrap overflow-hidden">
-          {track.name}
-         </span>
+         <span className="text-ellipsis whitespace-nowrap overflow-hidden">{track.name}</span>
          <span className="text-ellipsis whitespace-nowrap overflow-hidden">
           {track.artists.join(", ")}
          </span>
@@ -90,14 +87,12 @@ export const PlaylistTracks = ({ tracks, opacity, width }) => {
        </div>
        {width >= 550 && (
         <div className="overflow-hidden flex items-center">
-         <span className="text-ellipsis whitespace-nowrap overflow-hidden">
-          {track.album}
-         </span>
+         <span className="text-ellipsis whitespace-nowrap overflow-hidden">{track.album}</span>
         </div>
        )}
        {width >= 750 && (
         <div className="overflow-hidden flex items-center">
-         <span>{date.toLocaleDateString(undefined, dateFormat)}</span>
+         <span>{date.toLocaleDateString(undefined, formatDate)}</span>
         </div>
        )}
        {width >= 350 && (

@@ -1,16 +1,16 @@
-import { Sidebar } from "../components/Sidebar/Sidebar";
+import { useEffect, useRef, useState } from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import { Search } from "../components/Search/Search";
-import { Player } from "../components/Player/Player";
-import { Home } from "../components/Home/Home";
-import { Playlist } from "../components/Playlist/Playlist";
+import { useDispatch } from "react-redux";
+import useAuth from "../utils/useAuth";
+import { fetchRecentlyPlayed } from "../utils/redux/homeSlice";
+import Sidebar from "../components/Sidebar/Sidebar";
+import Search from "../components/Search/Search";
+import Player from "../components/Player/Player";
+import Home from "../components/Home/Home";
+import Playlist from "../components/Playlist/Playlist";
 import { Artist } from "../components/Artist/Artist";
 import { AccountBar } from "../components/AccountBar/AccountBar";
-import { useEffect, useRef, useState } from "react";
-import useAuth from "../utils/useAuth";
-import { LikedSongs } from "../components/Playlist/LikedSongs";
-import { useDispatch } from "react-redux";
-import { fetchRecentlyPlayed } from "../utils/redux/homeSlice";
+import LikedSongs from "../components/Playlist/LikedSongs";
 
 const Dashboard = ({ code }) => {
  const [width, setWidth] = useState();

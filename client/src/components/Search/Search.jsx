@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import { CategoryButton } from "../CategoryButton/CategoryButton";
 import { Loader } from "../../assets/Loader";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -9,10 +8,11 @@ import {
  selectStatus
 } from "../../utils/redux/searchSlice";
 import { setBgColor } from "../../utils/redux/colorsSlice";
-import { TrackResults } from "./TrackResults";
-import { ArtistResults } from "./ArtistResults";
+import ArtistResults from "./ArtistResults";
+import CategoryButton from "../CategoryButton/CategoryButton";
+import TrackResults from "./TrackResults";
 
-export const Search = ({ accessToken, width }) => {
+const Search = ({ accessToken, width }) => {
  const searchQuery = useSelector(selectSearchQuery);
  const searchResults = useSelector(selectSearchResults);
  const status = useSelector(selectStatus);
@@ -77,9 +77,7 @@ export const Search = ({ accessToken, width }) => {
           searchResults.artists?.items.length > 0 ? (
            <ArtistResults searchResults={searchResults} />
           ) : searchQuery ? (
-           <span className="text-muted mt-[72px] px-4">
-            No artists found...
-           </span>
+           <span className="text-muted mt-[72px] px-4">No artists found...</span>
           ) : (
            <></>
           )
@@ -92,3 +90,5 @@ export const Search = ({ accessToken, width }) => {
   </div>
  );
 };
+
+export default Search;

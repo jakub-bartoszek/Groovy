@@ -7,6 +7,7 @@ import libraryReducer from "./librarySlice";
 import homeReducer from "./homeSlice";
 import playlistReducer from "./playlistSlice";
 import spotifyReducer from "./spotifySlice";
+import artistReducer from "./artistSlice";
 
 import rootSaga from "../saga/rootSaga";
 
@@ -21,6 +22,7 @@ const store = configureStore({
 		library: libraryReducer,
 		home: homeReducer,
 		playlist: playlistReducer,
+		artist: artistReducer
 	},
 	middleware: [sagaMiddleware],
 });

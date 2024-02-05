@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { nanoid } from "@reduxjs/toolkit";
 
-export const ArtistTopTracks = ({ tracks, width }) => {
+const ArtistTopTracks = ({ tracks, width }) => {
  const { id } = useParams();
  const dispatch = useDispatch();
  const [showMore, setShowMore] = useState(false);
@@ -13,6 +13,8 @@ export const ArtistTopTracks = ({ tracks, width }) => {
  useEffect(() => {
   setShowMore(false);
  }, [id]);
+
+ console.log(tracks);
 
  return (
   <div className="w-full px-2">
@@ -32,19 +34,17 @@ export const ArtistTopTracks = ({ tracks, width }) => {
        dispatch(setCurrentTrack(track.uri));
       }}
      >
-      <span className="flex items-center justify-center group-hover:hidden">
-       {track.index}
-      </span>
+      <span className="flex items-center justify-center group-hover:hidden">{track.index}</span>
       <button className="hidden items-center justify-center group-hover:flex">
        <PlayIcon size={10} />
       </button>
       <div className="flex items-center gap-4 text-ellipsis whitespace-nowrap overflow-hidden">
        <div className="h-[40px] w-[40px] min-h-[40px] min-w-[40px] bg-black">
-        {track.image && (
+        {track.album.images.length > 0 && (
          <img
           className="object-cover"
           alt="Song cover"
-          src={track.image}
+          src={track.album.images[0].url}
          />
         )}
        </div>
@@ -53,20 +53,18 @@ export const ArtistTopTracks = ({ tracks, width }) => {
          {track.name}
         </span>
         <span className="text-muted text-ellipsis whitespace-nowrap overflow-hidden">
-         {track.artists.join(", ")}
+         {track.artists.map((artist) => artist.name).join(", ")}
         </span>
        </div>
       </div>
       {width > 500 && (
        <div className="flex items-center overflow-hidden">
-        <span className="text-ellipsis whitespace-nowrap overflow-hidden">
-         {track.album}
-        </span>
+        <span className="text-ellipsis whitespace-nowrap overflow-hidden">{track.album.name}</span>
        </div>
       )}
       {width > 350 && (
        <div className="flex items-center justify-center">
-        <span>{track.duration.replace(".", ":")}</span>
+        <span>{(track.duration_ms / 60000).toFixed(2).toString().replace(".", ":")}</span>
        </div>
       )}
      </div>
@@ -81,3 +79,5 @@ export const ArtistTopTracks = ({ tracks, width }) => {
   </div>
  );
 };
+
+export default ArtistTopTracks;

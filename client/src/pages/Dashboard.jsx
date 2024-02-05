@@ -1,7 +1,7 @@
 import { Sidebar } from "../components/Sidebar/Sidebar";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { Search } from "../components/Search/Search";
-import { Player } from "../components/Player";
+import { Player } from "../components/Player/Player";
 import { Home } from "../components/Home/Home";
 import { Playlist } from "../components/Playlist/Playlist";
 import { Artist } from "../components/Artist/Artist";

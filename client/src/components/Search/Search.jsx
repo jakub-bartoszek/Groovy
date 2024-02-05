@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { CategoryButton } from "../common/CategoryButton";
+import { CategoryButton } from "../CategoryButton/CategoryButton";
 import { Loader } from "../../assets/Loader";
 import { useDispatch, useSelector } from "react-redux";
 import {

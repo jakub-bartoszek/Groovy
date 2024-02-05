@@ -1,14 +1,14 @@
 import { configureStore } from "@reduxjs/toolkit";
 import createSagaMiddleware from "redux-saga";
-import searchReducer from "./utils/redux/searchSlice";
-import playerReducer from "./utils/redux/playerSlice";
-import colorsReducer from "./utils/redux/colorsSlice";
-import libraryReducer from "./utils/redux/librarySlice";
-import homeReducer from "./utils/redux/homeSlice";
-import playlistReducer from "./utils/redux/playlistSlice";
-import spotifyReducer from "./utils/redux/spotifySlice";
+import searchReducer from "./searchSlice";
+import playerReducer from "./playerSlice";
+import colorsReducer from "./colorsSlice";
+import libraryReducer from "./librarySlice";
+import homeReducer from "./homeSlice";
+import playlistReducer from "./playlistSlice";
+import spotifyReducer from "./spotifySlice";
 
-import rootSaga from "./utils/saga/rootSaga";
+import rootSaga from "../saga/rootSaga";
 
 const sagaMiddleware = createSagaMiddleware();
 

@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { PlaylistTracks } from "./PlaylistTracks";
 import { useDispatch, useSelector } from "react-redux";
-import { PlayButton } from "../common/PlayButton";
+import { PlayButton } from "../PlayButton/PlayButton";
 import {
  selectBgColor,
  selectOpacity,

@@ -4,7 +4,7 @@ import {
  selectCurrentTrack,
  selectIsPlaying,
  selectQueue
-} from "../utils/redux/playerSlice";
+} from "../../utils/redux/playerSlice";
 
 export const Player = ({ accessToken }) => {
  const track = useSelector(selectCurrentTrack);

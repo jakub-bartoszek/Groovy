@@ -7,7 +7,7 @@ import {
  setOpacity
 } from "../../utils/redux/colorsSlice";
 import { PlaylistTracks } from "./PlaylistTracks";
-import { PlayButton } from "../common/PlayButton";
+import { PlayButton } from "../PlayButton/PlayButton";
 import {
  fetchLikedSongs,
  selectLikedSongs

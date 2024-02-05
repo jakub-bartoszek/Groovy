@@ -3,7 +3,7 @@ import { LibraryIcon } from "../../../assets/icons/LibraryIcon";
 import { LeftArrowIcon } from "../../../assets/icons/LeftArrowIcon";
 import { RightArrowIcon } from "../../../assets/icons/RightArrowIcon";
 import { CrossIcon } from "../../../assets/icons/CrossIcon";
-import { CategoryButton } from "../../common/CategoryButton";
+import { CategoryButton } from "../../CategoryButton/CategoryButton";
 import { Playlists } from "./Playlists/Playlists";
 import { TopTracks } from "./TopTracks/TopTracks";
 import { TopArtists } from "./TopArtists/TopArtists";

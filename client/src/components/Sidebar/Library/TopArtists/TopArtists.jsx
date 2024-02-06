@@ -1,4 +1,3 @@
-import React from "react";
 import { nanoid } from "@reduxjs/toolkit";
 import { useSelector } from "react-redux";
 import { selectTopArtists } from "../../../../utils/redux/librarySlice";
@@ -11,7 +10,7 @@ const TopArtists = ({ width }) => {
   <>
    {topArtists.map((artist) => (
     <ArtistItem
-     key={nanoid()}
+     key={artist.id || nanoid()}
      item={artist}
      width={width}
      path={`/artists/${artist.id}`}

@@ -1,4 +1,3 @@
-import React from "react";
 import { nanoid } from "@reduxjs/toolkit";
 import { useDispatch } from "react-redux";
 import { setCurrentTrack } from "../../utils/redux/playerSlice";
@@ -11,7 +10,7 @@ const TrackResults = ({ searchResults }) => {
    {searchResults.tracks?.items.map((track) => (
     <li
      className="flex items-center gap-4 p-2 hover:bg-[#ffffff33] rounded-[10px] overflow-hidden cursor-pointer"
-     key={nanoid()}
+     key={track.id || nanoid()}
      onClick={() => {
       track && dispatch(setCurrentTrack(track.uri));
      }}

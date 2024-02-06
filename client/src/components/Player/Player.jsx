@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
-import SpotifyPlayer from "react-spotify-web-playback";
 import { selectCurrentTrack, selectIsPlaying, selectQueue } from "../../utils/redux/playerSlice";
+import SpotifyPlayer from "react-spotify-web-playback";
 
 const Player = ({ accessToken }) => {
  const track = useSelector(selectCurrentTrack);

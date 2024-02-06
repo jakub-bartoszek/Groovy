@@ -17,7 +17,7 @@ const Playlists = ({ width }) => {
    />
    {playlists.map((playlist) => (
     <PlaylistItem
-     key={nanoid()}
+     key={playlist.id || nanoid()}
      path={`/playlists/${playlist.id}`}
      item={playlist}
      width={width}

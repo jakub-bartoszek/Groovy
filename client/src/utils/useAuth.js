@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
-export default function useAuth(code) {
+export const useAuth = (code) => {
 	const [accessToken, setAccessToken] = useState();
 	const [refreshToken, setRefreshToken] = useState();
 	const [expiresIn, setExpiresIn] = useState();
@@ -10,7 +10,7 @@ export default function useAuth(code) {
 	const redirectUri = JSON.parse(localStorage.getItem("redirect_uri"));
 
 	useEffect(() => {
-		axios.post(`${redirectUri}/login`, { code, clientId, clientSecret, redirectUri })
+		axios.post(`http://localhost:3001/login`, { code, clientId, clientSecret, redirectUri })
 			.then(res => {
 				setAccessToken(res.data.accessToken);
 				setRefreshToken(res.data.refreshToken);
@@ -28,7 +28,7 @@ export default function useAuth(code) {
 		if (!refreshToken || !expiresIn) return;
 		const interval = setInterval(() => {
 
-			axios.post(`${redirectUri}/refresh`, { refreshToken, clientId, clientSecret, redirectUri })
+			axios.post(`http://localhost:3001/refresh`, { refreshToken, clientId, clientSecret, redirectUri })
 				.then(res => {
 					setAccessToken(res.data.accessToken);
 					setExpiresIn(res.data.expiresIn);
@@ -42,4 +42,4 @@ export default function useAuth(code) {
 	}, [refreshToken, expiresIn]);
 
 	return accessToken;
-}
+};

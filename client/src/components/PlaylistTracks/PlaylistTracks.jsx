@@ -1,10 +1,10 @@
+import { useEffect } from "react";
 import { useDispatch } from "react-redux";
+import { nanoid } from "@reduxjs/toolkit";
 import { setCurrentTrack } from "../../utils/redux/playerSlice";
 import { setOpacity } from "../../utils/redux/colorsSlice";
-import ClockIcon from "@heroicons/react/outline/ClockIcon";
 import { PlayIcon } from "../../assets/icons/PlayIcon";
-import { nanoid } from "@reduxjs/toolkit";
-import { useEffect } from "react";
+import ClockIcon from "@heroicons/react/outline/ClockIcon";
 
 const formatDate = (date) => {
  const dateFormat = {
@@ -15,7 +15,7 @@ const formatDate = (date) => {
  return date.toLocaleDateString(undefined, dateFormat);
 };
 
-export const PlaylistTracks = ({ tracks, opacity, width }) => {
+const PlaylistTracks = ({ tracks, opacity, width }) => {
  const dispatch = useDispatch();
 
  useEffect(() => {
@@ -59,7 +59,7 @@ export const PlaylistTracks = ({ tracks, opacity, width }) => {
 							${width < 750 && width >= 550 && "grid-cols-[1rem_4fr_2fr_minmax(120px,_1fr)]"}
        ${width < 550 && width >= 350 && "grid-cols-[1rem_3fr_minmax(60px,_1fr)]"}
        ${width < 350 && "grid-cols-[1rem_1fr]"}`}
-       key={nanoid()}
+       key={track.id || nanoid()}
        onClick={() => {
         dispatch(setCurrentTrack(track.uri));
        }}
@@ -107,3 +107,5 @@ export const PlaylistTracks = ({ tracks, opacity, width }) => {
   </div>
  );
 };
+
+export default PlaylistTracks;

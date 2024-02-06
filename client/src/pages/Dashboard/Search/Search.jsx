@@ -1,18 +1,18 @@
 import { useEffect, useRef, useState } from "react";
-import { Loader } from "../../assets/Loader";
+import Loader from "../../../components/Loader/Loader";
 import { useDispatch, useSelector } from "react-redux";
 import {
  fetchSearchResults,
  selectSearchQuery,
  selectSearchResults,
  selectStatus
-} from "../../utils/redux/searchSlice";
-import { setBgColor } from "../../utils/redux/colorsSlice";
-import ArtistResults from "./ArtistResults";
-import CategoryButton from "../CategoryButton/CategoryButton";
-import TrackResults from "./TrackResults";
+} from "../../../utils/redux/searchSlice";
+import { setBgColor } from "../../../utils/redux/colorsSlice";
+import ArtistResults from "../../../components/ArtistResults/ArtistResults";
+import CategoryButton from "../../../components/CategoryButton/CategoryButton";
+import TrackResults from "../../../components/TrackResults/TrackResults";
 
-const Search = ({ accessToken, width }) => {
+const Search = ({ accessToken }) => {
  const searchQuery = useSelector(selectSearchQuery);
  const searchResults = useSelector(selectSearchResults);
  const status = useSelector(selectStatus);

@@ -1,12 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
-import { LibraryIcon } from "../../../assets/icons/LibraryIcon";
-import { LeftArrowIcon } from "../../../assets/icons/LeftArrowIcon";
-import { RightArrowIcon } from "../../../assets/icons/RightArrowIcon";
-import { CrossIcon } from "../../../assets/icons/CrossIcon";
-import CategoryButton from "../../CategoryButton/CategoryButton";
-import Playlists from "./Playlists/Playlists";
-import TopTracks from "./TopTracks/TopTracks";
-import TopArtists from "./TopArtists/TopArtists";
+import { useEffect, useRef, useState } from "react";
 import {
  fetchPlaylists,
  fetchTopArtists,
@@ -14,7 +6,15 @@ import {
  selectStatus
 } from "../../../utils/redux/librarySlice";
 import { useDispatch, useSelector } from "react-redux";
-import { Loader } from "../../../assets/Loader";
+import { LibraryIcon } from "../../../assets/icons/LibraryIcon";
+import { LeftArrowIcon } from "../../../assets/icons/LeftArrowIcon";
+import { RightArrowIcon } from "../../../assets/icons/RightArrowIcon";
+import { CrossIcon } from "../../../assets/icons/CrossIcon";
+import Loader from "../../Loader/Loader";
+import CategoryButton from "../../CategoryButton/CategoryButton";
+import Playlists from "./Playlists/Playlists";
+import TopTracks from "./TopTracks/TopTracks";
+import TopArtists from "./TopArtists/TopArtists";
 
 const Library = ({ width, accessToken }) => {
  const contentWrapper = useRef(null);

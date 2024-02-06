@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Resizable } from "re-resizable";
 import { NavLink } from "react-router-dom";
 import { HomeIcon } from "../../assets/icons/HomeIcon";

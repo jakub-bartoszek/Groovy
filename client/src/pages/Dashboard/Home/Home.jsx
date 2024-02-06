@@ -1,10 +1,11 @@
 import { useCallback, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { selectBgColor, setOpacity } from "../../../utils/redux/colorsSlice";
+import { selectRecentlyPlayed, selectStatus } from "../../../utils/redux/homeSlice";
+import { nanoid } from "@reduxjs/toolkit";
 import { NavLink } from "react-router-dom";
-import { selectBgColor, setOpacity } from "../../utils/redux/colorsSlice";
-import Tile from "./Tile";
-import { Loader } from "../../assets/Loader";
-import { selectRecentlyPlayed, selectStatus } from "../../utils/redux/homeSlice";
+import Tile from "../../../components/Tile/Tile";
+import Loader from "../../../components/Loader/Loader";
 
 const Home = ({ width }) => {
  const dispatch = useDispatch();
@@ -51,7 +52,7 @@ const Home = ({ width }) => {
       </NavLink>
       {recentlyPlayed.map((track) => (
        <Tile
-        key={track.id}
+        key={track.id || nanoid()}
         width={width}
         track={track}
        />

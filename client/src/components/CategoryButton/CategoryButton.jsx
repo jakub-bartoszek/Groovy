@@ -1,5 +1,3 @@
-import React from "react";
-
 const CategoryButton = ({ category, setCategory, name }) => (
  <button
   className={`text-sm px-3 rounded-full h-8

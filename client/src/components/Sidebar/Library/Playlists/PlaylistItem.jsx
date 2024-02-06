@@ -25,7 +25,7 @@ const PlaylistItem = ({ item, width, path, likedSongs }) => {
  };
 
  return (
-  <li key={nanoid()}>
+  <li key={(item && item.id) || nanoid()}>
    <NavLink to={path}>
     <div
      className={`flex items-center gap-3 p-2 rounded-md hover:bg-[#1a1a1a] cursor-pointer playlist ${

@@ -1,11 +1,11 @@
 import { put, call, takeLatest, delay } from 'redux-saga/effects';
-import { fetchRecentlyPlayed, setRecentlyPlayed, setStatus } from '../redux/homeSlice';
-import { getRecentlyPlayed } from './getRecentlyPlayed';
+import { fetchRecentlyPlayed, setRecentlyPlayed, setStatus } from '../../redux/homeSlice';
+import { getRecentlyPlayed } from '../getFunctions/getRecentlyPlayed';
 
-function* fetchRecentlyPlayedHandler(accessToken) {
+function* fetchRecentlyPlayedHandler({payload: accessToken}) {
 	try {
 		yield put(setStatus("loading"));
-		const recentlyPlayed = yield call(getRecentlyPlayed, accessToken.payload);
+		const recentlyPlayed = yield call(getRecentlyPlayed, accessToken);
 		yield put(setRecentlyPlayed(recentlyPlayed));
 		yield delay(500);
 		yield put(setStatus("success"));

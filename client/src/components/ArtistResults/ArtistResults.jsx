@@ -6,7 +6,7 @@ const ArtistResults = ({ searchResults }) => (
   {searchResults.artists?.items.map((artist) => (
    <li
     className="bg-[#181818] p-4 rounded-md flex"
-    key={nanoid()}
+    key={artist || nanoid()}
    >
     <NavLink
      className="flex flex-col gap-4 overflow-hidden"

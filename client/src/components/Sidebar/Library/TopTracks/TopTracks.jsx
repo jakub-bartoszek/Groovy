@@ -1,4 +1,3 @@
-import React from "react";
 import { nanoid } from "@reduxjs/toolkit";
 import { useSelector } from "react-redux";
 import { selectTopTracks } from "../../../../utils/redux/librarySlice";
@@ -9,7 +8,7 @@ const TopTracks = ({ width }) => {
 
  return topTracks.map((track) => (
   <TopTrackItem
-   key={nanoid()}
+   key={track.id || nanoid()}
    item={track}
    width={width}
   />

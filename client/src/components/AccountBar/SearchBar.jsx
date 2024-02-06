@@ -1,11 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
 import { SearchIcon } from "../../assets/icons/SearchIcon";
-import {
- selectSearchQuery,
- setSearchQuery
-} from "../../utils/redux/searchSlice";
+import { selectSearchQuery, setSearchQuery } from "../../utils/redux/searchSlice";
 
-export const SearchBar = () => {
+const SearchBar = () => {
  const dispatch = useDispatch();
  const searchQuery = useSelector(selectSearchQuery);
 
@@ -23,3 +20,5 @@ export const SearchBar = () => {
   </label>
  );
 };
+
+export default SearchBar;

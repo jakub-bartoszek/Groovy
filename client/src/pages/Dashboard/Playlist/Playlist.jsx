@@ -1,19 +1,19 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { useParams } from "react-router-dom";
-import { PlaylistTracks } from "./PlaylistTracks";
 import { useDispatch, useSelector } from "react-redux";
-import PlayButton from "../PlayButton/PlayButton";
+import { useParams } from "react-router-dom";
+import { fetchPlaylist, selectPlaylist, selectStatus } from "../../../utils/redux/playlistSlice";
 import {
  selectBgColor,
  selectOpacity,
  setBgColor,
  setOpacity
-} from "../../utils/redux/colorsSlice";
-import ColorThief from "colorthief/dist/color-thief.mjs";
-import MusicNoteIcon from "@heroicons/react/outline/MusicNoteIcon";
-import { fetchPlaylist, selectPlaylist, selectStatus } from "../../utils/redux/playlistSlice";
-import { Loader } from "../../assets/Loader";
+} from "../../../utils/redux/colorsSlice";
 import _ from "lodash";
+import ColorThief from "colorthief/dist/color-thief.mjs";
+import PlaylistTracks from "../../../components/PlaylistTracks/PlaylistTracks";
+import PlayButton from "../../../components/PlayButton/PlayButton";
+import MusicNoteIcon from "@heroicons/react/outline/MusicNoteIcon";
+import Loader from "../../../components/Loader/Loader";
 
 const colorThief = new ColorThief();
 

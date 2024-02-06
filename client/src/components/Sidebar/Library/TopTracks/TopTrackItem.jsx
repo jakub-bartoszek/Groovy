@@ -1,4 +1,3 @@
-import React from "react";
 import { nanoid } from "@reduxjs/toolkit";
 import { useDispatch } from "react-redux";
 import { setCurrentTrack } from "../../../../utils/redux/playerSlice";
@@ -16,7 +15,7 @@ const TopTrackItem = ({ item, width }) => {
     width <= 70 && "justify-center"
    }`}
    onClick={handleItemClick}
-   key={nanoid()}
+   key={item.id || nanoid()}
   >
    <div className="h-11 w-11 rounded-md bg-[#282828] flex items-center justify-center relative">
     {item.album.images[0] && (

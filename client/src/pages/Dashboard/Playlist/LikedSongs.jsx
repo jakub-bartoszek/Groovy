@@ -5,12 +5,16 @@ import {
  selectOpacity,
  setBgColor,
  setOpacity
-} from "../../utils/redux/colorsSlice";
-import { PlaylistTracks } from "./PlaylistTracks";
-import PlayButton from "../PlayButton/PlayButton";
-import { fetchLikedSongs, selectLikedSongs, selectStatus } from "../../utils/redux/playlistSlice";
-import { Loader } from "../../assets/Loader";
+} from "../../../utils/redux/colorsSlice";
+import {
+ fetchLikedSongs,
+ selectLikedSongs,
+ selectStatus
+} from "../../../utils/redux/playlistSlice";
 import _ from "lodash";
+import PlaylistTracks from "../../../components/PlaylistTracks/PlaylistTracks";
+import PlayButton from "../../../components/PlayButton/PlayButton";
+import Loader from "../../../components/Loader/Loader";
 
 const LikedSongs = ({ accessToken, width }) => {
  const dispatch = useDispatch();

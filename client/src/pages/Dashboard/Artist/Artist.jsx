@@ -1,13 +1,12 @@
-import axios from "axios";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { selectBgColor, setBgColor, setOpacity } from "../../utils/redux/colorsSlice";
+import { selectBgColor, setBgColor, setOpacity } from "../../../utils/redux/colorsSlice.js";
+import { fetchArtist, selectArtist, selectArtistTracks } from "../../../utils/redux/artistSlice";
 import ColorThief from "colorthief/dist/color-thief.mjs";
-import ArtistTopTracks from "./ArtistTopTracks";
-import { fetchArtist, selectArtist, selectArtistTracks } from "../../utils/redux/artistSlice";
+import ArtistTopTracks from "../../../components/ArtistTopTracks/ArtistTopTracks.jsx";
 
-export const Artist = ({ width, accessToken }) => {
+const Artist = ({ width, accessToken }) => {
  const { id } = useParams();
  const artist = useSelector(selectArtist);
  const artistTracks = useSelector(selectArtistTracks);
@@ -93,3 +92,5 @@ export const Artist = ({ width, accessToken }) => {
   </div>
  );
 };
+
+export default Artist;

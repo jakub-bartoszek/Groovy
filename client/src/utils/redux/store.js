@@ -9,7 +9,7 @@ import playlistReducer from "./playlistSlice";
 import spotifyReducer from "./spotifySlice";
 import artistReducer from "./artistSlice";
 
-import rootSaga from "../saga/rootSaga";
+import rootSaga from "../saga/sagas/rootSaga";
 
 const sagaMiddleware = createSagaMiddleware();
 

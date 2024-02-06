@@ -1,9 +1,9 @@
-import { useDispatch } from "react-redux";
-import { setCurrentTrack } from "../../utils/redux/playerSlice";
-import { PlayIcon } from "../../assets/icons/PlayIcon";
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { nanoid } from "@reduxjs/toolkit";
+import { setCurrentTrack } from "../../utils/redux/playerSlice";
+import { PlayIcon } from "../../assets/icons/PlayIcon";
 
 const ArtistTopTracks = ({ tracks, width }) => {
  const { id } = useParams();
@@ -13,8 +13,6 @@ const ArtistTopTracks = ({ tracks, width }) => {
  useEffect(() => {
   setShowMore(false);
  }, [id]);
-
- console.log(tracks);
 
  return (
   <div className="w-full px-2">
@@ -29,7 +27,7 @@ const ArtistTopTracks = ({ tracks, width }) => {
         ? "grid grid-cols-[1rem_2fr_minmax(60px,_1fr)]"
         : "grid grid-cols-[1rem_1fr]"
       }`}
-      key={nanoid()}
+      key={track.id || nanoid()}
       onClick={() => {
        dispatch(setCurrentTrack(track.uri));
       }}

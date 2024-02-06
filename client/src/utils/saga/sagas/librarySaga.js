@@ -1,13 +1,13 @@
 import { put, call, takeLatest, delay } from 'redux-saga/effects';
-import { getPlaylists } from './getPlaylists';
-import { fetchPlaylists, fetchTopArtists, fetchTopTracks, setPlaylists, setStatus, setTopArtists, setTopTracks } from '../redux/librarySlice';
-import { getTopArtists } from './getTopArtists';
-import { getTopTracks } from './getTopTracks';
+import { getPlaylists } from '../getFunctions/getPlaylists';
+import { fetchPlaylists, fetchTopArtists, fetchTopTracks, setPlaylists, setStatus, setTopArtists, setTopTracks } from '../../redux/librarySlice';
+import { getTopArtists } from '../getFunctions/getTopArtists';
+import { getTopTracks } from '../getFunctions/getTopTracks';
 
-function* fetchPlaylistsHandler(accessToken) {
+function* fetchPlaylistsHandler({ payload: accessToken }) {
 	try {
 		yield put(setStatus("loading"));
-		const playlists = yield call(getPlaylists, accessToken.payload);
+		const playlists = yield call(getPlaylists, accessToken);
 		yield put(setPlaylists(playlists));
 		yield delay(500);
 		yield put(setStatus("success"));
@@ -17,10 +17,10 @@ function* fetchPlaylistsHandler(accessToken) {
 	}
 }
 
-function* fetchTopArtistsHandler(accessToken) {
+function* fetchTopArtistsHandler({ payload: accessToken }) {
 	try {
 		yield put(setStatus("loading"));
-		const topArtists = yield call(getTopArtists, accessToken.payload);
+		const topArtists = yield call(getTopArtists, accessToken);
 		yield put(setTopArtists(topArtists));
 		yield delay(500);
 		yield put(setStatus("success"));
@@ -30,11 +30,11 @@ function* fetchTopArtistsHandler(accessToken) {
 	}
 }
 
-function* fetchTopTracksHandler(accessToken) {
+function* fetchTopTracksHandler({ payload: accessToken }) {
 	try {
 		yield delay(500);
 		yield put(setStatus("loading"));
-		const topTracks = yield call(getTopTracks, accessToken.payload);
+		const topTracks = yield call(getTopTracks, accessToken);
 		yield put(setTopTracks(topTracks));
 		yield put(setStatus("success"));
 	}

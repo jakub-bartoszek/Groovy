@@ -1,8 +1,8 @@
-import ColorThief from "colorthief/dist/color-thief.mjs";
 import { useRef } from "react";
 import { useDispatch } from "react-redux";
 import { setCurrentTrack } from "../../utils/redux/playerSlice";
 import { setBgColor } from "../../utils/redux/colorsSlice";
+import ColorThief from "colorthief/dist/color-thief.mjs";
 
 const Tile = ({ track, name, imgSrc, width }) => {
  const dispatch = useDispatch();

@@ -1,6 +1,6 @@
 import { put, call, delay, takeLatest } from 'redux-saga/effects';
-import { fetchSearchResults, setSearchResults, setStatus } from '../redux/searchSlice';
-import { getSearchResults } from './getSearchResults';
+import { fetchSearchResults, setSearchResults, setStatus } from '../../redux/searchSlice';
+import { getSearchResults } from '../getFunctions/getSearchResults';
 
 function* fetchSearchResultsHandler({ payload }) {
 	try {

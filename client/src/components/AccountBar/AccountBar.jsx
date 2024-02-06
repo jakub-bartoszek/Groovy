@@ -1,12 +1,12 @@
-import { LeftArrowIcon } from "../../assets/icons/LeftArrowIcon";
-import BellIcon from "@heroicons/react/outline/BellIcon";
-import DownloadIcon from "@heroicons/react/outline/DownloadIcon";
 import { selectBgColor, selectOpacity } from "../../utils/redux/colorsSlice";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { SearchBar } from "./SearchBar";
+import { LeftArrowIcon } from "../../assets/icons/LeftArrowIcon";
+import SearchBar from "./SearchBar";
+import BellIcon from "@heroicons/react/outline/BellIcon";
+import DownloadIcon from "@heroicons/react/outline/DownloadIcon";
 
-export const AccountBar = ({ accessToken, width }) => {
+const AccountBar = ({ accessToken, width }) => {
  const bgColor = useSelector(selectBgColor);
  const opacity = useSelector(selectOpacity);
  const navigate = useNavigate();
@@ -30,11 +30,7 @@ export const AccountBar = ({ accessToken, width }) => {
    >
     <LeftArrowIcon size={18} />
    </button>
-   <div>
-    {window.location.href.includes("search") && (
-     <SearchBar accessToken={accessToken} />
-    )}
-   </div>
+   <div>{window.location.href.includes("search") && <SearchBar accessToken={accessToken} />}</div>
    {window.innerWidth > 500 && (
     <>
      <button
@@ -56,27 +52,19 @@ export const AccountBar = ({ accessToken, width }) => {
     {/* Imitation of user's avatar */}
     <ul className="absolute right-0 top-10 w-56 bg-[#282828] text-sm p-1 rounded-[10px] hidden group-focus-within:block scale-100 z-20">
      <li>
-      <button className="hover:bg-[#3e3e3e] p-3 w-full text-left rounded-t-[10px]">
-       Account
-      </button>
+      <button className="hover:bg-[#3e3e3e] p-3 w-full text-left rounded-t-[10px]">Account</button>
      </li>
      <li>
-      <button className="hover:bg-[#3e3e3e] p-3 w-full text-left">
-       Profile
-      </button>
+      <button className="hover:bg-[#3e3e3e] p-3 w-full text-left">Profile</button>
      </li>
      <li>
       <button className="hover:bg-[#3e3e3e] p-3 w-full text-left">Help</button>
      </li>
      <li>
-      <button className="hover:bg-[#3e3e3e] p-3 w-full text-left">
-       Download
-      </button>
+      <button className="hover:bg-[#3e3e3e] p-3 w-full text-left">Download</button>
      </li>
      <li>
-      <button className="hover:bg-[#3e3e3e] p-3 w-full text-left">
-       Settings
-      </button>
+      <button className="hover:bg-[#3e3e3e] p-3 w-full text-left">Settings</button>
      </li>
      <li>
       <button
@@ -91,3 +79,5 @@ export const AccountBar = ({ accessToken, width }) => {
   </div>
  );
 };
+
+export default AccountBar;

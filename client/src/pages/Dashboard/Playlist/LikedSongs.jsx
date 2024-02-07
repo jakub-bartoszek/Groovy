@@ -1,46 +1,20 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
- selectBgColor,
- selectOpacity,
- setBgColor,
- setOpacity
-} from "../../../utils/redux/colorsSlice";
 import {
  fetchLikedSongs,
  selectLikedSongs,
  selectStatus
 } from "../../../utils/redux/playlistSlice";
-import _ from "lodash";
-import PlaylistTracks from "../../../components/PlaylistTracks/PlaylistTracks";
-import PlayButton from "../../../components/PlayButton/PlayButton";
 import Loader from "../../../components/Loader/Loader";
+import Error from "../../../components/Error/Error";
+import PlaylistWrapper from "../../../components/PlaylistWrapper/PlaylistWrapper";
 
 const LikedSongs = ({ accessToken, width }) => {
  const dispatch = useDispatch();
- const [queue, setQueue] = useState();
- const opacity = useSelector(selectOpacity);
- const bgColor = useSelector(selectBgColor);
  const likedSongs = useSelector(selectLikedSongs);
- const scrollRef = useRef();
- const _ = require("lodash");
- const [tracks, setTracks] = useState();
+ const [queue, setQueue] = useState();
+ const [tracks, setTracks] = useState([]);
  const status = useSelector(selectStatus);
-
- const throttledScroll = useCallback(
-  _.throttle(
-   () => {
-    dispatch(setOpacity(scrollRef.current.scrollTop / 400));
-   },
-   100,
-   { leading: false }
-  ),
-  [setOpacity]
- );
-
- useEffect(() => {
-  dispatch(setBgColor({ R: 18, G: 18, B: 18, A: 0 }));
- }, []);
 
  useEffect(() => {
   if (accessToken) {
@@ -79,69 +53,39 @@ const LikedSongs = ({ accessToken, width }) => {
   }
  }, [likedSongs]);
 
- return (
-  <div className="h-full overflow-hidden relative rounded-[10px] text-white">
-   {status === "loading" && (
-    <div className="w-full h-full flex items-center justify-center">
-     <Loader />
-    </div>
-   )}
-   {status === "error" && <>Error</>}
-   {status === "success" && (
-    <div
-     className="h-full overflow-y-scroll bg-[#121212]"
-     ref={scrollRef}
-     onScroll={throttledScroll}
-    >
-     <div
-      className={`w-full flex ${width > 550 ? "h-[350px]" : "h-[200px]"}`}
-      style={{
-       backgroundColor: `rgb(${bgColor.R}, ${bgColor.G}, ${bgColor.B})`,
-       boxShadow: `0 0 200px 80px #000000aa, 0 0 200px 80px rgb(${bgColor.R}, ${bgColor.G}, ${bgColor.B})`,
-       transition: "all 300ms linear"
-      }}
-     >
-      <div className="flex self-end gap-4 w-full p-5 bg-gradient-to-t from-[#00000070]">
-       <div className={`bg-black aspect-square ${width > 550 ? "h-48 w-48" : "h-24 w-24"}`}>
-        <img
-         className="h-full w-full shadow-2xl object-cover image"
-         onLoad={() => {
-          const R = 83;
-          const G = 60;
-          const B = 160;
-
-          dispatch(setBgColor({ R: R, G: G, B: B }));
-         }}
-         src="https://misc.scdn.co/liked-songs/liked-songs-300.png"
-         alt="Liked songs"
-         crossOrigin="Anonymous"
-        />
-       </div>
-       <div className="flex flex-col justify-between overflow-hidden">
-        <span>Playlist</span>
-        <div className="flex flex-col gap-4">
-         <span
-          className={`font-bold text-ellipsis overflow-hidden
-                    ${width >= 700 && "text-7xl"}
-                    ${width < 700 && width > 550 && "text-5xl"}
-                    ${width < 550 && "text-3xl"}`}
-         >
-          Liked songs
-         </span>
-        </div>
+ switch (status) {
+  case "loading":
+   return <Loader />;
+  case "error":
+   return <Error />;
+  case "success":
+   return (
+    <PlaylistWrapper
+     width={width}
+     tracks={tracks}
+     image={"https://misc.scdn.co/liked-songs/liked-songs-300.png"}
+     name={"Liked songs"}
+     header={
+      <div className="flex flex-col justify-between overflow-hidden">
+       <span>Playlist</span>
+       <div className="flex flex-col gap-4">
+        <span
+         className={`font-bold text-ellipsis overflow-hidden
+         ${width >= 700 && "text-7xl"}
+         ${width < 700 && width > 550 && "text-5xl"}
+         ${width < 550 && "text-3xl"}`}
+        >
+         Liked songs
+        </span>
        </div>
       </div>
-     </div>
-     <PlayButton queue={queue} />
-     <PlaylistTracks
-      width={width}
-      opacity={opacity}
-      tracks={tracks}
-     />
-    </div>
-   )}
-  </div>
- );
+     }
+     queue={queue}
+    />
+   );
+  default:
+   return null;
+ }
 };
 
 export default LikedSongs;

@@ -1,21 +1,15 @@
 import { useEffect, useRef, useState } from "react";
-import Loader from "../../../components/Loader/Loader";
 import { useDispatch, useSelector } from "react-redux";
-import {
- fetchSearchResults,
- selectSearchQuery,
- selectSearchResults,
- selectStatus
-} from "../../../utils/redux/searchSlice";
+import { fetchSearchResults } from "../../../utils/redux/searchSlice";
 import { setBgColor } from "../../../utils/redux/colorsSlice";
 import ArtistResults from "../../../components/ArtistResults/ArtistResults";
 import CategoryButton from "../../../components/CategoryButton/CategoryButton";
 import TrackResults from "../../../components/TrackResults/TrackResults";
+import Error from "../../../components/Error/Error";
+import Loader from "../../../components/Loader/Loader";
 
 const Search = ({ accessToken }) => {
- const searchQuery = useSelector(selectSearchQuery);
- const searchResults = useSelector(selectSearchResults);
- const status = useSelector(selectStatus);
+ const { searchQuery, searchResults, status } = useSelector((state) => state.search);
  const [category, setCategory] = useState("track");
  const contentWrapper = useRef(null);
  const dispatch = useDispatch();
@@ -26,15 +20,43 @@ const Search = ({ accessToken }) => {
 
  useEffect(() => {
   if (accessToken && searchQuery && category) {
-   dispatch(
-    fetchSearchResults({
-     accessToken: accessToken,
-     searchQuery: searchQuery,
-     category: category
-    })
-   );
+   dispatch(fetchSearchResults({ accessToken, searchQuery, category }));
   }
- }, [dispatch, searchQuery, accessToken, category]);
+ }, [dispatch, accessToken, searchQuery, category]);
+
+ const renderCategory = () => {
+  const hasResults = (items) => items?.length > 0;
+
+  switch (category) {
+   case "track":
+    return hasResults(searchResults.tracks?.items) ? (
+     <TrackResults searchResults={searchResults} />
+    ) : (
+     <span className="text-muted mt-[72px] px-4">{searchQuery ? "No tracks found..." : ""}</span>
+    );
+   case "artist":
+    return hasResults(searchResults.artists?.items) ? (
+     <ArtistResults searchResults={searchResults} />
+    ) : (
+     <span className="text-muted mt-[72px] px-4">{searchQuery ? "No artists found..." : ""}</span>
+    );
+   default:
+    return null;
+  }
+ };
+
+ const renderContent = () => {
+  switch (status) {
+   case "loading":
+    return <Loader />;
+   case "error":
+    return <Error />;
+   case "success":
+    return <>{renderCategory()}</>;
+   default:
+    return null;
+  }
+ };
 
  return (
   <div className="h-full overflow-hidden relative rounded-[10px] text-white flex flex-col bg-[#121212]">
@@ -53,40 +75,7 @@ const Search = ({ accessToken }) => {
      name={"Track"}
     />
    </div>
-   {
-    {
-     loading: (
-      <div className="h-full flex items-center justify-center">
-       <Loader />
-      </div>
-     ),
-     error: <>Error</>,
-     success: (
-      <>
-       {
-        {
-         track:
-          searchResults.tracks?.items.length > 0 ? (
-           <TrackResults searchResults={searchResults} />
-          ) : searchQuery ? (
-           <span className="text-muted mt-[72px] px-4">No tracks found...</span>
-          ) : (
-           <></>
-          ),
-         artist:
-          searchResults.artists?.items.length > 0 ? (
-           <ArtistResults searchResults={searchResults} />
-          ) : searchQuery ? (
-           <span className="text-muted mt-[72px] px-4">No artists found...</span>
-          ) : (
-           <></>
-          )
-        }[category]
-       }
-      </>
-     )
-    }[status]
-   }
+   {renderContent()}
   </div>
  );
 };

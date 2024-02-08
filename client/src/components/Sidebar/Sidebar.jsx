@@ -5,6 +5,35 @@ import { HomeIcon } from "../../assets/icons/HomeIcon";
 import { SearchIcon } from "../../assets/icons/SearchIcon";
 import Library from "./Library/Library";
 
+const SidebarNavigation = ({ width }) => {
+ return (
+  <nav
+   className={`py-4 px-[19px] flex flex-col rounded-[10px] gap-4 font-bold bg-[#121212] text-[#b3b3b3] ${
+    width <= 70 && "items-center"
+   }`}
+  >
+   <NavLink
+    className="flex gap-4 items-center"
+    to="/home"
+   >
+    <div className="h-8 w-8 flex items-center justify-center">
+     <HomeIcon size={22} />
+    </div>
+    {width > 70 && <span>Home</span>}
+   </NavLink>
+   <NavLink
+    className="flex gap-4 items-center"
+    to="/search"
+   >
+    <div className="h-8 w-8 flex items-center justify-center">
+     <SearchIcon size={22} />
+    </div>
+    {width > 70 && <span>Search</span>}
+   </NavLink>
+  </nav>
+ );
+};
+
 const Sidebar = ({ accessToken }) => {
  const [width, setWidth] = useState();
  const sidebarRef = useRef();
@@ -42,30 +71,7 @@ const Sidebar = ({ accessToken }) => {
     className="h-full grid grid-flow-row grid-rows-[auto_1fr] gap-2 overflow-hidden"
     ref={sidebarRef}
    >
-    <nav
-     className={`py-4 px-[19px] flex flex-col rounded-[10px] gap-4 font-bold bg-[#121212] text-[#b3b3b3] ${
-      width <= 70 && "items-center"
-     }`}
-    >
-     <NavLink
-      className="flex gap-4 items-center"
-      to="/home"
-     >
-      <div className="h-8 w-8 flex items-center justify-center">
-       <HomeIcon size={22} />
-      </div>
-      {width > 70 && <span>Home</span>}
-     </NavLink>
-     <NavLink
-      className="flex gap-4 items-center"
-      to="/search"
-     >
-      <div className="h-8 w-8 flex items-center justify-center">
-       <SearchIcon size={22} />
-      </div>
-      {width > 70 && <span>Search</span>}
-     </NavLink>
-    </nav>
+    <SidebarNavigation width={width} />
     <Library
      accessToken={accessToken}
      width={width}

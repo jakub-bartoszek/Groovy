@@ -38,7 +38,7 @@ const Dashboard = ({ code }) => {
  }, [accessToken]);
 
  return (
-  <div className="overflow-hidden w-screen max-w-screen h-screen max-h-screen">
+  <div className="overflow-hidden w-screen max-w-screen h-[100dvh] max-h-[100dvh]">
    <BrowserRouter>
     <div
      className={`grid grid-cols-[auto_2fr] h-full w-full ${
@@ -48,7 +48,7 @@ const Dashboard = ({ code }) => {
      <Sidebar accessToken={accessToken} />
      <div
       ref={contentWrapperRef}
-      className="flex flex-col h-[100%] overflow-hidden rounded-xl relative"
+      className="flex flex-col h-[100%] rounded-xl relative overflow-hidden"
      >
       <AccountBar
        width={width}

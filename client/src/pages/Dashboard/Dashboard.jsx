@@ -48,7 +48,7 @@ const Dashboard = ({ code }) => {
      <Sidebar accessToken={accessToken} />
      <div
       ref={contentWrapperRef}
-      className="flex flex-col h-[100%] rounded-xl relative overflow-hidden"
+      className="@container flex flex-col h-[100%] rounded-xl relative overflow-hidden"
      >
       <AccountBar
        width={width}

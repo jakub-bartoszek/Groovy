@@ -9,7 +9,7 @@ import Loader from "../../../components/Loader/Loader";
 import Error from "../../../components/Error/Error";
 import PlaylistWrapper from "../../../components/PlaylistWrapper/PlaylistWrapper";
 
-const LikedSongs = ({ accessToken, width }) => {
+const LikedSongs = ({ accessToken }) => {
  const dispatch = useDispatch();
  const likedSongs = useSelector(selectLikedSongs);
  const [queue, setQueue] = useState();
@@ -61,20 +61,14 @@ const LikedSongs = ({ accessToken, width }) => {
   case "success":
    return (
     <PlaylistWrapper
-     width={width}
      tracks={tracks}
      image={"https://misc.scdn.co/liked-songs/liked-songs-300.png"}
      name={"Liked songs"}
      header={
-      <div className="flex flex-col justify-between overflow-hidden">
+      <div className="flex flex-col justify-between w-full">
        <span>Playlist</span>
        <div className="flex flex-col gap-4">
-        <span
-         className={`font-bold text-ellipsis overflow-hidden
-         ${width >= 700 && "text-7xl"}
-         ${width < 700 && width > 550 && "text-5xl"}
-         ${width < 550 && "text-3xl"}`}
-        >
+        <span className="font-bold text-3xl @xl:text-5xl @3xl:text-7xl">
          Liked songs
         </span>
        </div>

@@ -7,7 +7,7 @@ import Loader from "../../../components/Loader/Loader";
 import Error from "../../../components/Error/Error";
 import PlaylistWrapper from "../../../components/PlaylistWrapper/PlaylistWrapper";
 
-const Playlist = ({ accessToken, width }) => {
+const Playlist = ({ accessToken }) => {
  const dispatch = useDispatch();
  const { id } = useParams();
  const scrollRef = useRef();
@@ -76,20 +76,14 @@ const Playlist = ({ accessToken, width }) => {
      {playlist.id === id && (
       <PlaylistWrapper
        playlist={playlist}
-       width={width}
        tracks={tracks}
        image={mainImage && mainImage.url}
        name={playlist.name}
        header={
-        <div className="flex flex-col justify-between overflow-hidden">
+        <div className="flex flex-col justify-between">
          <div>Playlist</div>
-         <div className="flex flex-col gap-4 overflow-hidden">
-          <span
-           className={`font-bold text-ellipsis overflow-hidden
-           ${width >= 700 && "text-7xl"}
-           ${width < 700 && width > 550 && "text-5xl"}
-           ${width < 550 && "text-3xl"}`}
-          >
+         <div className="flex flex-col gap-4">
+         <span className="font-bold text-3xl @xl:text-5xl @3xl:text-7xl">
            {playlist.name}
           </span>
           <div className="flex items-center gap-2">

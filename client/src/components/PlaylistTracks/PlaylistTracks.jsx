@@ -1,8 +1,7 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { nanoid } from "@reduxjs/toolkit";
 import { setCurrentTrack } from "../../utils/redux/playerSlice";
-import { setOpacity } from "../../utils/redux/colorsSlice";
 import { PlayIcon } from "../../assets/icons/PlayIcon";
 import ClockIcon from "@heroicons/react/outline/ClockIcon";
 
@@ -18,10 +17,6 @@ const formatDate = (date) => {
 const PlaylistTracks = ({ tracks, opacity, width }) => {
  const dispatch = useDispatch();
 
- useEffect(() => {
-  dispatch(setOpacity(0));
- }, [dispatch]);
-
  return (
   <div className="w-full text-sm">
    <div
@@ -32,21 +27,19 @@ const PlaylistTracks = ({ tracks, opacity, width }) => {
     }}
    >
     <div
-     className={`grid gap-4 px-4 py-2 border-b-2 border-[#ffffff11] mb-5 text-muted
-					${width >= 750 && "grid-cols-[1rem_6fr_4fr_3fr_minmax(16px,_1fr)]"}
-					${width < 750 && width >= 550 && "grid-cols-[1rem_4fr_2fr_minmax(120px,_1fr)]"}
-					${width < 550 && width >= 350 && "grid-cols-[1rem_3fr_minmax(60px,_1fr)]"}
-     ${width < 350 && "grid-cols-[1rem_1fr]"}`}
+     className="grid gap-4 px-4 py-2 border-b-2 border-[#ffffff11] mb-5 text-muted
+          grid-cols-[1rem_1fr]
+          @md:grid-cols-[1rem_3fr_minmax(60px,_1fr)]
+          @xl:grid-cols-[1rem_4fr_2fr_minmax(120px,_1fr)]
+          @2xl:grid-cols-[1rem_6fr_4fr_3fr_minmax(16px,_1fr)]"
     >
      <span>#</span>
      <span>Title</span>
-     {width >= 550 && <span>Album</span>}
-     {width >= 750 && <span>Date Added</span>}
-     {width >= 350 && (
-      <div className="flex justify-center">
-       <ClockIcon className="w-5" />
-      </div>
-     )}
+     <span className="hidden @xl:flex">Album</span>
+     <span className="hidden @2xl:flex">Date Added</span>
+     <div className="hidden @md:flex justify-center">
+      <ClockIcon className="w-5" />
+     </div>
     </div>
    </div>
    <div className="px-2">
@@ -54,11 +47,11 @@ const PlaylistTracks = ({ tracks, opacity, width }) => {
      const date = new Date(track.dateAdded);
      return (
       <div
-       className={`grid rounded-md group gap-4 px-4 hover:bg-[#ffffff22] text-muted  cursor-pointer
-							${width >= 750 && "grid-cols-[1rem_6fr_4fr_3fr_minmax(16px,_1fr)]"}
-							${width < 750 && width >= 550 && "grid-cols-[1rem_4fr_2fr_minmax(120px,_1fr)]"}
-       ${width < 550 && width >= 350 && "grid-cols-[1rem_3fr_minmax(60px,_1fr)]"}
-       ${width < 350 && "grid-cols-[1rem_1fr]"}`}
+       className="grid rounded-md group gap-4 px-4 hover:bg-[#ffffff22] text-muted  cursor-pointer
+              grid-cols-[1rem_1fr]
+              @md:grid-cols-[1rem_3fr_minmax(60px,_1fr)]
+              @xl:grid-cols-[1rem_4fr_2fr_minmax(120px,_1fr)]
+              @2xl:grid-cols-[1rem_6fr_4fr_3fr_minmax(16px,_1fr)]"
        key={track.id || nanoid()}
        onClick={() => {
         dispatch(setCurrentTrack(track.uri));
@@ -85,21 +78,17 @@ const PlaylistTracks = ({ tracks, opacity, width }) => {
          </span>
         </div>
        </div>
-       {width >= 550 && (
-        <div className="overflow-hidden flex items-center">
-         <span className="text-ellipsis whitespace-nowrap overflow-hidden">{track.album}</span>
-        </div>
-       )}
-       {width >= 750 && (
-        <div className="overflow-hidden flex items-center">
-         <span>{date.toLocaleDateString(undefined, formatDate)}</span>
-        </div>
-       )}
-       {width >= 350 && (
-        <div className="flex items-center justify-center">
-         <span>{track.duration.replace(".", ":")}</span>
-        </div>
-       )}
+       <div className="overflow-hidden flex items-center">
+        <span className="text-ellipsis whitespace-nowrap overflow-hidden hidden @xl:flex">
+         {track.album}
+        </span>
+       </div>
+       <div className="overflow-hidden items-center hidden @2xl:flex">
+        <span>{date.toLocaleDateString(undefined, formatDate)}</span>
+       </div>
+       <div className="items-center justify-center hidden @md:flex">
+        <span>{track.duration.replace(".", ":")}</span>
+       </div>
       </div>
      );
     })}

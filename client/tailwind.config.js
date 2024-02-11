@@ -5,19 +5,10 @@ module.exports = {
 		extend: {
 			screens: {
 				'sm': '640px',
-				// => @media (min-width: 640px) { ... }
-
 				'md': '768px',
-				// => @media (min-width: 768px) { ... }
-
 				'lg': '1024px',
-				// => @media (min-width: 1024px) { ... }
-
 				'xl': '1280px',
-				// => @media (min-width: 1280px) { ... }
-
 				'2xl': '1536px',
-				// => @media (min-width: 1536px) { ... }
 			},
 			boxShadow: {
 				'left': '10px 0 20px 10px #121212, -10px 0 0 5px #121212',
@@ -64,4 +55,7 @@ module.exports = {
 			},
 		},
 	},
+	plugins: [
+		require('@tailwindcss/container-queries'),
+	],
 };

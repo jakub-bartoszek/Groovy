@@ -47,19 +47,19 @@ html, body {
 }
 
 ::-webkit-scrollbar {
-	width: 12px;
+	width: 10px;
 }
 
 ::-webkit-scrollbar-track {
-	background: transparent;
+	background: #1f1f1f;
 }
 
 ::-webkit-scrollbar-thumb {
-	background: #ffffff40;
+	background: #6b6b6b;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-	background: #ffffff60;
+	background: #7e7e7e;
 }
 
 .hide-scrollbar::-webkit-scrollbar {

@@ -1,13 +1,12 @@
 import { useRef } from "react";
+import { nanoid } from "@reduxjs/toolkit";
 import { useDispatch } from "react-redux";
 import { setCurrentTrack } from "../../utils/redux/playerSlice";
-import { setBgColor } from "../../utils/redux/colorsSlice";
-import ColorThief from "colorthief/dist/color-thief.mjs";
 
-const Tile = ({ track, name, imgSrc, width }) => {
- const dispatch = useDispatch();
+const Tile = ({ track, name, imgSrc }) => {
  const imageRef = useRef();
- const colorThief = new ColorThief();
+
+ const dispatch = useDispatch();
 
  const handleTileClick = () => {
   if (track) {
@@ -15,32 +14,20 @@ const Tile = ({ track, name, imgSrc, width }) => {
   }
  };
 
- const handleMouseEnter = () => {
-  if (imageRef.current) {
-   const img = imageRef.current;
-   const [R, G, B] = colorThief.getColor(img);
-   dispatch(setBgColor({ R, G, B, A: 1 }));
-  }
- };
-
  return (
   <li
-   className="cursor-pointer bg-white bg-opacity-10 rounded-[10px] relative"
-   onClick={handleTileClick}
+   id={nanoid()}
+   className="cursor-pointer flex gap-4 items-center bg-white bg-opacity-10 rounded-[10px] relative hover:bg-opacity-20 transition-all"
+   onClick={() => handleTileClick()}
   >
-   <div
-    className="aboslute flex items-center"
-    onMouseEnter={handleMouseEnter}
-   >
-    <img
-     className="rounded-[10px] h-[64px] w-[64px] shadow-xl"
-     ref={imageRef}
-     src={track ? track.track.album.images[2].url : imgSrc}
-     alt="Track cover"
-     crossOrigin="Anonymous"
-    />
-    <span className={`px-4 ${width < 800 && "text-sm"}`}>{track ? track.track.name : name}</span>
-   </div>
+   <img
+    className="rounded-[10px] h-16 w-16 @5xl:h-20 @5xl:w-20 shadow-xl"
+    ref={imageRef}
+    src={track ? track.track.album.images[2].url : imgSrc}
+    alt="Track cover"
+    crossOrigin="Anonymous"
+   />
+   <span>{track ? track.track.name : name}</span>
   </li>
  );
 };

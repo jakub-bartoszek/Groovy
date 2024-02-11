@@ -1,6 +1,5 @@
-import { useCallback, useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { selectBgColor, setOpacity } from "../../../utils/redux/colorsSlice";
+import { useRef } from "react";
+import { useSelector } from "react-redux";
 import { selectRecentlyPlayed, selectStatus } from "../../../utils/redux/homeSlice";
 import { nanoid } from "@reduxjs/toolkit";
 import { NavLink } from "react-router-dom";
@@ -9,23 +8,10 @@ import Loader from "../../../components/Loader/Loader";
 import Error from "../../../components/Error/Error";
 
 const Home = ({ width }) => {
- const dispatch = useDispatch();
  const recentlyPlayed = useSelector(selectRecentlyPlayed);
- const bgColor = useSelector(selectBgColor);
  const scrollRef = useRef();
  const _ = require("lodash");
  const status = useSelector(selectStatus);
-
- const throttledScroll = useCallback(
-  _.throttle(
-   () => {
-    dispatch(setOpacity(scrollRef.current.scrollTop / 300));
-   },
-   100,
-   { leading: false }
-  ),
-  [setOpacity]
- );
 
  switch (status) {
   case "loading":
@@ -34,43 +20,28 @@ const Home = ({ width }) => {
    return <Error />;
   case "success":
    return (
-    <div className="h-full overflow-hidden relative bg-[#121212] rounded-[10px] text-white">
-     <div
-      className="text-white h-full overflow-y-scroll"
-      ref={scrollRef}
-      onScroll={throttledScroll}
-     >
-      <div
-       className="pt-[72px] p-4"
-       style={{
-        backgroundImage: `linear-gradient(rgba(18, 18, 18, 0.7), #121212)`,
-        backgroundColor: `rgba(${bgColor?.R}, ${bgColor?.G}, ${bgColor?.B}, 1)`,
-        transition: "0.3s linear"
-       }}
-      >
-       <h1 className=" text-3xl font-bold py-6">Hello!</h1>
-
-       <ul
-        className={`grid gap-4 font-semibold ${width > 900 && "grid-cols-3"} ${
-         width > 550 && width < 900 && "grid-cols-2"
-        } ${width < 550 && "grid-cols-1"}`}
-       >
-        <NavLink to="/liked">
-         <Tile
-          width={width}
-          name="Liked songs"
-          imgSrc="https://misc.scdn.co/liked-songs/liked-songs-300.png"
-         />
-        </NavLink>
-        {recentlyPlayed.map((track) => (
-         <Tile
-          key={track.id || nanoid()}
-          width={width}
-          track={track}
-         />
-        ))}
-       </ul>
-      </div>
+    <div
+     className="@container h-full overflow-hidden relative rounded-[10px] text-white overflow-y-auto bg-[#121212]"
+     ref={scrollRef}
+    >
+     <div className="pt-[72px] p-4 bg-gradient-to-b from-[#616161] via-[#242424] via-30% to-[#121212] to-60% h-full">
+      <h1 className=" text-3xl font-bold py-6">Hello!</h1>
+      <ul className="grid gap-4 font-semibold @2xl:grid-cols-3 @md:grid-cols-2 @sm:grid-cols-1">
+       <NavLink to="/liked">
+        <Tile
+         key={nanoid()}
+         width={width}
+         name="Liked songs"
+         imgSrc="https://misc.scdn.co/liked-songs/liked-songs-300.png"
+        />
+       </NavLink>
+       {recentlyPlayed.map((track) => (
+        <Tile
+         key={track.id || nanoid()}
+         track={track}
+        />
+       ))}
+      </ul>
      </div>
     </div>
    );

@@ -13,9 +13,23 @@ import AccountBar from "../../components/AccountBar/AccountBar";
 import Player from "../../components/Player/Player";
 
 const Dashboard = ({ code }) => {
+ const [width, setWidth] = useState();
  const contentWrapperRef = useRef();
  const accessToken = useAuth(code);
  const dispatch = useDispatch();
+
+ useEffect(() => {
+  const element = contentWrapperRef.current;
+  if (element) {
+   const observer = new ResizeObserver(() => {
+    setWidth(element.offsetWidth);
+   });
+   observer.observe(element);
+   return () => {
+    observer.disconnect();
+   };
+  }
+ }, [width]);
 
  useEffect(() => {
   if (accessToken) {

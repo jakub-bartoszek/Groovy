@@ -3,7 +3,7 @@ import { selectPlaylists } from "../../../../utils/redux/librarySlice";
 import { useSelector } from "react-redux";
 import PlaylistItem from "./PlaylistItem";
 
-const Playlists = ({ width }) => {
+const Playlists = () => {
  const playlists = useSelector(selectPlaylists);
 
  return (
@@ -13,14 +13,12 @@ const Playlists = ({ width }) => {
     path={`/liked`}
     name="Liked songs"
     likedSongs={true}
-    width={width}
    />
    {playlists.map((playlist) => (
     <PlaylistItem
      key={playlist.id || nanoid()}
      path={`/playlists/${playlist.id}`}
      item={playlist}
-     width={width}
     />
    ))}
   </>

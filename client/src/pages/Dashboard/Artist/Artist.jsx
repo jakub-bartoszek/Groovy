@@ -2,20 +2,28 @@ import { useCallback, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { selectBgColor, setBgColor, setOpacity } from "../../../utils/redux/colorsSlice.js";
-import { fetchArtist, selectArtist, selectArtistTracks } from "../../../utils/redux/artistSlice";
+import {
+ fetchArtist,
+ selectArtist,
+ selectArtistTracks,
+ selectStatus
+} from "../../../utils/redux/artistSlice";
 import ColorThief from "colorthief/dist/color-thief.mjs";
 import ArtistTopTracks from "../../../components/ArtistTopTracks/ArtistTopTracks.jsx";
+import Loader from "../../../components/Loader/Loader.jsx";
+import Error from "../../../components/Error/Error.jsx";
 
-const Artist = ({ width, accessToken }) => {
+const Artist = ({ accessToken }) => {
  const { id } = useParams();
  const artist = useSelector(selectArtist);
  const artistTracks = useSelector(selectArtistTracks);
- const bgColor = useSelector(selectBgColor);
+ const { R, G, B } = useSelector(selectBgColor);
  const scrollRef = useRef();
  const dispatch = useDispatch();
  const colorThief = new ColorThief();
  const imageRef = useRef();
  const _ = require("lodash");
+ const status = useSelector(selectStatus);
 
  const throttledScroll = useCallback(
   _.throttle(
@@ -34,25 +42,27 @@ const Artist = ({ width, accessToken }) => {
   }
  }, [id]);
 
- return (
-  <div className="h-full overflow-hidden relative rounded-[10px] text-white">
-   {artist && (
+ switch (status) {
+  case "loading":
+   return <Loader />;
+  case "error":
+   return <Error />;
+  case "success":
+   return (
     <div
-     className="h-full overflow-y-scroll bg-[#121212]"
+     className="h-full overflow-y-scroll bg-[#121212] relative rounded-[10px] text-white"
      ref={scrollRef}
      onScroll={throttledScroll}
     >
      <div
-      className={`w-full flex ${width > 550 ? "h-[350px]" : "h-[200px]"}`}
+      className="w-full flex h-[200px] @xl:h-[350px]"
       style={{
-       backgroundColor: `rgb(${bgColor.R}, ${bgColor.G}, ${bgColor.B})`,
-       boxShadow: `0 0 200px 80px #000000aa, 0 0 200px 80px rgb(${bgColor.R}, ${bgColor.G}, ${bgColor.B})`
+       backgroundColor: `rgb(${R}, ${G}, ${B})`,
+       boxShadow: `0 0 200px 80px #000000aa, 0 0 200px 80px rgb(${R}, ${G}, ${B})`
       }}
      >
       <div className="flex self-end gap-4 w-full p-5 bg-gradient-to-t from-[#00000070]">
-       <div
-        className={`bg-black rounded-full aspect-square ${width > 550 ? "h-48 w-48" : "h-24 w-24"}`}
-       >
+       <div className="bg-black rounded-full aspect-square h-24 w-24 @xl:h-48 @xl:w-48">
         {artist.images && artist.images.length > 0 && (
          <img
           className="h-full w-full shadow-2xl image object-cover rounded-full"
@@ -73,7 +83,7 @@ const Artist = ({ width, accessToken }) => {
        </div>
        <div className="flex flex-col justify-between drop-shadow-md overflow-hidden">
         <span>Artist</span>
-        <span className={`font-bold ${width < 700 ? "text-4xl" : "text-7xl"}`}>
+        <span className="font-bold text-4xl @xl:text-7xl">
          <h1 className="text-ellipsis whitespace-nowrap overflow-hidden">{artist.name}</h1>
         </span>
         <span>{artist.followers && artist.followers.total} followers</span>
@@ -84,13 +94,13 @@ const Artist = ({ width, accessToken }) => {
       <ArtistTopTracks
        accessToken={accessToken}
        tracks={artistTracks.tracks}
-       width={width}
       />
      )}
     </div>
-   )}
-  </div>
- );
+   );
+  default:
+   return null;
+ }
 };
 
 export default Artist;

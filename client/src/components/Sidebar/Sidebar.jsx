@@ -60,7 +60,7 @@ const Sidebar = ({ accessToken }) => {
 
  return (
   <Resizable
-   className="h-full overflow-hidden"
+   className="@container h-full overflow-hidden"
    snapGap={150}
    minWidth="70px"
    snap={{ x: [70, ...snap] }}
@@ -71,11 +71,8 @@ const Sidebar = ({ accessToken }) => {
     className="h-full grid grid-flow-row grid-rows-[auto_1fr] gap-2 overflow-hidden"
     ref={sidebarRef}
    >
-    <SidebarNavigation width={width} />
-    <Library
-     accessToken={accessToken}
-     width={width}
-    />
+    <SidebarNavigation />
+    <Library accessToken={accessToken} />
    </div>
   </Resizable>
  );

@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { fetchPlaylist, selectPlaylist, selectStatus } from "../../../utils/redux/playlistSlice";
-import { setBgColor } from "../../../utils/redux/colorsSlice";
+import { setBgColor, setOpacity } from "../../../utils/redux/colorsSlice";
 import Loader from "../../../components/Loader/Loader";
 import Error from "../../../components/Error/Error";
 import PlaylistWrapper from "../../../components/PlaylistWrapper/PlaylistWrapper";
@@ -18,6 +18,7 @@ const Playlist = ({ accessToken }) => {
 
  useEffect(() => {
   dispatch(setBgColor({ R: 18, G: 18, B: 18, A: 0 }));
+  dispatch(setOpacity(0));
  }, [id]);
 
  useEffect(() => {
@@ -72,33 +73,27 @@ const Playlist = ({ accessToken }) => {
    return <Error />;
   case "success":
    return (
-    <>
-     {playlist.id === id && (
-      <PlaylistWrapper
-       playlist={playlist}
-       tracks={tracks}
-       image={mainImage && mainImage.url}
-       name={playlist.name}
-       header={
-        <div className="flex flex-col justify-between">
-         <div>Playlist</div>
-         <div className="flex flex-col gap-4">
-         <span className="font-bold text-3xl @xl:text-5xl @3xl:text-7xl">
-           {playlist.name}
-          </span>
-          <div className="flex items-center gap-2">
-           <span className="text-sm">
-            <b>{playlist.owner.display_name}</b>
-            {` • ${playlist.tracks.total} tracks`}
-           </span>
-          </div>
-         </div>
+    <PlaylistWrapper
+     playlist={playlist}
+     tracks={tracks}
+     image={mainImage && mainImage.url}
+     name={playlist.name}
+     header={
+      <div className="flex flex-col justify-between">
+       <div>Playlist</div>
+       <div className="flex flex-col gap-4">
+        <span className="font-bold text-3xl @xl:text-5xl @3xl:text-7xl">{playlist.name}</span>
+        <div className="flex items-center gap-2">
+         <span className="text-sm">
+          <b>{playlist.owner.display_name}</b>
+          {` • ${playlist.tracks.total} tracks`}
+         </span>
         </div>
-       }
-       queue={queue}
-      />
-     )}
-    </>
+       </div>
+      </div>
+     }
+     queue={queue}
+    />
    );
   default:
    return null;

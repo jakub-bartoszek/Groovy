@@ -13,7 +13,7 @@ import AccountBar from "../../components/AccountBar/AccountBar";
 import Player from "../../components/Player/Player";
 
 const Dashboard = ({ code }) => {
- const [width, setWidth] = useState();
+const [width, setWidth] = useState();
  const contentWrapperRef = useRef();
  const accessToken = useAuth(code);
  const dispatch = useDispatch();
@@ -38,67 +38,35 @@ const Dashboard = ({ code }) => {
  }, [accessToken]);
 
  return (
-  <div className="overflow-hidden w-screen max-w-screen h-[100dvh] max-h-[100dvh]">
+  <div className="@container overflow-hidden w-screen max-w-screen h-[100dvh] max-h-[100dvh]">
    <BrowserRouter>
-    <div
-     className={`grid grid-cols-[auto_2fr] h-full w-full ${
-      window.innerWidth > 767 ? "grid-rows-[1fr_80px]" : "grid-rows-[1fr_150px]"
-     } gap-2 bg-[black] p-2`}
-    >
+    <div className="grid grid-cols-[auto_2fr] h-full w-full gap-2 bg-[black] p-2 grid-rows-[1fr_150px] @[767px]:grid-rows-[1fr_80px]">
      <Sidebar accessToken={accessToken} />
      <div
       ref={contentWrapperRef}
       className="@container flex flex-col h-[100%] rounded-xl relative overflow-hidden"
      >
-      <AccountBar
-       width={width}
-       accessToken={accessToken}
-      />
+      <AccountBar accessToken={accessToken} />
       <Routes>
        <Route
         path="/artists/:id"
-        element={
-         <Artist
-          width={width}
-          accessToken={accessToken}
-         />
-        }
+        element={<Artist accessToken={accessToken} />}
        />
        <Route
         path="/playlists/:id"
-        element={
-         <Playlist
-          width={width}
-          accessToken={accessToken}
-         />
-        }
+        element={<Playlist accessToken={accessToken} />}
        />
        <Route
         path="/liked"
-        element={
-         <LikedSongs
-          width={width}
-          accessToken={accessToken}
-         />
-        }
+        element={<LikedSongs accessToken={accessToken} />}
        />
        <Route
         path="/search"
-        element={
-         <Search
-          width={width}
-          accessToken={accessToken}
-         />
-        }
+        element={<Search accessToken={accessToken} />}
        />
        <Route
         path="/home"
-        element={
-         <Home
-          width={width}
-          accessToken={accessToken}
-         />
-        }
+        element={<Home accessToken={accessToken} />}
        />
        <Route
         path="/"

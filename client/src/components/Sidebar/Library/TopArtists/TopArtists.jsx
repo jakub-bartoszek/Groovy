@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { selectTopArtists } from "../../../../utils/redux/librarySlice";
 import ArtistItem from "./ArtistItem";
 
-const TopArtists = ({ width }) => {
+const TopArtists = () => {
  const topArtists = useSelector(selectTopArtists);
 
  return (
@@ -12,7 +12,6 @@ const TopArtists = ({ width }) => {
     <ArtistItem
      key={artist.id || nanoid()}
      item={artist}
-     width={width}
      path={`/artists/${artist.id}`}
     />
    ))}

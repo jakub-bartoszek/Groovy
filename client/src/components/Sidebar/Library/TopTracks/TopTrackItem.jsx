@@ -2,7 +2,7 @@ import { nanoid } from "@reduxjs/toolkit";
 import { useDispatch } from "react-redux";
 import { setCurrentTrack } from "../../../../utils/redux/playerSlice";
 
-const TopTrackItem = ({ item, width }) => {
+const TopTrackItem = ({ item }) => {
  const dispatch = useDispatch();
 
  const handleItemClick = () => {
@@ -11,9 +11,7 @@ const TopTrackItem = ({ item, width }) => {
 
  return (
   <li
-   className={`flex items-center gap-3 p-2 rounded-md hover:bg-[#1a1a1a] cursor-pointer ${
-    width <= 70 && "justify-center"
-   }`}
+   className="flex items-center gap-2 p-2 rounded-md hover:bg-[#1a1a1a] cursor-pointer"
    onClick={handleItemClick}
    key={item.id || nanoid()}
   >
@@ -26,12 +24,10 @@ const TopTrackItem = ({ item, width }) => {
      />
     )}
    </div>
-   {width > 70 && (
-    <div className="flex flex-col">
-     <span className="font-semibold text-white">{item.name}</span>
-     <span className="text-sm">Track • {item.artists[0].name}</span>
-    </div>
-   )}
+   <div className="flex-col hidden @[71px]:flex">
+    <span className="font-semibold text-white">{item.name}</span>
+    <span className="text-sm">Track • {item.artists[0].name}</span>
+   </div>
   </li>
  );
 };

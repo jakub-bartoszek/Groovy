@@ -14,7 +14,7 @@ const formatDate = (date) => {
  return date.toLocaleDateString(undefined, dateFormat);
 };
 
-const PlaylistTracks = ({ tracks, opacity, width }) => {
+const PlaylistTracks = ({ tracks, opacity }) => {
  const dispatch = useDispatch();
 
  return (
@@ -26,13 +26,7 @@ const PlaylistTracks = ({ tracks, opacity, width }) => {
      transition: "background-color 300ms"
     }}
    >
-    <div
-     className="grid gap-4 px-4 py-2 border-b-2 border-[#ffffff11] mb-5 text-muted
-          grid-cols-[1rem_1fr]
-          @md:grid-cols-[1rem_3fr_minmax(60px,_1fr)]
-          @xl:grid-cols-[1rem_4fr_2fr_minmax(120px,_1fr)]
-          @2xl:grid-cols-[1rem_6fr_4fr_3fr_minmax(16px,_1fr)]"
-    >
+    <div className="grid gap-4 px-4 py-2 border-b-2 border-[#ffffff11] mb-5 text-muted grid-cols-[1rem_1fr] @md:grid-cols-[1rem_3fr_minmax(60px,_1fr)] @xl:grid-cols-[1rem_4fr_2fr_minmax(120px,_1fr)] @2xl:grid-cols-[1rem_6fr_4fr_3fr_minmax(16px,_1fr)]">
      <span>#</span>
      <span>Title</span>
      <span className="hidden @xl:flex">Album</span>
@@ -47,11 +41,7 @@ const PlaylistTracks = ({ tracks, opacity, width }) => {
      const date = new Date(track.dateAdded);
      return (
       <div
-       className="grid rounded-md group gap-4 px-4 hover:bg-[#ffffff22] text-muted  cursor-pointer
-              grid-cols-[1rem_1fr]
-              @md:grid-cols-[1rem_3fr_minmax(60px,_1fr)]
-              @xl:grid-cols-[1rem_4fr_2fr_minmax(120px,_1fr)]
-              @2xl:grid-cols-[1rem_6fr_4fr_3fr_minmax(16px,_1fr)]"
+       className="grid rounded-md group gap-4 px-4 hover:bg-[#ffffff22] text-muted  cursor-pointer grid-cols-[1rem_1fr] @md:grid-cols-[1rem_3fr_1fr] @xl:grid-cols-[1rem_4fr_2fr_minmax(120px,_1fr)] @2xl:grid-cols-[1rem_6fr_4fr_3fr_minmax(16px,_1fr)]"
        key={track.id || nanoid()}
        onClick={() => {
         dispatch(setCurrentTrack(track.uri));
@@ -78,10 +68,8 @@ const PlaylistTracks = ({ tracks, opacity, width }) => {
          </span>
         </div>
        </div>
-       <div className="overflow-hidden flex items-center">
-        <span className="text-ellipsis whitespace-nowrap overflow-hidden hidden @xl:flex">
-         {track.album}
-        </span>
+       <div className="overflow-hidden items-center hidden @xl:flex">
+        <span className="text-ellipsis whitespace-nowrap overflow-hidden">{track.album}</span>
        </div>
        <div className="overflow-hidden items-center hidden @2xl:flex">
         <span>{date.toLocaleDateString(undefined, formatDate)}</span>

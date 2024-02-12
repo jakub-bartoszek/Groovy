@@ -7,7 +7,7 @@ import Tile from "../../../components/Tile/Tile";
 import Loader from "../../../components/Loader/Loader";
 import Error from "../../../components/Error/Error";
 
-const Home = ({ width }) => {
+const Home = () => {
  const recentlyPlayed = useSelector(selectRecentlyPlayed);
  const scrollRef = useRef();
  const _ = require("lodash");
@@ -30,7 +30,6 @@ const Home = ({ width }) => {
        <NavLink to="/liked">
         <Tile
          key={nanoid()}
-         width={width}
          name="Liked songs"
          imgSrc="https://misc.scdn.co/liked-songs/liked-songs-300.png"
         />

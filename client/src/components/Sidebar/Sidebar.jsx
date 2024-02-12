@@ -5,13 +5,9 @@ import { HomeIcon } from "../../assets/icons/HomeIcon";
 import { SearchIcon } from "../../assets/icons/SearchIcon";
 import Library from "./Library/Library";
 
-const SidebarNavigation = ({ width }) => {
+const SidebarNavigation = () => {
  return (
-  <nav
-   className={`py-4 px-[19px] flex flex-col rounded-[10px] gap-4 font-bold bg-[#121212] text-[#b3b3b3] ${
-    width <= 70 && "items-center"
-   }`}
-  >
+  <nav className="py-4 px-[19px] flex flex-col rounded-[10px] gap-4 font-bold bg-[#121212] text-[#b3b3b3]">
    <NavLink
     className="flex gap-4 items-center"
     to="/home"
@@ -19,7 +15,7 @@ const SidebarNavigation = ({ width }) => {
     <div className="h-8 w-8 flex items-center justify-center">
      <HomeIcon size={22} />
     </div>
-    {width > 70 && <span>Home</span>}
+    <span className="hidden @[71px]:flex">Home</span>
    </NavLink>
    <NavLink
     className="flex gap-4 items-center"
@@ -28,7 +24,7 @@ const SidebarNavigation = ({ width }) => {
     <div className="h-8 w-8 flex items-center justify-center">
      <SearchIcon size={22} />
     </div>
-    {width > 70 && <span>Search</span>}
+    <span className="hidden @[71px]:flex">Search</span>
    </NavLink>
   </nav>
  );

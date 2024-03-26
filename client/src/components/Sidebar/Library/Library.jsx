@@ -183,7 +183,7 @@ const Library = ({ accessToken }) => {
  const renderCategory = () => {
   switch (category) {
    case "playlists":
-    return <Playlists accessToken={accessToken} />;
+    return <></>;
    case "tracks":
     return <TopTracks accessToken={accessToken} />;
    case "artists":

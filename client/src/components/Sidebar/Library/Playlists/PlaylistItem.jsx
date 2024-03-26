@@ -12,12 +12,12 @@ const PlaylistItem = ({ item, path, likedSongs }) => {
      src="https://misc.scdn.co/liked-songs/liked-songs-64.png"
     />
    );
-  } else if (item.images && item.images.length > 0) {
+  } else if (item.images[0]) {
    return (
     <img
      alt={item.name}
      className="h-11 w-11 rounded-md absolute"
-     src={item.images[item.images.length - 1]?.url}
+     src={item?.images[item.images.length - 1]?.url}
     />
    );
   }

@@ -8,7 +8,7 @@ const Playlists = () => {
 
  return (
   <>
-   <PlaylistItem
+   {/* <PlaylistItem
     key={nanoid()}
     path={`/liked`}
     name="Liked songs"
@@ -20,7 +20,7 @@ const Playlists = () => {
      path={`/playlists/${playlist.id}`}
      item={playlist}
     />
-   ))}
+   ))} */}
   </>
  );
 };
